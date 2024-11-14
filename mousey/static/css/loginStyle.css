@@ -1,75 +1,101 @@
-/* Style global */
+/* Global Styles */
 body {
-    background-color: gray;
+    background-color: #888888; /* Light gray for better contrast */
     font-family: 'Inria Sans', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
 }
 
-/* Style pour le conteneur principal */
+/* Main Container Style */
 .rectangle {
-    color: white;
-    border: 2px solid #333;
+    color: #ffffff;
+    border: 2px solid #333333;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Increased shadow for better visual effect */
     background-color: #242434;
     margin: 20px auto;
     max-width: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
 }
 
-/* Style pour le titre */
+/* Title Style */
 .titre {
-    color: white;
+    color: #ffffff;
     text-align: center;
     font-size: 2em;
     margin-bottom: 20px;
 }
 
-/* Style pour le texte en bas */
-.texteAcceuil {
-    color: white;
+/* Footer Text Style */
+.texte-acceuil {
+    color: #ffffff;
+    font-size: 1em;
+    text-align: center;
+    margin-top: 15px;
 }
 
-/* Styles pour les labels et inputs */
-.label-username, .label-password {
+/* Label and Input Styles */
+.label-username,
+.label-password {
     font-size: 1.2em;
     font-weight: bold;
-    text-align: center;
+    text-align: left;
     width: 100%;
-    color: #333;
+    color: #ffffff;
+    margin-bottom: 5px;
 }
 
+/* Input and Button Styles */
 input[type="text"],
 input[type="password"],
-button[type="submit"] {
-    font-size: 1.5em;
+button[type="submit"],
+button#togglePassword {
+    font-size: 1em;
     padding: 10px;
     width: 100%;
     max-width: 350px;
     box-sizing: border-box;
-    border: 2px solid #333;
+    border: 2px solid #333333;
     border-radius: 5px;
     height: 45px;
     margin: 5px 0;
 }
 
-/* Style pour le bouton de soumission */
+/* Submit Button Style */
 button[type="submit"] {
-    background-color: yellow;
-    color: black;
+    background-color: #ffeb3b; /* Yellow color */
+    color: #000000;
     cursor: pointer;
     transition: background-color 0.3s;
-    width: 300px;
-    height: 50px;
-    padding: 15px;
-    border: 2px solid black;
+    width: 100%;
+    max-width: 350px;
+    padding: 10px;
+    border: 2px solid #000000;
     border-radius: 5px;
-    font-size: 1.5em;
+    font-size: 1em;
 }
 
 button[type="submit"]:hover {
-    background-color: #555;
+    background-color: #555555;
+}
+
+/* Toggle Password Button Style */
+button#togglePassword {
+    background-color: #242434;
+    color: #ffeb3b;
+    border: none;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+button#togglePassword:hover {
+    color: #ffffff;
 }
