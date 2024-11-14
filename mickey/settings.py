@@ -84,6 +84,9 @@ DATABASES = {
         'PORT': "3306",
     }
 }
+STATIC_URL = '/static/'
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

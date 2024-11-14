@@ -1,0 +1,87 @@
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.imageAcceuil {
+    transform: scale(0.5);
+    display: block;
+    margin: 0 auto;
+    margin-bottom: -90px;
+}
+
+body {
+    background-color: gray;
+    font-family: 'Inria Sans', sans-serif;
+}
+
+.texteAcceuil {
+    color: white;
+}
+
+.rectangle {
+    color: white;
+    border: 2px solid #333;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #242434;
+    margin: 20px auto;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.titre {
+    color: white;
+    text-align: center;
+}
+
+.username {
+    font-size: 1.5em;
+}
+
+.label-username, .label-password {
+    font-size: 4em;
+    font-weight: bold;
+    color: #333;
+    transition: color 0.3s;
+    text-align: center;
+}
+
+input:focus + .label-username {
+    color: blue;
+}
+
+input[type="text"], input[type="password"], button[type="submit"] {
+    font-size: 1.5em;
+    padding: 10px;
+    width: 100%;
+    max-width: 350px;
+    box-sizing: border-box;
+    border: 2px solid #333;
+    border-radius: 5px;
+    height: 45px;
+    margin: 5px 0;
+}
+
+button[type="submit"] {
+    background-color: yellow;
+    color: black;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 300px;
+    height: 50px;
+    max-width: 600px;
+    padding: 15px;
+    border: 2px solid black;
+    border-radius: 5px;
+    font-size: 1.5em;
+}
+
+button[type="submit"]:hover {
+    background-color: #555;
+}

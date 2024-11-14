@@ -1,22 +1,25 @@
-<!-- mousey/templates/register.html -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <title>Inscription</title>
+    <link rel="stylesheet" type="text/css" href="{% static '/css/registerStyle.css' %}">
 </head>
 <body>
-    <h2>Inscription</h2>
+    <h2 class="titre">Inscription</h2>
     {% if messages %}
         {% for message in messages %}
             <p>{{ message }}</p>
         {% endfor %}
     {% endif %}
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">S'inscrire</button>
-    </form>
-    <p>Vous avez déjà un compte ? <a href="{% url 'login' %}">Connexion</a></p>
+    <div class="rectangle">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">S'inscrire</button>
+        </form>
+        <p class="texteAcceuil">Vous avez déjà un compte ? <a href="{% url 'login' %}">Connexion</a></p>
+    </div>
 </body>
 </html>
