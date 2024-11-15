@@ -12,28 +12,55 @@ input{
     font-size: 1.5em;
 }
 
-.textZone{
-    width: max-content;
-    padding-top: 20%;
-    padding-left: 50%;
+
+
+.textZone {
+    width: 100%;             /* Prend toute la largeur disponible */
+    max-width: 400px;        /* Limite la largeur à 400px */
+    padding: 20px;           /* Espacement interne autour des champs */
+    display: flex;
+    flex-direction: column;  /* Aligne les champs verticalement */
+    gap: 20px;               /* Espacement entre les champs */
 }
 
-.MEP1{
-    width: 95%;
-    padding: 0.2em;
-    background-color: rgba(255, 255, 255, 0.85);
-    border-radius: 30px;
+.textZone input[type="text"],
+.textZone input[type="password"] {
+    width: 100%;                /* Prend toute la largeur du conteneur */
+    padding: 15px;              /* Espacement interne pour agrandir visuellement */
+    font-size: 1.2em;           /* Texte agrandi */
+    border: 2px solid rgba(255, 255, 255, 0.7); /* Bordure blanche semi-transparente */
+    border-radius: 30px;        /* Coins arrondis */
+    background-color: rgba(255, 255, 255, 0.85); /* Fond blanc semi-transparent */
+    color: #242434;             /* Texte en couleur sombre */
+    outline: none;              /* Retire le contour bleu par défaut */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Légère ombre pour esthétique */
+    transition: all 0.3s ease; /* Animation douce sur les interactions */
 }
 
-.MEP2{
-    width: 95%;
-    padding: 0.2em;
-    background-color: rgba(255, 255, 255, 0.85);
-    border-radius: 30px;
-    margin-top: 5%;
+.textZone input[type="text"]:focus,
+.textZone input[type="password"]:focus {
+    border: 2px solid #ffeb3b; /* Bordure jaune au focus */
+    background-color: rgba(255, 255, 255, 1); /* Fond blanc opaque */
 }
-
 body{
     background-color: #242434;
     margin: auto;
+}
+
+.submitBtn {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #242434;
+    background-color: #ffeb3b;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.submitBtn:hover {
+    background-color: #e6c200;
 }

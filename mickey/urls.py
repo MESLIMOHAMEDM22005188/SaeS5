@@ -27,6 +27,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('home/', views.home, name='home'),
     path('levelOne/', views.level_one, name='level_one'),
+    path('levelOne/bureau/', views.level_one_bureau, name='level_one_bureau'),
     path('levelTwo/', views.level_two, name='level_two'),
     path('levelThree/', views.level_three, name='level_three'),
 ]
