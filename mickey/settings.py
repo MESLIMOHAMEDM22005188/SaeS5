@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
 from pathlib import Path
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -143,4 +145,23 @@ if not DEBUG:
 
 # Debug toolbar
 INTERNAL_IPS = ['127.0.0.1']
+
+SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
+
+def send_email(subject, to_email, body):
+    message = Mail(
+        from_email= 'pacmanthebossofhack@gmail.com',
+        to_email=to_email,
+        subject = subject,
+        html_content=body,
+    )
+    try:
+        sg = SendGridAPIClient(SENDGRID_API_KEY)
+        response = sg.send(message)
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
 

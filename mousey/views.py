@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
+from mickey.settings import send_email
 @login_required
 def level_one(request):
     if request.method == "POST":
@@ -32,19 +33,28 @@ def level_three(request):
 def home(request):
     return render(request, 'home.html')
 
-
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Votre compte a été créé avec succès !')
+            user = form.save()
+            # Envoi d'e-mail de bienvenue
+            send_email(
+                subject="Bienvenue sur notre plateforme !",
+                to_email=user.email,
+                body=f"""
+                    <h1>Bonjour {user.username},</h1>
+                    <p>Merci de vous être inscrit sur notre site. Nous espérons que vous apprécierez votre expérience.</p>
+                    <p>Cordialement,</p>
+                    <p>L'équipe</p>
+                """
+            )
+            messages.success(request, 'Votre compte a été créé avec succès ! Un e-mail de bienvenue vous a été envoyé.')
             return redirect('login')
     else:
         form = UserCreationForm()
 
     return render(request, 'register.html', {'form': form})
-
 @login_required
 def level_one_bureau(request):
     return render(request, 'level_one_bureau.html')
