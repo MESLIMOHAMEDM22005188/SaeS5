@@ -129,7 +129,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-ALLOWED_HOSTS = ['https://saes5.onrender.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['saes5.onrender.com', '127.0.0.1', 'localhost']
 
 SECURE_SSL_REDIRECT = True
 
