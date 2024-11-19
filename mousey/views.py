@@ -4,6 +4,9 @@ from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from mickey.settings import send_email
+from .forms import CustomUserCreationForm  # Import du formulaire personnalisé
+
+
 @login_required
 def level_one(request):
     if request.method == "POST":
@@ -35,13 +38,13 @@ def home(request):
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)  # Utilisation du formulaire personnalisé
         if form.is_valid():
             user = form.save()
             # Envoi d'e-mail de bienvenue
             send_email(
                 subject="Bienvenue sur notre plateforme !",
-                to_email=user.email,
+                to_email=user.email,  # Utilisation de l'e-mail saisi par l'utilisateur
                 body=f"""
                     <h1>Bonjour {user.username},</h1>
                     <p>Merci de vous être inscrit sur notre site. Nous espérons que vous apprécierez votre expérience.</p>
@@ -52,12 +55,13 @@ def register(request):
             messages.success(request, 'Votre compte a été créé avec succès ! Un e-mail de bienvenue vous a été envoyé.')
             return redirect('login')
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
 
     return render(request, 'register.html', {'form': form})
 @login_required
 def level_one_bureau(request):
     return render(request, 'level_one_bureau.html')
+
 
 def login(request):
     if request.method == 'POST':
