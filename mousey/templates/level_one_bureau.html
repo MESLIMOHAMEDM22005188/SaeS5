@@ -8,20 +8,26 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/Bureau.css' %}">
 </head>
 <body>
-    <!-- Contenu principal -->
+    <!-- Zone dédié aux apps -->
     <div class="content">
-        <!-- Ajoutez votre contenu ici -->
+        <img src="{% static 'image/outlook.png' %}" alt="outlook-app" class="outlook-app">
     </div>
 
-    <!-- Barre inférieure -->
+    <!-- barre des taches -->
     <div class="bottom-bar">
-        <img src="{% static 'image/eternaite.png' %}" alt="internet" class="icon1">
-        <img src="{% static 'image/heure.png' %}" alt="heure" class="heure">
-        <img src="{% static 'image/batterie.png' %}" alt="batterie" class="batterie">
-        <img src="{% static 'image/window11.png' %}" alt="window" class="window">
-        <img src="{% static 'image/son.png' %}" alt="Son" class="icon">
-        <img src="{% static 'image/outlook.png' %}" alt="outlook" class="outlook">
-
+        <div class="left-info">
+            <img src="{% static 'image/bouttonMA.png' %}" alt="boutton" class="bouttonMA">
+        </div>
+        <div class="center-app">
+           <img src="{% static 'image/window11.png' %}" alt="window" class="window">
+            <img src="{% static 'image/outlook.png' %}" alt="outlook" class="outlook">
+        </div>
+        <div class="right-info">
+            <img src="{% static 'image/eternaite.png' %}" alt="internet" class="icon1">
+            <img src="{% static 'image/batterie.png' %}" alt="batterie" class="batterie">
+            <img src="{% static 'image/son.png' %}" alt="Son" class="icon">
+            <img src="{% static 'image/heure.png' %}" alt="heure" class="heure">
+        </div>
     </div>
 </body>
 </html>
