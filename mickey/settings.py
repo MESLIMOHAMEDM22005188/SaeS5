@@ -31,13 +31,20 @@ if RENDER_EXTERNAL_HOSTNAME:
 
 
 
-url = "https://sandbox.api.mailtrap.io/api/send/3289971"
+# Looking to send emails in production? Check out our Email API/SMTP product!
+import requests
 
-payload = "{\"from\":{\"email\":\"hello@example.com\",\"name\":\"Mailtrap Test\"},\"to\":[{\"email\":\"mohamed.mesli@etu.univ-amu.fr\"}],\"subject\":\"You are awesome!\",\"text\":\"Congrats for sending test email with Mailtrap!\",\"category\":\"Integration Test\"}"
+url = "https://sandbox.api.mailtrap.io/api/send/3290490"
+
+payload = "{\"from\":{\"email\":\"nazimlama4@gmail.com\",\"name\":\"Mailtrap Test\"},\"to\":[{\"email\":\"pacmanthebossofhack@gmail.com\"}],\"subject\":\"You are awesome!\",\"text\":\"Congrats for sending test email with Mailtrap!\",\"category\":\"Integration Test\"}"
 headers = {
-  "Authorization": "Bearer 0e55d943c316aa56390f2f6fa11d700f",
+  "Authorization": "Bearer a26761618206487b9f0f2972a8afe32a",
   "Content-Type": "application/json"
 }
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
 
 response = requests.request("POST", url, headers=headers, data=payload)
 
