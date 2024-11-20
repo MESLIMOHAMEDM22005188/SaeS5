@@ -14,20 +14,19 @@ from mousey.forms import CustomUserCreationForm
 
 def send_email(subject, to_email, body):
     try:
-        from_email = "test@example.com"  # Adresse d'envoi (fictive ou réelle)
-        message = body
-        send_mail(
-            subject,
-            message,
-            from_email,
-            [to_email],
-            fail_silently=False,
+        message = Mail(
+            from_email="test@example.com",  # Adresse d'envoi
+            to_emails=to_email,
+            subject=subject,
+            html_content=body
         )
-        print(f"E-mail envoyé à {to_email} avec succès !")
-        return True
+        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+        response = sg.send(message)
+        print(f"Email envoyé avec le statut: {response.status_code}")
+        return response
     except Exception as e:
-        print(f"Erreur lors de l'envoi de l'e-mail : {e}")
-        return False
+        print(f"Erreur lors de l'envoi de l'e-mail: {e}")  # Affichez les détails de l'erreur
+        return None
 
 
 # Vue pour tester l'envoi d'un e-mail
