@@ -18,7 +18,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
-from mousey.views import test_email
+from mousey.views import test_email, verify_email
 
 from mousey import views
 
@@ -33,6 +33,8 @@ urlpatterns = [
     path('levelOne/bureau/', views.level_one_bureau, name='level_one_bureau'),
     path('levelTwo/', views.level_two, name='level_two'),
     path('levelThree/', views.level_three, name='level_three'),
+    path('verify-email/<str:email>/', verify_email, name='verify_email'),
+
 ]
 if settings.DEBUG:
     urlpatterns += [

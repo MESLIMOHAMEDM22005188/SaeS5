@@ -3,13 +3,40 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
+from django.core.cache import cache
 
 from mousey.forms import CustomUserCreationForm
+
+def verify_email(request, email):
+    if request.method == 'POST':
+        code = request.POST.get('code')
+        stored_code = cache.get(f'verification_code_{email}')
+
+        if str(code) == str(stored_code):
+            user = User.objects.get(email=email)
+            user.is_active = True  # Active l'utilisateur
+            user.save()
+            messages.success(request, "Votre compte a été vérifié avec succès !")
+            return redirect('login')
+        else:
+            messages.error(request, "Code de vérification incorrect ou expiré.")
+    return render(request, 'verify_email.html', {'email': email})
+
+
+def send_verification_email(user_email, code):
+    subject = "Code de vérification"
+    body = f"""
+        <h1>Code de vérification</h1>
+        <p>Votre code est : <strong>{code}</strong></p>
+        <p>Ce code est valide pendant 10 minutes.</p>
+    """
+    return send_email(subject, user_email, body)
 
 
 def send_email(subject, to_email, body):
