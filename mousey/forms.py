@@ -1,20 +1,18 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User, AbstractUser
+from mousey.models import CustomUser  # Import correct du modèle CustomUser
 from django.core.exceptions import ValidationError
-from django.db import models
-
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True, label="Adresse e-mail")
 
     class Meta:
-        model = User
-        fields = ['username', 'email', 'password1', 'password2']  # Ajout du champ e-mail
+        model = CustomUser  # Remplacez User par CustomUser
+        fields = ['username', 'email', 'password1', 'password2']
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
-        if User.objects.filter(username=username).exists():
+        if CustomUser.objects.filter(username=username).exists():  # Utiliser CustomUser ici
             raise ValidationError("Ce nom d'utilisateur est déjà pris.")
         return username
 

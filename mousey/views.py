@@ -5,7 +5,9 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 
 from mickey.settings import send_email
-from .forms import CustomUserCreationForm  # Import du formulaire personnalisé
+from .forms import CustomUserCreationForm
+from mousey.forms import CustomUserCreationForm
+from mousey.models import CustomUser
 
 
 @login_required
