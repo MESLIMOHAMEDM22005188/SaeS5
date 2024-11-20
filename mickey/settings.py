@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
 from pathlib import Path
+import requests
+
 
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,11 +30,18 @@ if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 
-# Looking to send emails in production? Check out our Email API/SMTP product!
-EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
-EMAIL_HOST_USER = '625d6d9b14a14b'
-EMAIL_HOST_PASSWORD = '********38c3'
-EMAIL_PORT = '2525'
+
+url = "https://sandbox.api.mailtrap.io/api/send/3289971"
+
+payload = "{\"from\":{\"email\":\"hello@example.com\",\"name\":\"Mailtrap Test\"},\"to\":[{\"email\":\"mohamed.mesli@etu.univ-amu.fr\"}],\"subject\":\"You are awesome!\",\"text\":\"Congrats for sending test email with Mailtrap!\",\"category\":\"Integration Test\"}"
+headers = {
+  "Authorization": "Bearer 0e55d943c316aa56390f2f6fa11d700f",
+  "Content-Type": "application/json"
+}
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
 
 # Applications
 INSTALLED_APPS = [
