@@ -76,43 +76,33 @@ def test_email(request):
 
 def register(request):
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)  # Formulaire personnalisé
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.is_active = False  # Désactive l'utilisateur jusqu'à la validation
-            user.save()
-
-            # Génération d'un code de vérification
+            user = form.save()
+            # Générer un code de vérification aléatoire
             verification_code = random.randint(100000, 999999)
-            cache.set(f'verification_code_{user.email}', verification_code,
-                      timeout=600)  # Stocke le code pendant 10 minutes
+            print(f"Code de vérification généré : {verification_code}")  # Pour tester en local
 
-            # Envoi de l'e-mail de vérification
-            email_status = send_email(
-                subject="Vérifiez votre adresse e-mail",
+            # Envoi d'un email avec le code de vérification
+            send_email(
+                subject="Votre code de vérification",
                 to_email=user.email,
                 body=f"""
                     <h1>Bonjour {user.username},</h1>
-                    <p>Votre code de vérification est : <strong>{verification_code}</strong></p>
-                    <p>Veuillez entrer ce code sur la page de vérification pour activer votre compte.</p>
+                    <p>Voici votre code de vérification : <strong>{verification_code}</strong></p>
                     <p>Cordialement,</p>
                     <p>L'équipe</p>
                 """
             )
-
-            if email_status:
-                messages.success(request,
-                                 "Un e-mail de vérification a été envoyé. Veuillez vérifier votre boîte de réception.")
-            else:
-                messages.warning(request,
-                                 "Votre compte a été créé, mais l'e-mail de vérification n'a pas pu être envoyé.")
-
-            return redirect('verify_email', email=user.email)  # Redirection vers la vérification
+            messages.success(
+                request,
+                'Un code de vérification vous a été envoyé. Veuillez vérifier votre e-mail.'
+            )
+            # Redirection vers la page de vérification
+            return redirect('verify_email')
     else:
         form = CustomUserCreationForm()
-
     return render(request, 'register.html', {'form': form})
-
 
 # Vue pour la connexion d'un utilisateur
 def login(request):
