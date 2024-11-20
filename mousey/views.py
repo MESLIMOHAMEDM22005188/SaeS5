@@ -1,9 +1,10 @@
 import os
-
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
+from django.core.mail import send_mail
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
@@ -11,48 +12,63 @@ from sendgrid.helpers.mail import Mail
 from mousey.forms import CustomUserCreationForm
 
 
-# Fonction d'envoi d'e-mails
 def send_email(subject, to_email, body):
-    message = Mail(
-        from_email='pacmanthebossofhack@gmail.com',  # Remplacez par une adresse e-mail vérifiée
-        to_emails=to_email,
-        subject=subject,
-        html_content=body
-    )
     try:
-        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
-        response = sg.send(message)
-        print(f"Email envoyé avec le statut: {response.status_code}")
-        return response
+        from_email = "test@example.com"  # Adresse d'envoi (fictive ou réelle)
+        message = body
+        send_mail(
+            subject,
+            message,
+            from_email,
+            [to_email],
+            fail_silently=False,
+        )
+        print(f"E-mail envoyé à {to_email} avec succès !")
+        return True
     except Exception as e:
-        print(f"Erreur lors de l'envoi de l'e-mail: {e}")
-        return None
+        print(f"Erreur lors de l'envoi de l'e-mail : {e}")
+        return False
 
 
-# Vue pour la page d'inscription
+# Vue pour tester l'envoi d'un e-mail
+def test_email(request):
+    subject = "Test Email avec Mailtrap"
+    body = "Ceci est un test d'e-mail avec Mailtrap et Django."
+    recipient_email = "recipient@example.com"  # Adresse de réception
+
+    email_status = send_email(subject, recipient_email, body)
+    if email_status:
+        return HttpResponse("E-mail envoyé avec succès !")
+    else:
+        return HttpResponse("Erreur lors de l'envoi de l'e-mail.")
+
+# Vue pour l'inscription d'un utilisateur
 def register(request):
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)  # Utilisation du formulaire personnalisé
+        form = CustomUserCreationForm(request.POST)  # Formulaire personnalisé
         if form.is_valid():
             user = form.save()
-            # Envoi d'e-mail de bienvenue
+            # Désactivation initiale de l'utilisateur si nécessaire
+            # user.is_active = False
+            # user.save()
+
+            # Envoi d'un email de bienvenue
             email_status = send_email(
                 subject="Bienvenue sur notre plateforme !",
-                to_email=user.email,  # Utilisation de l'e-mail saisi par l'utilisateur
+                to_email=user.email,
                 body=f"""
                     <h1>Bonjour {user.username},</h1>
                     <p>Merci de vous être inscrit sur notre site. Nous espérons que vous apprécierez votre expérience.</p>
                     <p>Cordialement,</p>
-                    <p>L'équipe</p> 
-
-                    """
+                    <p>L'équipe</p>
+                """
             )
             if email_status:
-                messages.success(request,
-                                 'Votre compte a été créé avec succès ! Un e-mail de bienvenue vous a été envoyé.')
+                messages.success(
+                    request, 'Votre compte a été créé avec succès ! Un e-mail de bienvenue vous a été envoyé.')
             else:
-                messages.warning(request,
-                                 'Votre compte a été créé, mais l\'e-mail de bienvenue n\'a pas pu être envoyé.')
+                messages.warning(
+                    request, 'Votre compte a été créé, mais l\'e-mail de bienvenue n\'a pas pu être envoyé.')
 
             return redirect('login')
     else:
@@ -61,7 +77,7 @@ def register(request):
     return render(request, 'register.html', {'form': form})
 
 
-# Vue pour la connexion des utilisateurs
+# Vue pour la connexion d'un utilisateur
 def login(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -96,7 +112,6 @@ def level_one(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        # Vérifie l'identifiant et le mot de passe
         if username == "utilisateur4" and password == "01234":
             return redirect('level_one_bureau')
         else:

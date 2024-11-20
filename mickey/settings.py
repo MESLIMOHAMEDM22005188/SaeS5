@@ -27,6 +27,13 @@ RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
+
+# Looking to send emails in production? Check out our Email API/SMTP product!
+EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
+EMAIL_HOST_USER = '625d6d9b14a14b'
+EMAIL_HOST_PASSWORD = '********38c3'
+EMAIL_PORT = '2525'
+
 # Applications
 INSTALLED_APPS = [
 
