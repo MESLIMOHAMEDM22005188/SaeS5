@@ -1,4 +1,6 @@
 import os
+from random import random
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
@@ -13,6 +15,7 @@ from django.core.cache import cache
 
 from mousey.forms import CustomUserCreationForm
 
+
 def verify_email(request, email):
     if request.method == 'POST':
         code = request.POST.get('code')
@@ -22,10 +25,12 @@ def verify_email(request, email):
             user = User.objects.get(email=email)
             user.is_active = True  # Active l'utilisateur
             user.save()
+            cache.delete(f'verification_code_{email}')  # Supprime le code du cache
             messages.success(request, "Votre compte a été vérifié avec succès !")
             return redirect('login')
         else:
             messages.error(request, "Code de vérification incorrect ou expiré.")
+
     return render(request, 'verify_email.html', {'email': email})
 
 
@@ -68,35 +73,41 @@ def test_email(request):
     else:
         return HttpResponse("Erreur lors de l'envoi de l'e-mail.")
 
-# Vue pour l'inscription d'un utilisateur
+
 def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)  # Formulaire personnalisé
         if form.is_valid():
-            user = form.save()
-            # Désactivation initiale de l'utilisateur si nécessaire
-            # user.is_active = False
-            # user.save()
+            user = form.save(commit=False)
+            user.is_active = False  # Désactive l'utilisateur jusqu'à la validation
+            user.save()
 
-            # Envoi d'un email de bienvenue
+            # Génération d'un code de vérification
+            verification_code = random.randint(100000, 999999)
+            cache.set(f'verification_code_{user.email}', verification_code,
+                      timeout=600)  # Stocke le code pendant 10 minutes
+
+            # Envoi de l'e-mail de vérification
             email_status = send_email(
-                subject="Bienvenue sur notre plateforme !",
+                subject="Vérifiez votre adresse e-mail",
                 to_email=user.email,
                 body=f"""
                     <h1>Bonjour {user.username},</h1>
-                    <p>Merci de vous être inscrit sur notre site. Nous espérons que vous apprécierez votre expérience.</p>
+                    <p>Votre code de vérification est : <strong>{verification_code}</strong></p>
+                    <p>Veuillez entrer ce code sur la page de vérification pour activer votre compte.</p>
                     <p>Cordialement,</p>
                     <p>L'équipe</p>
                 """
             )
-            if email_status:
-                messages.success(
-                    request, 'Votre compte a été créé avec succès ! Un e-mail de bienvenue vous a été envoyé.')
-            else:
-                messages.warning(
-                    request, 'Votre compte a été créé, mais l\'e-mail de bienvenue n\'a pas pu être envoyé.')
 
-            return redirect('login')
+            if email_status:
+                messages.success(request,
+                                 "Un e-mail de vérification a été envoyé. Veuillez vérifier votre boîte de réception.")
+            else:
+                messages.warning(request,
+                                 "Votre compte a été créé, mais l'e-mail de vérification n'a pas pu être envoyé.")
+
+            return redirect('verify_email', email=user.email)  # Redirection vers la vérification
     else:
         form = CustomUserCreationForm()
 
