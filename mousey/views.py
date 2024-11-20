@@ -1,8 +1,9 @@
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login as auth_login
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
+from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
+from django.shortcuts import render, redirect
+
 from mickey.settings import send_email
 from .forms import CustomUserCreationForm  # Import du formulaire personnalisé
 
@@ -44,7 +45,7 @@ def register(request):
             # Envoi d'e-mail de bienvenue
             send_email(
                 subject="Bienvenue sur notre plateforme !",
-                to_email=user.email,  # Utilisation de l'e-mail saisi par l'utilisateur
+                to_emails=user.email,  # Utilisation de l'e-mail saisi par l'utilisateur
                 body=f"""
                     <h1>Bonjour {user.username},</h1>
                     <p>Merci de vous être inscrit sur notre site. Nous espérons que vous apprécierez votre expérience.</p>

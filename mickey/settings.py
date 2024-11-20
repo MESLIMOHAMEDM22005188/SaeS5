@@ -11,8 +11,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
 from pathlib import Path
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
 
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,7 +30,6 @@ if RENDER_EXTERNAL_HOSTNAME:
 # Applications
 INSTALLED_APPS = [
 
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,10 +39,8 @@ INSTALLED_APPS = [
     'mousey',
 ]
 
-
 if DEBUG:
     INSTALLED_APPS += ['debug_toolbar']
-
 
 # Middleware
 MIDDLEWARE = [
@@ -63,7 +58,6 @@ if DEBUG:
 
 # URL Configuration
 ROOT_URLCONF = 'mickey.urls'
-
 
 INTERNAL_IPS = ['127.0.0.1']
 
@@ -110,7 +104,6 @@ if not DEBUG:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
     MIDDLEWARE.append('whitenoise.middleware.WhiteNoiseMiddleware')
 
-
 # Authentication
 LOGIN_REDIRECT_URL = '/home/'
 LOGIN_URL = '/login/'
@@ -148,11 +141,15 @@ INTERNAL_IPS = ['127.0.0.1']
 
 SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
 
+
 def send_email(subject, to_email, body):
+    from sendgrid import SendGridAPIClient
+    from sendgrid.helpers.mail import Mail
+
     message = Mail(
-        from_email= 'pacmanthebossofhack@gmail.com',
-        to_email=to_email,
-        subject = subject,
+        from_email='pacmanthebossofhack@gmail.com',  # Remplacez par l'adresse e-mail de l'expéditeur autorisée
+        to_emails=to_email,  # Utilisez 'to_emails' au lieu de 'to_email'
+        subject=subject,
         html_content=body,
     )
     try:
@@ -163,5 +160,3 @@ def send_email(subject, to_email, body):
         print(response.headers)
     except Exception as e:
         print(f"An error occurred: {e}")
-
-
