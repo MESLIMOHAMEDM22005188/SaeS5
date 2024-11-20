@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from mickey.settings import send_email
 from .forms import CustomUserCreationForm
 from mousey.forms import CustomUserCreationForm
-from mousey.models import CustomUser
+from django.contrib.auth.models import User
 
 
 @login_required
