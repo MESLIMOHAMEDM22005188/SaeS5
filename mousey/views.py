@@ -80,7 +80,7 @@ def register(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Votre compte a été créé avec succès ! Veuillez vous connecter.')
-            return redirect('login')
+            return redirect('bureau.html')
     else:
         form = CustomUserCreationForm()
     return render(request, 'login.html', {'form': form})
