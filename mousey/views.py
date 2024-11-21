@@ -9,13 +9,13 @@ from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django_otp.plugins.otp_static.models import StaticDevice
-from .forms import CustomUserCreationForm
+from .forms import UserCreationForm
 
 
 def register(request):
     """Inscription d'un nouvel utilisateur"""
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
+        form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             user.is_active = False
@@ -36,7 +36,7 @@ def register(request):
             messages.success(request, "Des codes de vérification ont été envoyés.")
             return redirect('verify', method='email', identifier=user.email)
     else:
-        form = CustomUserCreationForm()
+        form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
 
 
