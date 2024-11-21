@@ -1,6 +1,11 @@
 import os
 from pathlib import Path
 
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://saes5.onrender.com',
+]
+
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
