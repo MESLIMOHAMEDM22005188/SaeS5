@@ -10,7 +10,6 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django_otp.plugins.otp_static.models import StaticDevice
 from .forms import UserCreationFormWithFields
-
 def register(request):
     if request.method == 'POST':
         form = UserCreationFormWithFields(request.POST)
@@ -25,12 +24,11 @@ def register(request):
             send_verification_email(user.email, verification_code_email)
 
             messages.success(request, "Un code de vérification a été envoyé à votre adresse e-mail.")
-            # Remplacer cette ligne pour passer uniquement l'identifier dans l'URL
-            return redirect('verify', identifier=user.email)  # Ne passez que 'identifier'
+            # Correction ici : utilisez uniquement 'identifier'
+            return redirect('verify', identifier=user.email)  # Passez uniquement 'identifier'
     else:
         form = UserCreationFormWithFields()
     return render(request, 'register.html', {'form': form})
-
 def send_email(subject, to_email, body):
     """Envoi d'un e-mail via Django SendMail"""
     try:
@@ -138,4 +136,4 @@ def verify(request, method, identifier):
         else:
             messages.error(request, "Code incorrect ou expiré. Veuillez réessayer.")
 
-    return render(request, 'verify_email.html', {'method': method, 'identifier': identifier})
+    return render(request, 'verify.html', {'method': method, 'identifier': identifier})
