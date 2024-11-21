@@ -13,5 +13,9 @@
         <input type="text" id="code" name="code" required>
         <button type="submit">Vérifier</button>
     </form>
+
+    <form action="{% url 'resend_verification_email' email=email %}" method="GET">
+        <button type="submit">Renvoyer le code</button>
+    </form>
 </body>
 </html>

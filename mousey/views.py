@@ -52,22 +52,33 @@ def login_view(request):
         form = CustomUserCreationForm()
     return render(request, 'login.html', {'form': form})
 
+
 def verify_email(request, email):
-    """ Vue pour vérifier le code d'activation """
+    """ Vue pour vérifier le code d'activation et gérer le renvoi d'e-mails """
     if request.method == 'POST':
-        code = request.POST.get('code')
-        stored_code = cache.get(f'verification_code_{email}')
+        if 'resend_email' in request.POST:
+            # Générer un nouveau code de vérification
+            new_code = randint(100000, 999999)
+            cache.set(f'verification_code_{email}', new_code, timeout=600)  # Code valide 10 minutes
 
-        if str(code) == str(stored_code):
-            user = User.objects.get(email=email)
-            user.is_active = True  # Active l'utilisateur
-            user.save()
-            cache.delete(f'verification_code_{email}')  # Supprime le code du cache
-
-            messages.success(request, "Votre compte a été vérifié avec succès. Vous pouvez vous connecter.")
-            return redirect('home')  # Redirection vers home
+            # Renvoyer l'e-mail
+            send_verification_email(email, new_code)
+            messages.success(request, "Un nouveau code de vérification a été envoyé à votre adresse email.")
         else:
-            messages.error(request, "Code de vérification incorrect ou expiré.")
+            # Vérifier le code de vérification
+            code = request.POST.get('code')
+            stored_code = cache.get(f'verification_code_{email}')
+
+            if str(code) == str(stored_code):
+                user = User.objects.get(email=email)
+                user.is_active = True  # Active l'utilisateur
+                user.save()
+                cache.delete(f'verification_code_{email}')  # Supprime le code du cache
+                messages.success(request, "Votre compte a été vérifié avec succès !")
+                return redirect('home')
+            else:
+                messages.error(request, "Code de vérification incorrect ou expiré.")
+
     return render(request, 'verify_email.html', {'email': email})
 
 
