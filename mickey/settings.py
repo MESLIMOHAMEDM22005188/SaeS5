@@ -11,7 +11,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-gb6$j!l#(iokk_x+8yq@m
 DEBUG = os.environ.get('DEBUG', 'True').lower() in ('true', '1')
 
 # Allowed Hosts
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'saes5.onrender.com']
 
 # Applications
 INSTALLED_APPS = [
