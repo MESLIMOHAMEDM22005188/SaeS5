@@ -5,9 +5,9 @@
     <title>Vérification</title>
 </head>
 <body>
-    <h1>Vérification par {{ method }}</h1>
-    <p>Un code a été envoyé à {{ identifier }}.</p>
-    <form method="POST">
+    <h1>Vérification via {{ method }}</h1>
+    <p>Veuillez entrer le code envoyé à {{ identifier }}</p>
+    <form method="post">
         {% csrf_token %}
         <label for="code">Code :</label>
         <input type="text" id="code" name="code" required>

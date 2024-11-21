@@ -19,12 +19,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from mousey.views import test_email
+from mousey.views import verify
 
 from mousey import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('verify/<str:method>/<str:identifier>/', views.verify, name='verify'),
+    path('verify/<str:method>/<str:identifier>/', verify, name='verify'),
     path('register/', views.register, name='register'),
     path('', include('mousey.urls')),
     path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
