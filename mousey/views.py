@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.cache import cache
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm
 
@@ -132,3 +133,13 @@ def level_two(request):
 @login_required
 def level_three(request):
     return render(request, 'level_three.html')
+def test_email(request):
+    subject = "Test Email"
+    body = "Ceci est un e-mail de test envoyé par Django."
+    recipient_email = "recipient@example.com"  # Remplacez par une adresse e-mail valide
+
+    try:
+        send_email(subject, recipient_email, body)  # Appelle une fonction utilitaire d'envoi d'e-mails
+        return HttpResponse("E-mail envoyé avec succès !")
+    except Exception as e:
+        return HttpResponse(f"Échec de l'envoi de l'e-mail : {e}")
