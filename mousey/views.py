@@ -71,17 +71,21 @@ def test_email(request):
     if email_status:
         return HttpResponse("E-mail envoyé avec succès !")
     else:
-        import random  # Assurez-vous que cette ligne est présente
+        import random
+
+
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Votre compte a été créé avec succès !')
+            messages.success(request, 'Votre compte a été créé avec succès ! Veuillez vous connecter.')
             return redirect('login')
     else:
-        form = UserCreationForm()
-    return render(request, 'register.html', {'form': form})
+        form = CustomUserCreationForm()
+    return render(request, 'login.html', {'form': form})
+
+
 def login(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -103,13 +107,11 @@ def login(request):
     return render(request, 'login.html', {'form': form})
 
 
-# Vue pour la page d'accueil
 @login_required
 def home(request):
     return render(request, 'home.html')
 
 
-# Vue pour le niveau 1
 @login_required
 def level_one(request):
     if request.method == "POST":
@@ -124,19 +126,16 @@ def level_one(request):
     return render(request, 'level_one.html')
 
 
-# Vue pour le bureau du niveau 1
 @login_required
 def level_one_bureau(request):
     return render(request, 'level_one_bureau.html')
 
 
-# Vue pour le niveau 2
 @login_required
 def level_two(request):
     return render(request, 'level_two.html')
 
 
-# Vue pour le niveau 3
 @login_required
 def level_three(request):
     return render(request, 'level_three.html')

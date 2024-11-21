@@ -1,10 +1,11 @@
-''''from django.contrib.auth.models import AbstractUser
-from django.db import models
+from django.contrib.auth.forms import AuthenticationForm
+from django import forms
 
-class CustomUser(AbstractUser):
-    email = models.EmailField(unique=True, blank=False)
 
-    def __str__(self):
-        return self.username
-
-'''''
+class CustomAuthenticationForm(AuthenticationForm):
+    username = forms.CharField(
+        widget=forms.TextInput(attrs={'id': 'id_username', 'placeholder': 'Nom d\'utilisateur'})
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'id': 'id_password', 'placeholder': 'Mot de passe'})
+    )
