@@ -137,4 +137,4 @@ def verify(request, method, identifier):
             messages.error(request, "Utilisateur non trouvé.")
         else:
             messages.error(request, "Code incorrect ou expiré. Veuillez réessayer.")
-    return render(request, 'verify.html', {'method': method, 'identifier': identifier})
+    return render(request, 'verify_email.html', {'method': method, 'identifier': identifier})
