@@ -6,7 +6,7 @@
 </head>
 <body>
     <h1>Vérification de l'e-mail</h1>
-    <p>Un code de vérification a été envoyé à {{ email }}.</p>
+    <p>Un code de vérification a été envoyé à {{ identifier }}.</p>
     <form method="POST">
         {% csrf_token %}
         <label for="code">Code de vérification :</label>

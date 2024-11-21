@@ -7,7 +7,6 @@ from django.core.cache import cache
 from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django_otp.plugins.otp_static.models import StaticDevice
 from .forms import UserCreationFormWithFields
 
 
@@ -41,7 +40,6 @@ def send_email(subject, to_email, body):
             recipient_list=[to_email],
             fail_silently=False,
         )
-        print(f"E-mail envoyé avec succès à {to_email}")
     except Exception as e:
         print(f"Erreur lors de l'envoi de l'e-mail : {e}")
 
@@ -56,25 +54,32 @@ def send_verification_email(user_email, code):
     send_email(subject, user_email, body)
 
 
-def login_view(request):
-    """Connexion d'un utilisateur."""
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            auth_login(request, user)
-            messages.success(request, f'Bienvenue {username} ! Vous êtes connecté.')
-            return redirect('home')
-        else:
-            messages.error(request, 'Identifiants invalides. Veuillez réessayer.')
-    return render(request, 'login.html')
-
-
 @login_required
 def home(request):
     """Page d'accueil."""
     return render(request, 'home.html')
+
+
+def verify(request, identifier):
+    """Vérification du compte utilisateur via un code envoyé par e-mail."""
+    if request.method == 'POST':
+        code = request.POST.get('code')
+        stored_code = cache.get(f'verification_code_email_{identifier}')
+
+        if stored_code and str(code) == str(stored_code):
+            user = get_user_model().objects.filter(email=identifier).first()
+            if user:
+                user.is_active = True
+                user.save()
+                cache.delete(f'verification_code_email_{identifier}')
+                messages.success(request, "Votre compte a été vérifié avec succès!")
+                return redirect('home')
+            else:
+                messages.error(request, "Utilisateur non trouvé.")
+        else:
+            messages.error(request, "Code incorrect ou expiré. Veuillez réessayer.")
+
+    return render(request, 'verify.html', {'identifier': identifier})
 
 
 @login_required
@@ -106,37 +111,3 @@ def level_two(request):
 def level_three(request):
     """Page pour le niveau 3."""
     return render(request, 'level_three.html')
-
-
-def test_email(request):
-    """Envoi d'un e-mail de test."""
-    subject = "Test Email"
-    body = "Ceci est un e-mail de test envoyé par Django."
-    recipient_email = "recipient@example.com"
-    try:
-        send_email(subject, recipient_email, body)
-        return HttpResponse("E-mail envoyé avec succès !")
-    except Exception as e:
-        return HttpResponse(f"Échec de l'envoi de l'e-mail : {e}")
-
-
-def verify(request, method, identifier):
-    """Vérification du compte utilisateur via un code envoyé par e-mail."""
-    if request.method == 'POST':
-        code = request.POST.get('code')
-        stored_code = cache.get(f'verification_code_{identifier}')
-
-        if stored_code and str(code) == str(stored_code):
-            user = get_user_model().objects.filter(email=identifier).first()
-            if user:
-                user.is_active = True
-                user.save()
-                cache.delete(f'verification_code_{identifier}')
-                messages.success(request, "Votre compte a été vérifié avec succès!")
-                return redirect('home')
-            else:
-                messages.error(request, "Utilisateur non trouvé.")
-        else:
-            messages.error(request, "Code incorrect ou expiré. Veuillez réessayer.")
-
-    return redirect('verify', method='email', identifier=user.email)
