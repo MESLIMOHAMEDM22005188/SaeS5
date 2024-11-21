@@ -7,8 +7,8 @@ from mousey import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('verify/<str:identifier>/', views.verify, name='verify'),
-    path('register/', views.register, name='register'),
-    path('', views.home, name='home'),
+    path('', views.register, name='register'),
+    path('/home', views.home, name='home'),
     path('verify/<str:identifier>/', views.verify, name='verify'),
     path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
