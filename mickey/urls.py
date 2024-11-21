@@ -1,5 +1,6 @@
+from debug_toolbar import settings
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from mousey import views
 
@@ -15,3 +16,7 @@ urlpatterns = [
     path('levelTwo/', views.level_two, name='level_two'),
     path('levelThree/', views.level_three, name='level_three'),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [path('__debug__/', include(debug_toolbar.urls))]

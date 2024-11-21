@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django_otp',
     'django_otp.plugins.otp_totp',
     'django_otp.plugins.otp_static',
+    'debug_toolbar',
 ]
 
 # Middleware
@@ -46,11 +47,21 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_otp.middleware.OTPMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+
 ]
 
 if DEBUG:
-    MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')
+    INTERNAL_IPS = [
+        '127.0.0.1',
+        'localhost',
+        '::1',  # IPv6
+    ]
 
+    DEBUG_TOOLBAR_CONFIG = {
+        'SHOW_TOOLBAR_CALLBACK': lambda request: True,  # Toujours afficher la barre
+        'INTERCEPT_REDIRECTS': False,  # Ne pas intercepter les redirections
+    }
 # URL Configuration
 ROOT_URLCONF = 'mickey.urls'
 
@@ -118,8 +129,3 @@ EMAIL_HOST = 'localhost'  # Assuming sendmail is on localhost
 EMAIL_PORT = 25  # Default port for sendmail
 EMAIL_USE_TLS = False  # Sendmail usually does not require TLS
 DEFAULT_FROM_EMAIL = 'webmaster@localhost'  # Replace with a valid email address
-
-# Debug toolbar
-if DEBUG:
-    INTERNAL_IPS = ['127.0.0.1']
-    INSTALLED_APPS += ['debug_toolbar']
