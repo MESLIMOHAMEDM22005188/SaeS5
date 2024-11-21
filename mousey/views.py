@@ -89,7 +89,7 @@ def send_email(subject, to_email, body):
 
     try:
         message = Mail(
-            from_email="test@example.com",  # Adresse d'expéditeur
+            from_email="pacmanthebossofhack@gmail.com",  # Adresse d'expéditeur
             to_emails=to_email,
             subject=subject,
             html_content=body
