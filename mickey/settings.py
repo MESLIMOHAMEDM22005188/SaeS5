@@ -32,7 +32,9 @@ if RENDER_EXTERNAL_HOSTNAME:
 
 url = "https://sandbox.api.mailtrap.io/api/send/3290490"
 
-payload = "{\"from\":{\"email\":\"nazimlama4@gmail.com\",\"name\":\"Mailtrap Test\"},\"to\":[{\"email\":\"pacmanthebossofhack@gmail.com\"}],\"subject\":\"You are awesome!\",\"text\":\"Congrats for sending test email with Mailtrap!\",\"category\":\"Integration Test\"}"
+payload = "{\"from\":{\"email\":\"nazimlama4@gmail.com\",\"name\":\"Mailtrap Test\"},\"to\":[{" \
+          "\"email\":\"pacmanthebossofhack@gmail.com\"}],\"subject\":\"You are awesome!\",\"text\":\"Congrats for " \
+          "sending test email with Mailtrap!\",\"category\":\"Integration Test\"} "
 headers = {
   "Authorization": "Bearer a26761618206487b9f0f2972a8afe32a",
   "Content-Type": "application/json"
@@ -56,10 +58,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mousey',
+    'django_otp',
+    'django_otp.plugins.otp_totp',
+    'django_otp.plugins.otp_static',
+    'two_factor',
 ]
 
-if DEBUG:
-    INSTALLED_APPS += ['debug_toolbar']
 
 # Middleware
 MIDDLEWARE = [
@@ -70,10 +74,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_otp.middleware.OTPMiddleware',
 ]
-
-if DEBUG:
-    MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')  # Ajout conditionnel
 
 # URL Configuration
 ROOT_URLCONF = 'mickey.urls'
@@ -157,7 +159,6 @@ if not DEBUG:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
 
-# Debug toolbar
 INTERNAL_IPS = ['127.0.0.1']
 
 SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
@@ -166,7 +167,13 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+EMAIL_HOST_USER = SENDGRID_API_KEY
+EMAIL_HOST_PASSWORD = 'a26761618206487b9f0f2972a8afe32a'
 DEFAULT_FROM_EMAIL = 'pacmanthebossofhack@gmail.com'
+EMAIL_USE_TLS = True
 
+
+if DEBUG:
+    INSTALLED_APPS += ['debug_toolbar']
+    MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')
+    TWO_FACTOR_FORCE_OTP = False

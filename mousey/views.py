@@ -1,37 +1,70 @@
 import os
+import random
 from random import randint
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.cache import cache
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django_otp.plugins.otp_static.models import StaticDevice
+from sendgrid.helpers.mail import email
+
 from .forms import CustomUserCreationForm
 
 
+def send_sms(phone_number, code):
+    """Simule l'envoi de SMS"""
+    print(f"Code {code} envoyé au numéro {phone_number}")
+
+@login_required
+def enable_2fa_phone(request):
+    if request.method == "POST":
+        code = random.randint(100000, 999999)
+        device = StaticDevice.objects.create(user=request.user, name="Telephone")
+        device.token_set.create(token=code)
+        send_sms(request.user.phone_number, code)
+        messages.info(request, "Un code de verification a été envoyé sur votre tel")
+        return redirect('verify_2fa_phone')
+    return  render(request, 'enable_2fa_phone.html')
+
+
+@login_required
+def verify_2fa_phone(request):
+    if request.method == 'POST':
+        code = request.POST.get('code')
+        device = StaticDevice.objects.filter(user=request.user).first()
+        if device and device.token_set.filter(token=code).exists():
+            messages.success(request, "L'A2F est activée avec succès.")
+            return redirect('home')
+        messages.error(request, "Code incorrect. Veuillez réessayer.")
+    return render(request, 'verify_2fa_phone.html')
+
+
 def register(request):
-    """ Vue pour gérer l'inscription """
+    """Inscription d'un nouvel utilisateur"""
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.is_active = False  # Désactive l'utilisateur jusqu'à vérification
+            user.is_active = False
             user.save()
 
-            # Générer un code de vérification
-            verification_code = randint(100000, 999999)
-            cache.set(f'verification_code_{user.email}', verification_code, timeout=600)  # Code valide 10 min
+            verification_code_email = randint(100000, 999999)
+            verification_code_phone = randint(100000, 999999)
+            cache.set(f'verification_code_email_{user.email}', verification_code_email, timeout=600)
+            cache.set(f'verification_code_phone_{user.phone_number}', verification_code_phone, timeout=600)
 
-            # Envoyer le code par e-mail
-            send_verification_email(user.email, verification_code)
+            send_verification_email(user.email, verification_code_email)
+            send_sms(user.phone_number, verification_code_phone)
 
-            messages.success(request, "Un code de vérification a été envoyé à votre adresse email.")
-            return redirect('verify_email', email=user.email)
+            messages.success(request, "Des codes de vérification ont été envoyés.")
+            return redirect('verify', method='email', identifier=user.email)
     else:
         form = CustomUserCreationForm()
     return render(request, 'register.html', {'form': form})
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -52,32 +85,28 @@ def login_view(request):
         form = CustomUserCreationForm()
     return render(request, 'login.html', {'form': form})
 
-
-def verify_email(request, email):
+def register(request):
+    """Inscription d'un nouvel utilisateur"""
     if request.method == 'POST':
-        # Validation du code
-        if 'code' in request.POST:
-            code = request.POST.get('code')
-            stored_code = cache.get(f'verification_code_{email}')
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
 
-            if str(code) == str(stored_code):
-                user = User.objects.get(email=email)
-                user.is_active = True  # Active l'utilisateur
-                user.save()
-                cache.delete(f'verification_code_{email}')  # Supprime le code du cache
-                messages.success(request, "Votre compte a été vérifié avec succès !")
-                return redirect('home')
-            else:
-                messages.error(request, "Code de vérification incorrect ou expiré.")
+            verification_code_email = randint(100000, 999999)
+            verification_code_phone = randint(100000, 999999)
+            cache.set(f'verification_code_email_{user.email}', verification_code_email, timeout=600)
+            cache.set(f'verification_code_phone_{user.phone_number}', verification_code_phone, timeout=600)
 
-    elif request.method == 'GET' and 'resend' in request.GET:
-        # Renvoi du code
-        new_code = randint(100000, 999999)
-        cache.set(f'verification_code_{email}', new_code, timeout=600)  # Code valide 10 minutes
-        send_verification_email(email, new_code)
-        messages.success(request, "Un nouveau code de vérification a été envoyé à votre adresse email.")
+            send_verification_email(user.email, verification_code_email)
+            send_sms(user.phone_number, verification_code_phone)
 
-    return render(request, 'verify_email.html', {'email': email})
+            messages.success(request, "Des codes de vérification ont été envoyés.")
+            return redirect('verify', method='email', identifier=user.email)
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'register.html', {'form': form})
 
 def send_verification_email(user_email, code):
     """ Fonction pour envoyer un e-mail de vérification """
@@ -88,6 +117,8 @@ def send_verification_email(user_email, code):
         <p>Ce code est valide pendant 10 minutes.</p>
     """
     send_email(subject, user_email, body)
+    print(f"Code {code} envoyé à l'adresse {email}")
+
 
 
 def send_email(subject, to_email, body):

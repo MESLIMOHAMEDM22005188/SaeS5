@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Vérification</title>
+</head>
+<body>
+    <h1>Vérification par {{ method }}</h1>
+    <p>Un code a été envoyé à {{ identifier }}.</p>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="code">Code :</label>
+        <input type="text" id="code" name="code" required>
+        <button type="submit">Vérifier</button>
+    </form>
+</body>
+</html>
