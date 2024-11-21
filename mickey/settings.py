@@ -18,7 +18,10 @@ DEBUG = os.environ.get('DEBUG', 'True').lower() in ('true', '1')
 
 # Allowed Hosts
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'saes5.onrender.com']
-
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': lambda request: True,  # Assurez-vous que le toolbar est toujours actif
+    'INTERCEPT_REDIRECTS': False,  # Désactive l'interception des redirections
+}
 # Applications
 INSTALLED_APPS = [
     'django.contrib.admin',

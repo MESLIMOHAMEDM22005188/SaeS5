@@ -1,7 +1,7 @@
 import random
 from random import randint
 from django.contrib import messages
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.cache import cache
@@ -122,19 +122,21 @@ def test_email(request):
 
 
 def verify(request, method, identifier):
-    """Vérification du compte utilisateur"""
     if request.method == 'POST':
         code = request.POST.get('code')
         stored_code = cache.get(f'verification_code_{identifier}')
+
         if stored_code and str(code) == str(stored_code):
-            user = User.objects.filter(email=identifier).first()
+            user = get_user_model().objects.filter(email=identifier).first()
             if user:
                 user.is_active = True
                 user.save()
                 cache.delete(f'verification_code_{identifier}')
-                messages.success(request, "Votre compte a été vérifié avec succès !")
-                return redirect('home')
-            messages.error(request, "Utilisateur non trouvé.")
+                messages.success(request, "Votre compte a été vérifié avec succès!")
+                return redirect('home')  # Redirige vers la page d'accueil
+            else:
+                messages.error(request, "Utilisateur non trouvé.")
         else:
             messages.error(request, "Code incorrect ou expiré. Veuillez réessayer.")
+
     return render(request, 'verify_email.html', {'method': method, 'identifier': identifier})
