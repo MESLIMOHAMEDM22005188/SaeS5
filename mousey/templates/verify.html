@@ -2,16 +2,21 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Vérification</title>
+    <title>Vérification de l'e-mail</title>
 </head>
 <body>
-    <h1>Vérification via {{ method }}</h1>
-    <p>Veuillez entrer le code envoyé à {{ identifier }}</p>
-    <form method="post">
+    <h1>Vérification de l'e-mail</h1>
+    <p>Un code de vérification a été envoyé à {{ email }}.</p>
+    <form method="POST">
         {% csrf_token %}
-        <label for="code">Code :</label>
+        <label for="code">Code de vérification :</label>
         <input type="text" id="code" name="code" required>
         <button type="submit">Vérifier</button>
+    </form>
+
+    <!-- Bouton raccourci vers la page home -->
+    <form action="{% url 'home' %}" method="GET">
+        <button type="submit">Aller à la page Home</button>
     </form>
 </body>
 </html>
