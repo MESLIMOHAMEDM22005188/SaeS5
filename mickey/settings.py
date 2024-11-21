@@ -170,22 +170,3 @@ EMAIL_HOST_USER = 'apikey'
 EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
 DEFAULT_FROM_EMAIL = 'pacmanthebossofhack@gmail.com'
 
-
-def send_email(subject, to_email, body):
-    from sendgrid import SendGridAPIClient
-    from sendgrid.helpers.mail import Mail
-
-    message = Mail(
-        from_email='pacmanthebossofhack@gmail.com',  # Remplacez par l'adresse e-mail de l'expéditeur autorisée
-        to_emails=to_email,  # Utilisez 'to_emails' au lieu de 'to_email'
-        subject=subject,
-        html_content=body,
-    )
-    try:
-        sg = SendGridAPIClient(SENDGRID_API_KEY)
-        response = sg.send(message)
-        print(response.status_code)
-        print(response.body)
-        print(response.headers)
-    except Exception as e:
-        print(f"An error occurred: {e}")
