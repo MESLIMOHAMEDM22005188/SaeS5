@@ -2,19 +2,42 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Inscription</title>
+    <title>Connexion</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/loginStyle.css' %}">
 </head>
 <body>
     <div class="rectangle">
-        <h2 class="titre">Inscription</h2>
+        <h2 class="titre">Connexion</h2>
         <form method="POST">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">S'inscrire</button>
+            <label class="label-username" for="id_username">Nom d'utilisateur</label>
+            {{ form.username }}
+            <br>
+
+            <label class="label-password" for="id_password">Mot de passe</label>
+            {{ form.password }}
+
+            <button type="button" id="togglePassword" onclick="togglePasswordVisibility()">Voir mot de passe</button>
+
+            <button type="submit">Se connecter</button>
         </form>
-        <p class="texte-acceuil">Vous avez déjà un compte ? <a href="{% url 'login' %}">Connexion</a></p>
+        <p class="texte-acceuil">Vous n'avez pas de compte ? <a href="{% url 'register' %}">Inscription</a></p>
     </div>
+
+    <script>
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById("id_password");
+            const toggleButton = document.getElementById("togglePassword");
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                toggleButton.textContent = "Cacher mot de passe";
+            } else {
+                passwordField.type = "password";
+                toggleButton.textContent = "Voir mot de passe";
+            }
+        }
+    </script>
 </body>
 </html>
