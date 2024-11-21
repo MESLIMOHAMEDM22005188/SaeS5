@@ -3,14 +3,16 @@ from random import randint
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, get_user_model
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.core.cache import cache
 from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django_otp.plugins.otp_static.models import StaticDevice
 from .forms import UserCreationFormWithFields
+
+
 def register(request):
+    """Gestion de l'inscription d'un utilisateur."""
     if request.method == 'POST':
         form = UserCreationFormWithFields(request.POST)
         if form.is_valid():
@@ -22,15 +24,15 @@ def register(request):
             cache.set(f'verification_code_email_{user.email}', verification_code_email, timeout=600)
 
             send_verification_email(user.email, verification_code_email)
-
             messages.success(request, "Un code de vérification a été envoyé à votre adresse e-mail.")
-            # Correction ici : utilisez uniquement 'identifier'
-            return redirect('verify', identifier=user.email)  # Passez uniquement 'identifier'
+            return redirect('verify', identifier=user.email)
     else:
         form = UserCreationFormWithFields()
     return render(request, 'register.html', {'form': form})
+
+
 def send_email(subject, to_email, body):
-    """Envoi d'un e-mail via Django SendMail"""
+    """Envoi d'un e-mail via Django SendMail."""
     try:
         send_mail(
             subject=subject,
@@ -45,7 +47,7 @@ def send_email(subject, to_email, body):
 
 
 def send_verification_email(user_email, code):
-    """Envoi d'un e-mail de vérification"""
+    """Envoi d'un e-mail de vérification."""
     subject = "Code de vérification"
     body = f"""
         Votre code de vérification est : {code}.
@@ -55,7 +57,7 @@ def send_verification_email(user_email, code):
 
 
 def login_view(request):
-    """Connexion d'un utilisateur"""
+    """Connexion d'un utilisateur."""
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -71,13 +73,13 @@ def login_view(request):
 
 @login_required
 def home(request):
-    """Page d'accueil"""
+    """Page d'accueil."""
     return render(request, 'home.html')
 
 
 @login_required
 def level_one(request):
-    """Page pour le niveau 1"""
+    """Page pour le niveau 1."""
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -90,24 +92,24 @@ def level_one(request):
 
 @login_required
 def level_one_bureau(request):
-    """Page pour le bureau du niveau 1"""
+    """Page pour le bureau du niveau 1."""
     return render(request, 'level_one_bureau.html')
 
 
 @login_required
 def level_two(request):
-    """Page pour le niveau 2"""
+    """Page pour le niveau 2."""
     return render(request, 'level_two.html')
 
 
 @login_required
 def level_three(request):
-    """Page pour le niveau 3"""
+    """Page pour le niveau 3."""
     return render(request, 'level_three.html')
 
 
 def test_email(request):
-    """Envoi d'un e-mail de test"""
+    """Envoi d'un e-mail de test."""
     subject = "Test Email"
     body = "Ceci est un e-mail de test envoyé par Django."
     recipient_email = "recipient@example.com"
@@ -119,6 +121,7 @@ def test_email(request):
 
 
 def verify(request, method, identifier):
+    """Vérification du compte utilisateur via un code envoyé par e-mail."""
     if request.method == 'POST':
         code = request.POST.get('code')
         stored_code = cache.get(f'verification_code_{identifier}')
@@ -130,7 +133,7 @@ def verify(request, method, identifier):
                 user.save()
                 cache.delete(f'verification_code_{identifier}')
                 messages.success(request, "Votre compte a été vérifié avec succès!")
-                return redirect('home')  # Redirige vers la page d'accueil
+                return redirect('home')
             else:
                 messages.error(request, "Utilisateur non trouvé.")
         else:
