@@ -9,11 +9,6 @@ class UserCreationFormWithFields(UserCreationForm):
         label="Adresse e-mail",
         widget=forms.EmailInput(attrs={'placeholder': 'Adresse e-mail'}),
     )
-    phone_number = forms.CharField(
-        required=True,
-        label="Numéro de téléphone",
-        widget=forms.TextInput(attrs={'placeholder': 'Numéro de téléphone'}),
-    )
 
     class Meta:
         model = User  # Modèle par défaut de Django
@@ -31,8 +26,3 @@ class UserCreationFormWithFields(UserCreationForm):
             raise forms.ValidationError("Un compte avec cet e-mail existe déjà.")
         return email
 
-    def clean_phone_number(self):
-        phone_number = self.cleaned_data.get('phone_number')
-        if User.objects.filter(username=phone_number).exists():
-            raise forms.ValidationError("Ce numéro de téléphone est déjà utilisé.")
-        return phone_number

@@ -9,34 +9,27 @@ from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django_otp.plugins.otp_static.models import StaticDevice
-from .forms import UserCreationForm
-
+from .forms import UserCreationFormWithFields
+# Remplacer toutes les occurrences de CustomUser par User
+from django.contrib.auth.models import User
 
 def register(request):
-    """Inscription d'un nouvel utilisateur"""
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = UserCreationFormWithFields(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.is_active = False
+            user.is_active = False  # L'utilisateur doit vérifier son e-mail
             user.save()
 
-            # Génération des codes de vérification
             verification_code_email = randint(100000, 999999)
-            verification_code_phone = randint(100000, 999999)
-
-            # Stockage des codes dans le cache
             cache.set(f'verification_code_email_{user.email}', verification_code_email, timeout=600)
-            cache.set(f'verification_code_phone_{user.phone_number}', verification_code_phone, timeout=600)
 
-            # Envoi des codes
             send_verification_email(user.email, verification_code_email)
-            send_sms(user.phone_number, verification_code_phone)
 
-            messages.success(request, "Des codes de vérification ont été envoyés.")
+            messages.success(request, "Un code de vérification a été envoyé à votre adresse e-mail.")
             return redirect('verify', method='email', identifier=user.email)
     else:
-        form = UserCreationForm()
+        form = UserCreationFormWithFields()
     return render(request, 'register.html', {'form': form})
 
 
@@ -135,8 +128,7 @@ def verify(request, method, identifier):
         code = request.POST.get('code')
         stored_code = cache.get(f'verification_code_{identifier}')
         if stored_code and str(code) == str(stored_code):
-            user = User.objects.filter(email=identifier).first() if method == "email" else User.objects.filter(
-                phone_number=identifier).first()
+            user = User.objects.filter(email=identifier).first()
             if user:
                 user.is_active = True
                 user.save()
@@ -147,34 +139,3 @@ def verify(request, method, identifier):
         else:
             messages.error(request, "Code incorrect ou expiré. Veuillez réessayer.")
     return render(request, 'verify.html', {'method': method, 'identifier': identifier})
-
-
-def send_sms(phone_number, code):
-    """Simule l'envoi de SMS"""
-    print(f"Code {code} envoyé au numéro {phone_number}")
-
-
-@login_required
-def enable_2fa_phone(request):
-    """Activer l'authentification à deux facteurs par téléphone"""
-    if request.method == "POST":
-        code = random.randint(100000, 999999)
-        device = StaticDevice.objects.create(user=request.user, name="Téléphone")
-        device.token_set.create(token=code)
-        send_sms(request.user.phone_number, code)
-        messages.info(request, "Un code de vérification a été envoyé sur votre téléphone.")
-        return redirect('verify_2fa_phone')
-    return render(request, 'enable_2fa_phone.html')
-
-
-@login_required
-def verify_2fa_phone(request):
-    """Vérification de l'authentification à deux facteurs"""
-    if request.method == 'POST':
-        code = request.POST.get('code')
-        device = StaticDevice.objects.filter(user=request.user).first()
-        if device and device.token_set.filter(token=code).exists():
-            messages.success(request, "L'A2F est activée avec succès.")
-            return redirect('home')
-        messages.error(request, "Code incorrect. Veuillez réessayer.")
-    return render(request, 'verify_2fa_phone.html')
