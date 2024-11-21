@@ -89,7 +89,7 @@ def send_email(subject, to_email, body):
 
     try:
         message = Mail(
-            from_email="pacmanthebossofhack@gmail.com",  # Adresse d'expéditeur
+            from_email="nazimlama4@gmail.com",
             to_emails=to_email,
             subject=subject,
             html_content=body
@@ -136,10 +136,10 @@ def level_three(request):
 def test_email(request):
     subject = "Test Email"
     body = "Ceci est un e-mail de test envoyé par Django."
-    recipient_email = "recipient@example.com"  # Remplacez par une adresse e-mail valide
+    recipient_email = "recipient@example.com"
 
     try:
-        send_email(subject, recipient_email, body)  # Appelle une fonction utilitaire d'envoi d'e-mails
+        send_email(subject, recipient_email, body)
         return HttpResponse("E-mail envoyé avec succès !")
     except Exception as e:
         return HttpResponse(f"Échec de l'envoi de l'e-mail : {e}")
