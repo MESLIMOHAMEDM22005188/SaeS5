@@ -54,18 +54,9 @@ def login_view(request):
 
 
 def verify_email(request, email):
-    """ Vue pour vérifier le code d'activation et gérer le renvoi d'e-mails """
     if request.method == 'POST':
-        if 'resend_email' in request.POST:
-            # Générer un nouveau code de vérification
-            new_code = randint(100000, 999999)
-            cache.set(f'verification_code_{email}', new_code, timeout=600)  # Code valide 10 minutes
-
-            # Renvoyer l'e-mail
-            send_verification_email(email, new_code)
-            messages.success(request, "Un nouveau code de vérification a été envoyé à votre adresse email.")
-        else:
-            # Vérifier le code de vérification
+        # Validation du code
+        if 'code' in request.POST:
             code = request.POST.get('code')
             stored_code = cache.get(f'verification_code_{email}')
 
@@ -79,8 +70,14 @@ def verify_email(request, email):
             else:
                 messages.error(request, "Code de vérification incorrect ou expiré.")
 
-    return render(request, 'verify_email.html', {'email': email})
+    elif request.method == 'GET' and 'resend' in request.GET:
+        # Renvoi du code
+        new_code = randint(100000, 999999)
+        cache.set(f'verification_code_{email}', new_code, timeout=600)  # Code valide 10 minutes
+        send_verification_email(email, new_code)
+        messages.success(request, "Un nouveau code de vérification a été envoyé à votre adresse email.")
 
+    return render(request, 'verify_email.html', {'email': email})
 
 def send_verification_email(user_email, code):
     """ Fonction pour envoyer un e-mail de vérification """

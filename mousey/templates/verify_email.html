@@ -7,6 +7,8 @@
 <body>
     <h1>Vérification de l'e-mail</h1>
     <p>Un code de vérification a été envoyé à {{ email }}.</p>
+
+    <!-- Formulaire pour entrer le code -->
     <form method="POST">
         {% csrf_token %}
         <label for="code">Code de vérification :</label>
@@ -14,8 +16,9 @@
         <button type="submit">Vérifier</button>
     </form>
 
-    <form action="{% url 'resend_verification_email' email=email %}" method="GET">
-        <button type="submit">Renvoyer le code</button>
+    <!-- Bouton pour renvoyer le code -->
+    <form method="GET">
+        <button type="submit" name="resend" value="true">Renvoyer le code</button>
     </form>
 </body>
 </html>
