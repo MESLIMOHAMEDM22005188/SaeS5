@@ -14,8 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-gb6$j!l#(iokk_x+8yq@mo46%g@dai)s+w&2&f%hyk(vrwjmam')
 
 # DEBUG mode
-DEBUG = os.environ.get('DEBUG', 'True').lower() in ('true', '1')
-
+DEBUG = True
 # Allowed Hosts
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'saes5.onrender.com']
 DEBUG_TOOLBAR_CONFIG = {
