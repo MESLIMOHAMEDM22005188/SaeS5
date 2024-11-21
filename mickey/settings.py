@@ -5,7 +5,7 @@ from pathlib import Path
 CSRF_TRUSTED_ORIGINS = [
     'https://saes5.onrender.com',
 ]
-AUTH_USER_MODEL = 'mousey.CustomUser'
+AUTH_USER_MODEL = 'auth.User'
 
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent

@@ -5,14 +5,18 @@ from django.contrib.auth.models import User
 
 class UserCreationFormWithFields(UserCreationForm):
     email = forms.EmailField(
-        required=True,
+        required=True,  # Le champ email est requis
         label="Adresse e-mail",
         widget=forms.EmailInput(attrs={'placeholder': 'Adresse e-mail'}),
     )
 
     class Meta:
+        model = User  # Utilise le modèle User par défaut de Django
+        fields = ['username', 'email', 'password1', 'password2']
+
+    class Meta:
         model = User  # Modèle par défaut de Django
-        fields = ['username', 'email', 'phone_number', 'password1', 'password2']
+        fields = ['username', 'email', 'password1', 'password2']
 
     def clean_username(self):
         username = self.cleaned_data.get('username')

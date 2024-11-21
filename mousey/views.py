@@ -10,8 +10,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django_otp.plugins.otp_static.models import StaticDevice
 from .forms import UserCreationFormWithFields
-# Remplacer toutes les occurrences de CustomUser par User
-from django.contrib.auth.models import User
+
 
 def register(request):
     if request.method == 'POST':
