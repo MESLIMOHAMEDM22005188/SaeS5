@@ -6,11 +6,83 @@
     <title>Bureau Niveau 1</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/Bureau.css' %}">
+    <style>
+        /* Styles pour la fenêtre de mails */
+        #email-window {
+            display: none;
+            position: fixed;
+            top: 10%;
+            left: 20%;
+            width: 60%;
+            height: 70%;
+            border: 2px solid #333;
+            background-color: #fff;
+            z-index: 100;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        #email-window header {
+            background-color: #0078D7;
+            color: white;
+            padding: 10px;
+            font-size: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #email-window header button {
+            background: red;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        #email-window .email-content {
+            padding: 20px;
+            height: calc(100% - 50px);
+            overflow-y: auto;
+        }
+
+        .email {
+            border-bottom: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #feedback {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
     <!-- Contenu principal -->
     <div class="content">
-        <!-- Ajoutez votre contenu ici -->
+        <h1>Bienvenue à votre bureau</h1>
+        <p>Cliquez sur l'icône Outlook pour consulter vos emails.</p>
     </div>
 
     <!-- Barre inférieure -->
@@ -20,22 +92,33 @@
         <img src="{% static 'image/batterie.png' %}" alt="batterie" class="batterie">
         <img src="{% static 'image/window11.png' %}" alt="window" class="window">
         <img src="{% static 'image/son.png' %}" alt="Son" class="icon">
-        <img src="{% static 'image/outlook.png' %}" alt="outlook" class="outlook">
-
+        <img src="{% static 'image/outlook.png' %}" alt="outlook" class="outlook" onclick="openEmailWindow()">
     </div>
-<script>
+
+    <!-- Fenêtre des emails -->
+    <div id="email-window">
+        <header>
+            <span>Boîte de réception</span>
+            <button onclick="closeEmailWindow()">×</button>
+        </header>
+        <div class="email-content" id="emails">
+            <!-- Les emails apparaîtront ici -->
+        </div>
+        <div id="feedback"></div>
+        <button id="next-email" style="display: none;" onclick="nextEmail()">Suivant</button>
+    </div>
+
+    <script>
         // Liste des emails
         const emails = [
             {
                 subject: "Félicitations ! Vous avez gagné un iPhone !",
                 body: "Cliquez sur ce lien pour récupérer votre prix : <a href='http://ceci-nest-pas-un-virus.co'>http://ceci-nest-pas-un-virus.co</a>",
-                color: "black",
                 isPhishing: true
             },
             {
                 subject: "Attention au phishing !",
                 body: "Soyez vigilant. Ne cliquez sur aucun lien suspect. Votre sécurité est importante.",
-                color: "black",
                 isPhishing: false
             },
             {
@@ -43,7 +126,6 @@
                 body: "Bonjour, il est important de rester vigilant. Cliquez ici pour apprendre à détecter le phishing : <a href='http://secure-phish-form.com'>http://secure-phish-form.com</a>",
                 sender: "patron@entreprisex.com",
                 actualSender: "patrron@entreprisex.com",
-                color: "black",
                 isPhishing: true
             }
         ];
@@ -91,7 +173,6 @@
             // Afficher le bouton suivant
             const nextButton = document.getElementById('next-email');
             nextButton.style.display = "block";
-            nextButton.onclick = nextEmail;
         }
 
         // Passer au prochain email
