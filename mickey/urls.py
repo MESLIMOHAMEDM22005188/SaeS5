@@ -24,6 +24,7 @@ from mousey import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('register/', views.register, name='register'),
     path('test-email/', test_email, name='test_email'),
     path('', include('mousey.urls')),
     path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),

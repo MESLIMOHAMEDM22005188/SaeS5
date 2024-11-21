@@ -30,10 +30,6 @@ if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 
-
-# Looking to send emails in production? Check out our Email API/SMTP product!
-import requests
-
 url = "https://sandbox.api.mailtrap.io/api/send/3290490"
 
 payload = "{\"from\":{\"email\":\"nazimlama4@gmail.com\",\"name\":\"Mailtrap Test\"},\"to\":[{\"email\":\"pacmanthebossofhack@gmail.com\"}],\"subject\":\"You are awesome!\",\"text\":\"Congrats for sending test email with Mailtrap!\",\"category\":\"Integration Test\"}"

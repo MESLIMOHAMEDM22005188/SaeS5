@@ -4,7 +4,7 @@ from random import random
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.http import HttpResponse
@@ -72,38 +72,16 @@ def test_email(request):
         return HttpResponse("E-mail envoyé avec succès !")
     else:
         import random  # Assurez-vous que cette ligne est présente
-
-        def register(request):
-            if request.method == 'POST':
-                form = CustomUserCreationForm(request.POST)  # Formulaire personnalisé
-                if form.is_valid():
-                    user = form.save()
-                    # Générer un code de vérification aléatoire
-                    verification_code = random.randint(100000, 999999)
-                    print(f"Code de vérification généré : {verification_code}")  # Pour tester en local
-
-                    # Envoi d'un email avec le code de vérification
-                    send_email(
-                        subject="Votre code de vérification",
-                        to_email=user.email,
-                        body=f"""
-                            <h1>Bonjour {user.username},</h1>
-                            <p>Voici votre code de vérification : <strong>{verification_code}</strong></p>
-                            <p>Cordialement,</p>
-                            <p>L'équipe</p>
-                        """
-                    )
-                    messages.success(
-                        request,
-                        'Un code de vérification vous a été envoyé. Veuillez vérifier votre e-mail.'
-                    )
-                    # Redirection vers la page de vérification
-                    return redirect('verify_email')
-            else:
-                form = CustomUserCreationForm()
-            return render(request, 'register.html', {'form': form})
-
-
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Votre compte a été créé avec succès !')
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+    return render(request, 'register.html', {'form': form})
 def login(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
