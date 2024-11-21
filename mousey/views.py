@@ -139,4 +139,4 @@ def verify(request, method, identifier):
         else:
             messages.error(request, "Code incorrect ou expiré. Veuillez réessayer.")
 
-    return render(request, 'verify.html', {'method': method, 'identifier': identifier})
+    return redirect('verify', method='email', identifier=user.email)
