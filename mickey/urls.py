@@ -8,7 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.register, name='register'),
     path('home/', views.home, name='home'),
-    path('verify/<slug:identifier>/', views.verify, name='verify'),
+    path('verify/<path:identifier>/', views.verify, name='verify'),
     path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('levelOne/', views.level_one, name='level_one'),

@@ -75,7 +75,7 @@ def verify(request, identifier):
                 user.save()
                 cache.delete(f'verification_code_email_{identifier}')
                 messages.success(request, "Votre compte a été vérifié avec succès!")
-                return redirect('home')
+                return redirect('login.html')
             else:
                 messages.error(request, "Utilisateur non trouvé.")
         else:
