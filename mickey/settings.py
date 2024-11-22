@@ -13,6 +13,7 @@ CSRF_TRUSTED_ORIGINS = [
 
 # Auth settings
 AUTH_USER_MODEL = 'mousey.CustomUser'
+
 LOGIN_REDIRECT_URL = '/home/'
 
 # Secret Key
