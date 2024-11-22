@@ -42,39 +42,34 @@ def send_verification_sms(phone_number, code):
     except Exception as e:
         print(f"Erreur lors de l'envoi du SMS: {e}")
 
-
 def register(request):
     """Vue pour l'enregistrement utilisateur."""
     if request.method == 'POST':
         form = UserCreationFormWithFields(request.POST)
         if form.is_valid():
             try:
-                user = form.save(commit=False)
-                user.is_active = False
-                user.save()
+                user = form.save()
+                phone_number = form.cleaned_data['phone_number']
+                user.profile.phone_number = phone_number
+                user.profile.save()
 
                 # Génère un code de vérification
                 verification_code = randint(100000, 999999)
                 cache.set(f'verification_code_phone_{user.username}', verification_code, timeout=600)
 
-                # Envoie le code par SMS (ou email si configuré)
-                send_verification_sms(user.phone_number, verification_code)
+                # Envoie le code par SMS
+                send_verification_sms(phone_number, verification_code)
 
                 messages.success(request, "Un code de vérification a été envoyé à votre téléphone.")
                 return redirect('verify', identifier=user.username)
-            except IntegrityError as e:
-                if 'username' in str(e):
-                    messages.error(request, "Ce nom d'utilisateur est déjà pris.")
-                else:
-                    messages.error(request, "Une erreur inattendue s'est produite.")
+            except Exception as e:
+                messages.error(request, f"Une erreur inattendue s'est produite : {e}")
         else:
             messages.error(request, "Formulaire invalide. Veuillez vérifier vos informations.")
     else:
         form = UserCreationFormWithFields()
 
     return render(request, 'register.html', {'form': form})
-
-
 """
 def send_email(subject, to_email, body):
     Envoi d'un e-mail via Django SendMail.
