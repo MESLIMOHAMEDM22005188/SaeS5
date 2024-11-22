@@ -1,87 +1,125 @@
-.header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.imageAcceuil {
-    transform: scale(0.5);
-    display: block;
-    margin: 0 auto;
-    margin-bottom: -90px;
-}
-
+/* Global Styles */
 body {
-    background-color: gray;
-    font-family: 'Inria Sans', sans-serif;
-}
-
-.texteAcceuil {
-    color: white;
-}
-
-.rectangle {
-    color: white;
-    border: 2px solid #333;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #242434;
-    margin: 20px auto;
-    max-width: 400px;
+    background-color: #121212; /* Background sombre */
+    font-family: 'Inria Sans', sans-serif, Arial, sans-serif;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    gap: 10px;
+    min-height: 100vh;
+    margin: 0;
+    color: #ffffff;
 }
 
+/* Main Container Style */
+.rectangle {
+    border: 2px solid #333333;
+    padding: 30px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    background-color: #1e1e2f;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* Title Style */
 .titre {
-    color: white;
+    color: #ffeb3b;
     text-align: center;
+    font-size: 2em;
+    margin-bottom: 20px;
 }
 
-.username {
-    font-size: 1.5em;
+/* Messages */
+.messages {
+    margin-bottom: 20px;
 }
 
-.label-username, .label-password {
-    font-size: 4em;
-    font-weight: bold;
-    color: #333;
-    transition: color 0.3s;
-    text-align: center;
+.message {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 0.9em;
 }
 
-input:focus + .label-username {
-    color: blue;
+.message.error {
+    background-color: #ff5252;
+    color: #ffffff;
 }
 
-input[type="text"], input[type="password"], button[type="submit"] {
-    font-size: 1.5em;
+.message.success {
+    background-color: #4caf50;
+    color: #ffffff;
+}
+
+/* Form Fieldset Style */
+fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+legend {
+    font-size: 1.2em;
+    color: #ffeb3b;
+    margin-bottom: 10px;
+}
+
+/* Input Fields Style */
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    font-size: 1em;
     padding: 10px;
     width: 100%;
-    max-width: 350px;
-    box-sizing: border-box;
-    border: 2px solid #333;
+    border: 2px solid #333333;
     border-radius: 5px;
-    height: 45px;
-    margin: 5px 0;
+    background-color: #242434;
+    color: #ffffff;
+    margin-bottom: 15px;
+    box-sizing: border-box;
 }
 
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+    border-color: #ffeb3b;
+    outline: none;
+}
+
+/* Submit Button Style */
 button[type="submit"] {
-    background-color: yellow;
-    color: black;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    width: 300px;
-    height: 50px;
-    max-width: 600px;
-    padding: 15px;
-    border: 2px solid black;
+    background-color: #ffeb3b;
+    color: #000000;
+    border: none;
     border-radius: 5px;
-    font-size: 1.5em;
+    padding: 10px 15px;
+    font-size: 1em;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 button[type="submit"]:hover {
-    background-color: #555;
+    background-color: #ffc107;
+    transform: scale(1.05);
+}
+
+/* Link Style */
+.texte-acceuil {
+    color: #ffffff;
+    font-size: 0.9em;
+    margin-top: 15px;
+}
+
+.texte-acceuil a {
+    color: #ffeb3b;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.texte-acceuil a:hover {
+    color: #ffffff;
 }

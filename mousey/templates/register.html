@@ -3,12 +3,15 @@
 <head>
     {% load static %}
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/registerStyle.css' %}">
+    <link rel="stylesheet" href="{% static 'css/registerStyle.css' %}">
 </head>
 <body>
-    <div class="container">
-        <h2 class="titre">Créer un compte</h2>
+    <div class="rectangle">
+        <header>
+            <h2 class="titre">Créer un compte</h2>
+        </header>
 
         {% if messages %}
             <div class="messages">
@@ -18,12 +21,21 @@
             </div>
         {% endif %}
 
-        <form method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}  <!-- Ajoute automatiquement tous les champs, y compris l'e-mail -->
-            <button type="submit" class="btn-submit">S'inscrire</button>
-        </form>
-        <p class="texte-acceuil">Vous avez déjà un compte ? <a href="{% url 'login' %}">Connexion</a></p>
+        <main>
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset>
+                    <legend>Informations personnelles</legend>
+                    {{ form.as_p }}
+                </fieldset>
+                <button type="submit" class="btn-submit">S'inscrire</button>
+            </form>
+
+            <p class="texte-acceuil">
+                Vous avez déjà un compte ?
+                <a href="{% url 'login' %}">Connexion</a>
+            </p>
+        </main>
     </div>
 </body>
 </html>
