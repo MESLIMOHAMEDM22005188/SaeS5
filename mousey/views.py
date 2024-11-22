@@ -74,7 +74,7 @@ def send_verification_email(user_email, code):
     send_email(subject, user_email, body)
 
 
-@login_required
+#@login_required
 def home(request):
     """Page d'accueil."""
     return render(request, 'home.html')
