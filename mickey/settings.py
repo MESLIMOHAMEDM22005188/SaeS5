@@ -14,7 +14,7 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 # Auth settings
-AUTH_USER_MODEL = 'mousey.CustomUser'
+AUTH_USER_MODEL = 'auth.User'
 
 LOGIN_REDIRECT_URL = '/home/'
 

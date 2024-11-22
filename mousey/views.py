@@ -6,9 +6,11 @@ from django.contrib.auth import authenticate, login as auth_login, get_user_mode
 from django.core.cache import cache
 from django.db import IntegrityError
 from django.shortcuts import render, redirect
+from django.template.defaulttags import now
 from python_http_client import Client
 
-from .forms import UserCreationFormWithFields
+from .forms import  UserCreationFormWithPhone
+from .models import PhoneVerification
 
 
 def user_login(request):
@@ -30,44 +32,44 @@ def user_login(request):
     return render(request, 'registration/login.html')
 
 
+
 def send_verification_sms(phone_number, code):
     """Envoi d'un SMS de vérification."""
     client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
     try:
         client.messages.create(
-            body=f"Votre code de vérification est: {code}. Ce code est valide pendant 10 minutes.",
+            body=f"Votre code de vérification est : {code}",
             from_=settings.TWILIO_PHONE_NUMBER,
             to=phone_number,
         )
     except Exception as e:
-        print(f"Erreur lors de l'envoi du SMS: {e}")
-
+        print(f"Erreur lors de l'envoi du SMS : {e}")
 def register(request):
-    """Vue pour l'enregistrement utilisateur."""
+    """Vue pour enregistrer un utilisateur et ajouter un numéro de téléphone."""
     if request.method == 'POST':
-        form = UserCreationFormWithFields(request.POST)
+        form = UserCreationFormWithPhone(request.POST)
         if form.is_valid():
-            try:
-                user = form.save()
-                phone_number = form.cleaned_data['phone_number']
-                user.profile.phone_number = phone_number
-                user.profile.save()
+            user = form.save()
+            phone_number = form.cleaned_data['phone_number']
 
-                # Génère un code de vérification
-                verification_code = randint(100000, 999999)
-                cache.set(f'verification_code_phone_{user.username}', verification_code, timeout=600)
+            # Création de l'entrée dans PhoneVerification
+            phone_verification = PhoneVerification.objects.create(
+                user=user,
+                phone_number=phone_number
+            )
 
-                # Envoie le code par SMS
-                send_verification_sms(phone_number, verification_code)
+            # Génération du code de vérification
+            phone_verification.generate_code()
 
-                messages.success(request, "Un code de vérification a été envoyé à votre téléphone.")
-                return redirect('verify', identifier=user.username)
-            except Exception as e:
-                messages.error(request, f"Une erreur inattendue s'est produite : {e}")
+            # Envoi du code par SMS
+            send_verification_sms(phone_number, phone_verification.verification_code)
+
+            messages.success(request, "Un code de vérification a été envoyé à votre téléphone.")
+            return redirect('verify', identifier=user.username)
         else:
-            messages.error(request, "Formulaire invalide. Veuillez vérifier vos informations.")
+            messages.error(request, "Erreur dans le formulaire. Veuillez vérifier vos informations.")
     else:
-        form = UserCreationFormWithFields()
+        form = UserCreationFormWithPhone()
 
     return render(request, 'register.html', {'form': form})
 """
@@ -92,30 +94,30 @@ def send_verification_email(user_email, code):
     body = f"Votre code de vérification est : {code}. Ce code est valide pendant 10 minutes."
     send_email(subject, user_email, body)
 """
-
-
 def verify(request, identifier):
-    """Vérification du compte utilisateur via un code envoyé par SMS."""
+    """Vérification du compte via un code SMS."""
+    user = get_user_model().objects.filter(username=identifier).first()
+    if not user:
+        messages.error(request, "Utilisateur introuvable.")
+        return redirect('register')
+
     if request.method == 'POST':
         code = request.POST.get('code')
-        stored_code = cache.get(f'verification_code_phone_{identifier}')
+        phone_verification = PhoneVerification.objects.filter(user=user).first()
 
-        if stored_code and str(code) == str(stored_code):
-            user = get_user_model().objects.filter(username=identifier).first()
-            if user:
-                user.is_active = True
-                user.save()
-                cache.delete(f'verification_code_phone_{identifier}')
+        if phone_verification and phone_verification.verification_code == code:
+            if phone_verification.code_expiration > now():
+                phone_verification.is_verified = True
+                phone_verification.save()
                 auth_login(request, user)
-                messages.success(request, "Votre compte a été vérifié avec succès.")
+                messages.success(request, "Votre numéro a été vérifié avec succès.")
                 return redirect('home')
             else:
-                messages.error(request, "Utilisateur non trouvé.")
+                messages.error(request, "Le code a expiré.")
         else:
-            messages.error(request, "Code incorrect ou expiré.")
+            messages.error(request, "Code incorrect.")
+
     return render(request, 'verify.html', {'identifier': identifier})
-
-
 # @login_required
 def home(request):
     """Page d'accueil."""

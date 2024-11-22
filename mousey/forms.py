@@ -1,9 +1,10 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser
+from django.contrib.auth.models import User
+from .models import PhoneVerification
 
 
-class UserCreationFormWithFields(UserCreationForm):
+class UserCreationFormWithPhone(UserCreationForm):
     phone_number = forms.CharField(
         required=True,
         label="Numéro de téléphone",
@@ -11,11 +12,13 @@ class UserCreationFormWithFields(UserCreationForm):
     )
 
     class Meta:
-        model = CustomUser
+        model = User
         fields = ['username', 'phone_number', 'password1', 'password2']
 
     def clean_phone_number(self):
         phone_number = self.cleaned_data.get('phone_number')
-        if CustomUser.objects.filter(phone_number=phone_number).exists():
+        if PhoneVerification.objects.filter(phone_number=phone_number).exists():
             raise forms.ValidationError("Ce numéro de téléphone est déjà utilisé.")
         return phone_number
+
+
