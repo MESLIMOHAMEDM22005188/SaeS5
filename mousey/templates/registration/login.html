@@ -12,11 +12,21 @@
         <h1>Connexion</h1>
     </header>
     <main>
-        <form method="post">
+        <form method="post" action="{% url 'login' %}">
             {% csrf_token %}
             <fieldset>
                 <legend>Identifiez-vous</legend>
-                {{ form.as_p }}
+
+                <label for="username">Nom d'utilisateur :</label>
+                <input type="text" id="username" name="username" placeholder="Votre nom d'utilisateur" required>
+
+                <label for="password">Mot de passe :</label>
+                <input type="password" id="password" name="password" placeholder="Votre mot de passe" required>
+
+                <label>
+                    <input type="checkbox" onclick="togglePassword()"> Afficher le mot de passe
+                </label>
+
                 <input type="hidden" name="next" value="{{ next }}">
                 <button type="submit">Se connecter</button>
             </fieldset>
@@ -28,9 +38,7 @@
     <script>
         function togglePassword() {
             const passwordField = document.getElementById("password");
-            if (passwordField) {
-                passwordField.type = passwordField.type === "password" ? "text" : "password";
-            }
+            passwordField.type = passwordField.type === "password" ? "text" : "password";
         }
     </script>
 </body>
