@@ -3,7 +3,6 @@ from pathlib import Path
 
 import mickey
 
-DJANGO_SETTINGS_MODULE=mickey.settings
 
 CSRF_TRUSTED_ORIGINS = [
     'https://saes5.onrender.com',
