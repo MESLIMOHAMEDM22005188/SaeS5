@@ -7,25 +7,27 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: #000; /* Black background for contrast */
-    color: #fff; /* White text for better readability */
+    color: #fff; /* White text for readability */
 }
 
-/* Main Container */
+/* Form Container */
 form {
-    background: linear-gradient(135deg, #32CD32, #98FB98); /* Gradient background for the form */
+    background: linear-gradient(135deg, #8A2BE2, #FF6347); /* Violet to red gradient */
     border-radius: 15px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); /* Shadow for a floating effect */
     padding: 30px;
     width: 100%;
     max-width: 400px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 /* Title */
 h1 {
     font-size: 2.5em;
-    color: #fff;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-weight: bold;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 }
@@ -33,33 +35,30 @@ h1 {
 /* Instruction Text */
 p {
     font-size: 1.2em;
-    color: #fff;
     margin-bottom: 20px;
 }
 
-/* Label and Input */
+/* Label */
 label {
-    display: block;
     font-size: 1.1em;
-    margin-bottom: 10px;
-    color: #fff;
     text-align: left;
+    margin-bottom: 5px;
 }
 
+/* Input Field */
 input[type="text"] {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     border: none;
     border-radius: 5px;
     font-size: 1em;
-    margin-bottom: 20px;
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 /* Input Focus */
 input[type="text"]:focus {
     outline: none;
-    box-shadow: 0 0 8px rgba(76, 175, 80, 0.8);
+    box-shadow: 0 0 8px rgba(138, 43, 226, 0.8); /* Violet glow on focus */
 }
 
 /* Submit Button */
@@ -70,16 +69,16 @@ button[type="submit"] {
     border-radius: 5px;
     font-size: 1.2em;
     font-weight: bold;
-    background: linear-gradient(135deg, #FFD700, #ADFF2F); /* Golden gradient */
-    color: #000;
+    background: linear-gradient(135deg, #FF6347, #8A2BE2); /* Red to violet gradient */
+    color: #fff;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
 }
 
 button[type="submit"]:hover {
-    background: linear-gradient(135deg, #ADFF2F, #FFD700); /* Reverse gradient on hover */
+    background: linear-gradient(135deg, #8A2BE2, #FF6347); /* Reverse gradient on hover */
     transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+    box-shadow: 0 4px 12px rgba(138, 43, 226, 0.4); /* Add glow effect */
 }
 
 /* Messages */
@@ -90,7 +89,7 @@ ul {
 }
 
 li {
-    background: linear-gradient(135deg, #8A2BE2, #FF6347); /* Violet to red gradient */
+    background: rgba(255, 99, 71, 0.8); /* Slightly transparent red */
     color: #fff;
     padding: 10px;
     border-radius: 5px;
