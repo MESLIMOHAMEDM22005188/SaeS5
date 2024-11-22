@@ -1,86 +1,88 @@
 /* Global Styles */
 body {
-    background-color: #f0f0f0; /* Light gray background */
-    font-family: 'Arial', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    height: 100vh;
     margin: 0;
-    padding: 0;
-    color: #333333;
+    font-family: Arial, sans-serif;
+    background-color: #000; /* Black background for contrast */
+    color: #fff; /* White text for better readability */
 }
 
 /* Main Container */
 form {
-    background-color: #ffffff;
-    border: 1px solid #dddddd;
-    border-radius: 8px;
-    padding: 20px 30px;
+    background: linear-gradient(135deg, #32CD32, #98FB98); /* Gradient background for the form */
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); /* Shadow for a floating effect */
+    padding: 30px;
     width: 100%;
     max-width: 400px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
-/* Page Title */
+/* Title */
 h1 {
-    font-size: 1.8em;
-    color: #4caf50; /* Green accent for the title */
-    text-align: center;
+    font-size: 2.5em;
+    color: #fff;
     margin-bottom: 20px;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 }
 
 /* Instruction Text */
 p {
-    font-size: 1em;
-    color: #555555;
+    font-size: 1.2em;
+    color: #fff;
     margin-bottom: 20px;
 }
 
-/* Label and Input Fields */
+/* Label and Input */
 label {
     display: block;
-    font-weight: bold;
-    margin-bottom: 8px;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    color: #fff;
     text-align: left;
 }
 
 input[type="text"] {
     width: 100%;
     padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #cccccc;
+    border: none;
     border-radius: 5px;
-    box-sizing: border-box;
     font-size: 1em;
+    margin-bottom: 20px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
+/* Input Focus */
 input[type="text"]:focus {
     outline: none;
-    border-color: #4caf50;
-    box-shadow: 0 0 4px rgba(76, 175, 80, 0.5); /* Green glow on focus */
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.8);
 }
 
 /* Submit Button */
 button[type="submit"] {
-    background-color: #4caf50;
-    color: #ffffff;
-    padding: 10px 15px;
-    font-size: 1em;
+    width: 100%;
+    padding: 12px;
     border: none;
     border-radius: 5px;
+    font-size: 1.2em;
+    font-weight: bold;
+    background: linear-gradient(135deg, #FFD700, #ADFF2F); /* Golden gradient */
+    color: #000;
     cursor: pointer;
-    width: 100%;
-    transition: background-color 0.3s, transform 0.2s;
+    transition: all 0.3s ease-in-out;
 }
 
 button[type="submit"]:hover {
-    background-color: #45a049;
+    background: linear-gradient(135deg, #ADFF2F, #FFD700); /* Reverse gradient on hover */
     transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
 }
 
-/* Messages Styling */
+/* Messages */
 ul {
     list-style: none;
     padding: 0;
@@ -88,24 +90,26 @@ ul {
 }
 
 li {
-    background-color: #ffdddd;
-    color: #d32f2f;
+    background: linear-gradient(135deg, #8A2BE2, #FF6347); /* Violet to red gradient */
+    color: #fff;
     padding: 10px;
-    border: 1px solid #d32f2f;
     border-radius: 5px;
     margin-bottom: 10px;
+    text-align: center;
+    font-weight: bold;
 }
 
 /* Responsive Design */
 @media (max-width: 500px) {
     form {
-        padding: 15px 20px;
+        padding: 20px;
     }
 
     h1 {
-        font-size: 1.5em;
+        font-size: 2em;
     }
 
     button[type="submit"] {
-        font-size: 0.9em;
+        font-size: 1em;
     }
+}
