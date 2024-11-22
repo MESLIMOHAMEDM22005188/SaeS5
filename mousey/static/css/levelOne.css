@@ -15,9 +15,10 @@ input{
 
 
 .textZone {
+    padding-top: 10%;
+    padding-left: 40%;
     width: 100%;             /* Prend toute la largeur disponible */
     max-width: 400px;        /* Limite la largeur à 400px */
-    padding: 20px;           /* Espacement interne autour des champs */
     display: flex;
     flex-direction: column;  /* Aligne les champs verticalement */
     gap: 20px;               /* Espacement entre les champs */
@@ -42,6 +43,11 @@ input{
     border: 2px solid #ffeb3b; /* Bordure jaune au focus */
     background-color: rgba(255, 255, 255, 1); /* Fond blanc opaque */
 }
+
+.MEP3{
+   padding-left: 10%;
+}
+
 body{
     background-color: #242434;
     margin: auto;
@@ -63,4 +69,8 @@ body{
 
 .submitBtn:hover {
     background-color: #e6c200;
+}
+
+#email-content {
+    color: black; /* Texte en noir */
 }
