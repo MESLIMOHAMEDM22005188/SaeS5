@@ -6,6 +6,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 ROOT_URLCONF = 'mickey.urls'
 
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATICFILES_DIRS = [Path(BASE_DIR) / "static"]
 # CSRF Trusted Origins
 CSRF_TRUSTED_ORIGINS = [
     'https://saes5.onrender.com',
@@ -70,7 +72,6 @@ DATABASES = {
 
 # Static files
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
 
 if not DEBUG:
     STATIC_ROOT = BASE_DIR / 'staticfiles'
