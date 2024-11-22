@@ -8,32 +8,30 @@
     <link rel="stylesheet" href="{% static 'css/loginStyle.css' %}">
 </head>
 <body>
-    <header>
-        <h1>Connexion</h1>
-    </header>
-    <main>
-        <form method="post" action="{% url 'login' %}">
-            {% csrf_token %}
-            <fieldset>
-                <legend>Identifiez-vous</legend>
-
-                <label for="username">Nom d'utilisateur :</label>
+    <div class="rectangle">
+        <header>
+            <h1 class="titre">Connexion</h1>
+        </header>
+        <main>
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <label for="username" class="label-username">Nom d'utilisateur :</label>
                 <input type="text" id="username" name="username" placeholder="Votre nom d'utilisateur" required>
 
-                <label for="password">Mot de passe :</label>
+                <label for="password" class="label-password">Mot de passe :</label>
                 <input type="password" id="password" name="password" placeholder="Votre mot de passe" required>
 
-                <label>
+                <label class="toggle-password">
                     <input type="checkbox" onclick="togglePassword()"> Afficher le mot de passe
                 </label>
 
                 <input type="hidden" name="next" value="{{ next }}">
                 <button type="submit">Se connecter</button>
-            </fieldset>
-        </form>
+            </form>
 
-        <p>Vous n'avez pas de compte ? <a href="{% url 'register' %}">Inscrivez-vous ici</a>.</p>
-    </main>
+            <p class="texte-acceuil">Vous n'avez pas de compte ? <a href="{% url 'register' %}">Inscrivez-vous ici</a>.</p>
+        </main>
+    </div>
 
     <script>
         function togglePassword() {

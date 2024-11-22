@@ -1,7 +1,6 @@
-/* Global Styles */
 body {
-    background-color: #888888; /* Light gray for better contrast */
-    font-family: 'Inria Sans', sans-serif;
+    background-color: #121212;
+    font-family: 'Inria Sans', sans-serif, Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,93 +8,90 @@ body {
     margin: 0;
 }
 
-/* Main Container Style */
 .rectangle {
     color: #ffffff;
     border: 2px solid #333333;
-    padding: 20px;
+    padding: 30px 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Increased shadow for better visual effect */
-    background-color: #242434;
-    margin: 20px auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    background-color: #1e1e2f;
+    width: 100%;
     max-width: 400px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
+    text-align: center;
 }
 
-/* Title Style */
 .titre {
-    color: #ffffff;
+    color: #ffeb3b;
     text-align: center;
-    font-size: 2em;
+    font-size: 2.2em;
     margin-bottom: 20px;
 }
 
-/* Footer Text Style */
-.texte-acceuil {
-    color: #ffffff;
-    font-size: 1em;
-    text-align: center;
-    margin-top: 15px;
-}
-
-/* Label and Input Styles */
 .label-username,
 .label-password {
-    font-size: 1.2em;
-    font-weight: bold;
+    display: block;
+    font-size: 1em;
     text-align: left;
-    width: 100%;
     color: #ffffff;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
 
-/* Input and Button Styles */
 input[type="text"],
-input[type="password"],
-button[type="submit"],
-button#togglePassword {
+input[type="password"] {
     font-size: 1em;
     padding: 10px;
     width: 100%;
-    max-width: 350px;
-    box-sizing: border-box;
     border: 2px solid #333333;
     border-radius: 5px;
-    height: 45px;
-    margin: 5px 0;
+    background-color: #242434;
+    color: #ffffff;
+    margin-bottom: 15px;
+    box-sizing: border-box;
 }
 
-/* Submit Button Style */
+.toggle-password {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 0.9em;
+    color: #ffeb3b;
+    margin-bottom: 20px;
+}
+
+.toggle-password input {
+    margin-right: 10px;
+}
+
 button[type="submit"] {
-    background-color: #ffeb3b; /* Yellow color */
+    background-color: #ffeb3b;
     color: #000000;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    width: 100%;
-    max-width: 350px;
-    padding: 10px;
-    border: 2px solid #000000;
+    border: none;
     border-radius: 5px;
+    padding: 10px 15px;
     font-size: 1em;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 button[type="submit"]:hover {
-    background-color: #555555;
+    background-color: #ffc107;
+    transform: scale(1.05);
 }
 
-/* Toggle Password Button Style */
-button#togglePassword {
-    background-color: #242434;
-    color: #ffeb3b;
-    border: none;
+.texte-acceuil {
+    color: #ffffff;
     font-size: 0.9em;
-    cursor: pointer;
+    margin-top: 15px;
+}
+
+.texte-acceuil a {
+    color: #ffeb3b;
+    text-decoration: none;
+    font-weight: bold;
     transition: color 0.3s;
 }
 
-button#togglePassword:hover {
+.texte-acceuil a:hover {
     color: #ffffff;
 }
