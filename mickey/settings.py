@@ -1,30 +1,28 @@
 import os
 from pathlib import Path
 
+# Base directory
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# CSRF Trusted Origins
 CSRF_TRUSTED_ORIGINS = [
     'https://saes5.onrender.com',
 ]
 
+# Auth settings
 AUTH_USER_MODEL = 'auth.User'
 LOGIN_REDIRECT_URL = '/home/'
-# Base directory
-BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECRET_KEY
+# Secret Key
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-gb6$j!l#(iokk_x+8yq@mo46%g@dai)s+w&2&f%hyk(vrwjmam')
 
+# Debug settings
 DEBUG = True
+
 # Allowed Hosts
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'saes5.onrender.com']
-DEBUG_TOOLBAR_CONFIG = {
-    'SHOW_TOOLBAR_CALLBACK': lambda request: True,
-    'INTERCEPT_REDIRECTS)': False,
-}
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']  # Si vous utilisez un dossier `static` au niveau du projet
-
-# Applications
+# Installed Applications
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -32,11 +30,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'mousey',
+    'mousey',  # Votre application
     'django_otp',
     'django_otp.plugins.otp_totp',
     'django_otp.plugins.otp_static',
-    'debug_toolbar',
 ]
 
 # Middleware
@@ -49,17 +46,17 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_otp.middleware.OTPMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
-
 ]
 
+# Debug Toolbar
 if DEBUG:
-    INTERNAL_IPS = [
-        '127.0.0.1',
-        'localhost',
-        '::1',  # IPv6
-    ]
+    INSTALLED_APPS += ['debug_toolbar']
+    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
 
+    DEBUG_TOOLBAR_CONFIG = {
+        'SHOW_TOOLBAR_CALLBACK': lambda request: True,
+        'INTERCEPT_REDIRECTS': False,
+    }
 
 # URL Configuration
 ROOT_URLCONF = 'mickey.urls'
@@ -68,7 +65,7 @@ ROOT_URLCONF = 'mickey.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],  # Chemin vers le répertoire templates
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -98,12 +95,17 @@ DATABASES = {
 
 # Static files
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+
 if not DEBUG:
     STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Authentication
-LOGIN_REDIRECT_URL = '/home/'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Authentication and Email Settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 25
+EMAIL_USE_TLS = False
+DEFAULT_FROM_EMAIL = 'webmaster@localhost'
 
 # Password Validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -122,9 +124,3 @@ USE_TZ = True
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Email Backend Configuration for Sendmail
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'localhost'  # Assuming sendmail is on localhost
-EMAIL_PORT = 25  # Default port for sendmail
-EMAIL_USE_TLS = False  # Sendmail usually does not require TLS
-DEFAULT_FROM_EMAIL = 'webmaster@localhost'  # Replace with a valid email address
