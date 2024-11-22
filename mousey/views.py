@@ -3,6 +3,7 @@ from random import randint
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, get_user_model
+from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.db import IntegrityError
 from django.shortcuts import render, redirect
@@ -118,13 +119,13 @@ def verify(request, identifier):
             messages.error(request, "Code incorrect.")
 
     return render(request, 'verify.html', {'identifier': identifier})
-# @login_required
+@login_required
 def home(request):
     """Page d'accueil."""
     return render(request, 'home.html')
 
 
-# @login_required
+@login_required
 def level_one(request):
     """Page pour le niveau 1."""
     if request.method == "POST":
@@ -137,19 +138,19 @@ def level_one(request):
     return render(request, 'level_one.html')
 
 
-# @login_required
+@login_required
 def level_one_bureau(request):
     """Page pour le bureau du niveau 1."""
     return render(request, 'level_one_bureau.html')
 
 
-# @login_required
+@login_required
 def level_two(request):
     """Page pour le niveau 2."""
     return render(request, 'level_two.html')
 
 
-# @login_required
+@login_required
 def level_three(request):
     """Page pour le niveau 3."""
     return render(request, 'level_three.html')
