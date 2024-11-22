@@ -24,7 +24,7 @@ def user_login(request):
         if user is not None:
             login(request, user)
             messages.success(request, "Connexion réussie !")
-            return redirect('home')
+            return redirect('home.html')
         else:
             messages.error(request, "Nom d'utilisateur ou mot de passe incorrect.")
     return render(request, 'login.html')
