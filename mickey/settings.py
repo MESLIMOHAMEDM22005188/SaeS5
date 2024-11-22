@@ -4,6 +4,7 @@ from pathlib import Path
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+ROOT_URLCONF = 'mickey.urls'
 
 # CSRF Trusted Origins
 CSRF_TRUSTED_ORIGINS = [
