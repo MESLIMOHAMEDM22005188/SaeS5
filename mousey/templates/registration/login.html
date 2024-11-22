@@ -13,18 +13,24 @@
     </header>
     <main>
         <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="hidden" name="next" value="{{ next }}">
-    <button type="submit">Se connecter</button>
-</form>
+            {% csrf_token %}
+            <fieldset>
+                <legend>Identifiez-vous</legend>
+                {{ form.as_p }}
+                <input type="hidden" name="next" value="{{ next }}">
+                <button type="submit">Se connecter</button>
+            </fieldset>
+        </form>
 
         <p>Vous n'avez pas de compte ? <a href="{% url 'register' %}">Inscrivez-vous ici</a>.</p>
     </main>
+
     <script>
         function togglePassword() {
             const passwordField = document.getElementById("password");
-            passwordField.type = passwordField.type === "password" ? "text" : "password";
+            if (passwordField) {
+                passwordField.type = passwordField.type === "password" ? "text" : "password";
+            }
         }
     </script>
 </body>
