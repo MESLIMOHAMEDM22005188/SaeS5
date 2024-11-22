@@ -17,7 +17,7 @@ body, html {
     width: 90%;
     height: 90%;
     display: grid;
-    grid-template-columns: [col1] 10% [col2] 10% [col3] 10% [col4] 10% [col5] 10% [col6] 10% [col7] 10% [col8] 10% [col9] 10% [col10] 10%;
+    grid-template-columns: [col1] 8% [col2] 10% [col3] 10% [col4] 10% [col5] 10% [col6] 10% [col7] 10% [col8] 10% [col9] 10% [col10] 10%;
     grid-template-rows: [row1] 10% [row2] 10% [row3] 10% [row4] 10% [row5] 10% [row6] 10% [row7] 10% [row8] 10% [row9] 10% [row10] 10%;
 }
 
@@ -31,6 +31,11 @@ body, html {
     margin-left: auto;
     margin-right: auto;
 }
+
+.email-list{
+    color: black;
+}
+
 
 .bottom-bar {
     position: fixed;
@@ -52,12 +57,12 @@ body, html {
 
 .right-info{
     position: fixed;
-    right: 0px;
+    right: 10px;
 }
 
 .left-info{
     position: fixed;
-    left: 0px;
+    left: 10px;
 }
 
 .center-app{
