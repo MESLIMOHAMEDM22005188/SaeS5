@@ -6,7 +6,7 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 AUTH_USER_MODEL = 'auth.User'
-
+LOGIN_REDIRECT_URL = '/home/'
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 

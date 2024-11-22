@@ -1,7 +1,7 @@
 import random
 from random import randint
 from django.contrib import messages
-from django.contrib.auth import authenticate, login as auth_login, get_user_model
+from django.contrib.auth import authenticate, login as auth_login, get_user_model, login
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.core.mail import send_mail
@@ -61,7 +61,6 @@ def home(request):
     """Page d'accueil."""
     return render(request, 'home.html')
 
-
 def verify(request, identifier):
     """Vérification du compte utilisateur via un code envoyé par e-mail."""
     if request.method == 'POST':
@@ -74,16 +73,15 @@ def verify(request, identifier):
                 user.is_active = True
                 user.save()
                 cache.delete(f'verification_code_email_{identifier}')
-                messages.success(request, "Votre compte a été vérifié avec succès!")
-                return redirect('login.html')
+                login(request, user)  # Connecte l'utilisateur automatiquement
+                messages.success(request, "Votre compte a été vérifié avec succès et vous êtes maintenant connecté.")
+                return redirect('home')
             else:
                 messages.error(request, "Utilisateur non trouvé.")
         else:
             messages.error(request, "Code incorrect ou expiré. Veuillez réessayer.")
 
     return render(request, 'verify.html', {'identifier': identifier})
-
-
 @login_required
 def level_one(request):
     """Page pour le niveau 1."""
