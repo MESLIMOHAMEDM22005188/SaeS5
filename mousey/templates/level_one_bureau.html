@@ -6,42 +6,38 @@
     <title>Bureau Niveau 1</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/Bureau.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/emailWindow.css' %}">
 </head>
 <body>
-
     <div class="content">
-        <img src="{% static 'image/outlook.png' %}" alt="outlook" class="outlook" onclick="openEmailWindow()">
+        <img src="{% static 'image/outlook.png' %}" alt="Outlook" class="icon" onclick="openEmailWindow()">
     </div>
 
     <div class="bottom-bar">
-                <div class="left-info">
-            <img src="{% static 'image/bouttonMA.png' %}" alt="boutton" class="bouttonMA">
+        <div class="left-info">
+            <img src="{% static 'image/power.png' %}" alt="Éteindre" class="icon">
         </div>
         <div class="center-app">
-           <img src="{% static 'image/window11.png' %}" alt="window" class="window">
-            <img src="{% static 'image/outlook.png' %}" alt="outlook" class="outlook" onclick="openEmailWindow()">
+            <img src="{% static 'image/windows.png' %}" alt="Windows" class="icon">
+            <img src="{% static 'image/outlook.png' %}" alt="Outlook" class="icon" onclick="openEmailWindow()">
         </div>
         <div class="right-info">
-            <img src="{% static 'image/eternaite.png' %}" alt="internet" class="icon1">
-            <img src="{% static 'image/batterie.png' %}" alt="batterie" class="batterie">
-            <img src="{% static 'image/son.png' %}" alt="Son" class="icon">
-            <img src="{% static 'image/heure.png' %}" alt="heure" class="heure">
+            <img src="{% static 'image/internet.png' %}" alt="Internet" class="icon">
+            <img src="{% static 'image/battery.png' %}" alt="Batterie" class="icon">
+            <img src="{% static 'image/sound.png' %}" alt="Son" class="icon">
+            <span class="time">16:53 15/11/2024</span>
         </div>
     </div>
 
-    <div id="email-window">
+    <div id="email-window" class="email-window">
         <header>
             <span>Boîte de réception</span>
-            <img src="{% static 'image/close.png' %}" alt="Fermer" id="close-email-window" class="a">
+            <button id="close-email-window" class="close-btn">X</button>
         </header>
         <div class="email-interface">
             <div class="email-list">
-                <ul id="email-titles">
-                </ul>
+                <ul id="email-titles"></ul>
             </div>
-            <div class="email-content" id="email-content">
-            </div>
+            <div class="email-content" id="email-content"></div>
         </div>
     </div>
 
