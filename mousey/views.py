@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login as auth_login, get_user_mode
 from django.core.cache import cache
 from django.db import IntegrityError
 from django.shortcuts import render, redirect
-from django.template.defaulttags import now
+from django.utils.timezone import now
 from python_http_client import Client
 
 from .forms import  UserCreationFormWithPhone
