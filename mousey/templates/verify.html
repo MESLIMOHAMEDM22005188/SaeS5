@@ -1,22 +1,27 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Vérification de l'e-mail</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vérification du téléphone</title>
 </head>
 <body>
-    <h1>Vérification de l'e-mail</h1>
-    <p>Un code de vérification a été envoyé à {{ identifier }}.</p>
+    <h1>Vérification du téléphone</h1>
+    <p>Un code de vérification a été envoyé à votre numéro de téléphone. Veuillez le saisir ci-dessous :</p>
+
     <form method="POST">
         {% csrf_token %}
         <label for="code">Code de vérification :</label>
-        <input type="text" id="code" name="code" required>
+        <input type="text" id="code" name="code" placeholder="Entrez le code ici" required>
         <button type="submit">Vérifier</button>
     </form>
 
-    <!-- Bouton raccourci vers la page home -->
-    <form action="{% url 'home' %}" method="GET">
-        <button type="submit">Aller à la page Home</button>
-    </form>
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 </body>
 </html>
