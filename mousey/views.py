@@ -32,65 +32,47 @@ def user_login(request):
             messages.error(request, "Nom d'utilisateur ou mot de passe incorrect.")
     return render(request, 'registration/login.html')
 
+
+
+def send_verification_sms(phone_number, code):
+    """Envoi d'un SMS de vérification."""
+    client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+    try:
+        client.messages.create(
+            body=f"Votre code de vérification est : {code}",
+            from_=settings.TWILIO_PHONE_NUMBER,
+            to=phone_number,
+        )
+    except Exception as e:
+        print(f"Erreur lors de l'envoi du SMS : {e}")
 def register(request):
-    """Vue pour l'enregistrement utilisateur."""
+    """Vue pour enregistrer un utilisateur et ajouter un numéro de téléphone."""
     if request.method == 'POST':
         form = UserCreationFormWithPhone(request.POST)
         if form.is_valid():
-            try:
-                user = form.save()
-                phone_number = form.cleaned_data['phone_number']
+            user = form.save()
+            phone_number = form.cleaned_data['phone_number']
 
-                # Créer une entrée dans la table PhoneVerification
-                phone_verification, created = PhoneVerification.objects.get_or_create(user=user, phone_number=phone_number)
+            # Création de l'entrée dans PhoneVerification
+            phone_verification = PhoneVerification.objects.create(
+                user=user,
+                phone_number=phone_number
+            )
 
-                # Générer et envoyer le code de vérification
-                verification_code = send_verification_sms(phone_number)
-                if verification_code:
-                    phone_verification.verification_code = verification_code
-                    phone_verification.save()
+            # Génération du code de vérification
+            phone_verification.generate_code()
 
-                    messages.success(request, "Un code de vérification a été envoyé à votre téléphone.")
-                    return redirect('verify', identifier=user.username)
-                else:
-                    messages.error(request, "Erreur lors de l'envoi du code. Veuillez réessayer.")
-            except Exception as e:
-                messages.error(request, f"Une erreur inattendue s'est produite : {e}")
+            # Envoi du code par SMS
+            send_verification_sms(phone_number, phone_verification.verification_code)
+
+            messages.success(request, "Un code de vérification a été envoyé à votre téléphone.")
+            return redirect('verify', identifier=user.username)
         else:
-            messages.error(request, "Formulaire invalide. Veuillez vérifier vos informations.")
+            messages.error(request, "Erreur dans le formulaire. Veuillez vérifier vos informations.")
     else:
         form = UserCreationFormWithPhone()
 
     return render(request, 'register.html', {'form': form})
-
-
-def send_verification_sms(phone_number):
-    """Envoi d'un SMS de vérification avec un code à un utilisateur."""
-    # Twilio credentials
-    account_sid = settings.TWILIO_ACCOUNT_SID
-    auth_token = settings.TWILIO_AUTH_TOKEN
-    client = Client(account_sid, auth_token)
-
-    # Générer un code de vérification
-    verification_code = randint(100000, 999999)
-
-    # Message à envoyer
-    message_body = f"Votre code de vérification est : {verification_code}. Ce code est valide pendant 10 minutes."
-
-    try:
-        # Envoi du SMS
-        message = client.messages.create(
-            body=message_body,
-            from_="+1 904 637 7917",  # Numéro Twilio
-            to=phone_number            # Numéro de l'utilisateur
-        )
-        print(f"Message envoyé avec SID: {message.sid}")
-
-        return verification_code
-    except Exception as e:
-        print(f"Erreur lors de l'envoi du SMS : {e}")
-        return None
-
 """
 def send_email(subject, to_email, body):
     Envoi d'un e-mail via Django SendMail.
@@ -113,28 +95,29 @@ def send_verification_email(user_email, code):
     body = f"Votre code de vérification est : {code}. Ce code est valide pendant 10 minutes."
     send_email(subject, user_email, body)
 """
-
 def verify(request, identifier):
-    """Vérification du compte utilisateur via un code envoyé par SMS."""
+    """Vérification du compte via un code SMS."""
+    user = get_user_model().objects.filter(username=identifier).first()
+    if not user:
+        messages.error(request, "Utilisateur introuvable.")
+        return redirect('register')
+
     if request.method == 'POST':
         code = request.POST.get('code')
-        try:
-            phone_verification = PhoneVerification.objects.get(user__username=identifier)
-            if phone_verification.verification_code == code:
+        phone_verification = PhoneVerification.objects.filter(user=user).first()
+
+        if phone_verification and phone_verification.verification_code == code:
+            if phone_verification.code_expiration > now():
                 phone_verification.is_verified = True
                 phone_verification.save()
-
-                user = phone_verification.user
-                user.is_active = True
-                user.save()
-
                 auth_login(request, user)
-                messages.success(request, "Votre compte a été vérifié avec succès.")
+                messages.success(request, "Votre numéro a été vérifié avec succès.")
                 return redirect('home')
             else:
-                messages.error(request, "Code incorrect ou expiré.")
-        except PhoneVerification.DoesNotExist:
-            messages.error(request, "Vérification impossible. Veuillez vous inscrire à nouveau.")
+                messages.error(request, "Le code a expiré.")
+        else:
+            messages.error(request, "Code incorrect.")
+
     return render(request, 'verify.html', {'identifier': identifier})
 @login_required
 def home(request):
