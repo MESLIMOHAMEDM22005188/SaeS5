@@ -13,16 +13,12 @@
     </header>
     <main>
         <form method="post">
-            {% csrf_token %}
-            <label for="username">Nom d'utilisateur</label>
-            <input type="text" id="username" name="username" required>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="hidden" name="next" value="{{ next }}">
+    <button type="submit">Se connecter</button>
+</form>
 
-            <label for="password">Mot de passe</label>
-            <input type="password" id="password" name="password" required>
-            <input type="checkbox" id="show-password" onclick="togglePassword()"> Afficher le mot de passe
-
-            <button type="submit">Se connecter</button>
-        </form>
         <p>Vous n'avez pas de compte ? <a href="{% url 'register' %}">Inscrivez-vous ici</a>.</p>
     </main>
     <script>

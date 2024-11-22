@@ -16,18 +16,18 @@ def user_login(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        # Débogage : afficher les identifiants saisis
-        print(f"Identifiant reçu : {username}")
-        print(f"Mot de passe reçu : {password}")
-
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            login(request, user)
-            messages.success(request, "Connexion réussie !")
-            return redirect('home.html')
+            if not user.is_active:
+                messages.error(request, "Votre compte n'est pas activé. Veuillez vérifier votre e-mail.")
+            else:
+                login(request, user)
+                messages.success(request, "Connexion réussie !")
+                return redirect('home')
         else:
             messages.error(request, "Nom d'utilisateur ou mot de passe incorrect.")
     return render(request, 'login.html')
+
 
 def register(request):
     if request.method == 'POST':

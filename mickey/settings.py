@@ -103,7 +103,7 @@ if not DEBUG:
 
 # Authentication
 LOGIN_REDIRECT_URL = '/home/'
-LOGIN_URL = '/login/'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Password Validation
 AUTH_PASSWORD_VALIDATORS = [
