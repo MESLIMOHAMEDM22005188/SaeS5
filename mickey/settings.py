@@ -1,12 +1,10 @@
 import os
 from pathlib import Path
 
-import mickey
-
-
 CSRF_TRUSTED_ORIGINS = [
     'https://saes5.onrender.com',
 ]
+
 AUTH_USER_MODEL = 'auth.User'
 
 # Base directory
@@ -20,7 +18,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'saes5.onrender.com']
 DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': lambda request: True,
-    'INTERCEPT_REDIRECTS': False,
+    'INTERCEPT_REDIRECTS)': False,
 }
 
 # Applications
@@ -59,10 +57,7 @@ if DEBUG:
         '::1',  # IPv6
     ]
 
-    DEBUG_TOOLBAR_CONFIG = {
-        'SHOW_TOOLBAR_CALLBACK': lambda request: True,  # Toujours afficher la barre
-        'I''NTERCEPT_REDIRECTS': False,  # Ne pas intercepter les redirections
-    }
+
 # URL Configuration
 ROOT_URLCONF = 'mickey.urls'
 
