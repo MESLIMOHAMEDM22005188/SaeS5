@@ -21,6 +21,9 @@ DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS)': False,
 }
 
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']  # Si vous utilisez un dossier `static` au niveau du projet
+
 # Applications
 INSTALLED_APPS = [
     'django.contrib.admin',
