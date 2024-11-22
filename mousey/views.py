@@ -1,12 +1,10 @@
-import random
 from random import randint
 
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import authenticate, login as auth_login, get_user_model, login
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login as auth_login, get_user_model
 from django.core.cache import cache
-from django.core.mail import send_mail
+from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from python_http_client import Client
 
@@ -32,20 +30,17 @@ def user_login(request):
     return render(request, 'registration/login.html')
 
 
-
 def send_verification_sms(phone_number, code):
     """Envoi d'un SMS de vérification."""
     client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
     try:
         client.messages.create(
-            body=f"Votre code de vérification est : {code}. Ce code est valide pendant 10 minutes.",
+            body=f"Votre code de vérification est: {code}. Ce code est valide pendant 10 minutes.",
             from_=settings.TWILIO_PHONE_NUMBER,
             to=phone_number,
         )
     except Exception as e:
-        print(f"Erreur lors de l'envoi du SMS : {e}")
-
-
+        print(f"Erreur lors de l'envoi du SMS: {e}")
 
 
 def register(request):
@@ -53,21 +48,32 @@ def register(request):
     if request.method == 'POST':
         form = UserCreationFormWithFields(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.is_active = False
-            user.save()
+            try:
+                user = form.save(commit=False)
+                user.is_active = False
+                user.save()
 
-            phone_number = request.POST.get('phone_number')
-            verification_code = randint(100000, 999999)
-            cache.set(f'verification_code_phone_{phone_number}', verification_code, timeout=600)
+                # Génère un code de vérification
+                verification_code = randint(100000, 999999)
+                cache.set(f'verification_code_phone_{user.username}', verification_code, timeout=600)
 
-            send_verification_sms(phone_number, verification_code)
-            messages.success(request, "Un code de vérification a été envoyé à votre numéro de téléphone.")
-            return redirect('verify', identifier=phone_number)
+                # Envoie le code par SMS (ou email si configuré)
+                send_verification_sms(user.phone_number, verification_code)
+
+                messages.success(request, "Un code de vérification a été envoyé à votre téléphone.")
+                return redirect('verify', identifier=user.username)
+            except IntegrityError as e:
+                if 'username' in str(e):
+                    messages.error(request, "Ce nom d'utilisateur est déjà pris.")
+                else:
+                    messages.error(request, "Une erreur inattendue s'est produite.")
+        else:
+            messages.error(request, "Formulaire invalide. Veuillez vérifier vos informations.")
     else:
         form = UserCreationFormWithFields()
 
     return render(request, 'register.html', {'form': form})
+
 
 """
 def send_email(subject, to_email, body):
@@ -115,13 +121,13 @@ def verify(request, identifier):
     return render(request, 'verify.html', {'identifier': identifier})
 
 
-#@login_required
+# @login_required
 def home(request):
     """Page d'accueil."""
     return render(request, 'home.html')
 
 
-#@login_required
+# @login_required
 def level_one(request):
     """Page pour le niveau 1."""
     if request.method == "POST":
@@ -134,19 +140,19 @@ def level_one(request):
     return render(request, 'level_one.html')
 
 
-#@login_required
+# @login_required
 def level_one_bureau(request):
     """Page pour le bureau du niveau 1."""
     return render(request, 'level_one_bureau.html')
 
 
-#@login_required
+# @login_required
 def level_two(request):
     """Page pour le niveau 2."""
     return render(request, 'level_two.html')
 
 
-#@login_required
+# @login_required
 def level_three(request):
     """Page pour le niveau 3."""
     return render(request, 'level_three.html')
