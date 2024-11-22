@@ -19,6 +19,7 @@ DEBUG = True
 # Allowed Hosts
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'saes5.onrender.com']
 DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': lambda request: True,
     'INTERCEPT_REDIRECTS': False,
 }
 
@@ -60,7 +61,7 @@ if DEBUG:
 
     DEBUG_TOOLBAR_CONFIG = {
         'SHOW_TOOLBAR_CALLBACK': lambda request: True,  # Toujours afficher la barre
-        'INTERCEPT_REDIRECTS': False,  # Ne pas intercepter les redirections
+        'I''NTERCEPT_REDIRECTS': False,  # Ne pas intercepter les redirections
     }
 # URL Configuration
 ROOT_URLCONF = 'mickey.urls'

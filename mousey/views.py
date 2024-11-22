@@ -10,13 +10,13 @@ from django.shortcuts import render, redirect
 from .forms import UserCreationFormWithFields
 
 
+
 def register(request):
-    """Gestion de l'inscription d'un utilisateur."""
     if request.method == 'POST':
         form = UserCreationFormWithFields(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.is_active = False  # L'utilisateur doit vérifier son e-mail
+            user.is_active = False
             user.save()
 
             verification_code_email = randint(100000, 999999)
@@ -24,12 +24,14 @@ def register(request):
 
             send_verification_email(user.email, verification_code_email)
             messages.success(request, "Un code de vérification a été envoyé à votre adresse e-mail.")
+
+            # Redirection vers la page de vérification
             return redirect('verify', identifier=user.email)
+
     else:
         form = UserCreationFormWithFields()
+
     return render(request, 'register.html', {'form': form})
-
-
 def send_email(subject, to_email, body):
     """Envoi d'un e-mail via Django SendMail."""
     try:
