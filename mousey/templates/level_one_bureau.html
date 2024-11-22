@@ -6,108 +6,45 @@
     <title>Bureau Niveau 1</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/Bureau.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/emailWindow.css' %}">
 </head>
 <body>
-    <!-- Contenu principal -->
+
     <div class="content">
-        <!-- Ajoutez votre contenu ici -->
+        <img src="{% static 'image/outlook.png' %}" alt="outlook" class="outlook" onclick="openEmailWindow()">
     </div>
 
-    <!-- Barre inférieure -->
     <div class="bottom-bar">
-        <img src="{% static 'image/eternaite.png' %}" alt="internet" class="icon1">
-        <img src="{% static 'image/heure.png' %}" alt="heure" class="heure">
-        <img src="{% static 'image/batterie.png' %}" alt="batterie" class="batterie">
-        <img src="{% static 'image/window11.png' %}" alt="window" class="window">
-        <img src="{% static 'image/son.png' %}" alt="Son" class="icon">
-        <img src="{% static 'image/outlook.png' %}" alt="outlook" class="outlook">
-
+                <div class="left-info">
+            <img src="{% static 'image/bouttonMA.png' %}" alt="boutton" class="bouttonMA">
+        </div>
+        <div class="center-app">
+           <img src="{% static 'image/window11.png' %}" alt="window" class="window">
+            <img src="{% static 'image/outlook.png' %}" alt="outlook" class="outlook" onclick="openEmailWindow()">
+        </div>
+        <div class="right-info">
+            <img src="{% static 'image/eternaite.png' %}" alt="internet" class="icon1">
+            <img src="{% static 'image/batterie.png' %}" alt="batterie" class="batterie">
+            <img src="{% static 'image/son.png' %}" alt="Son" class="icon">
+            <img src="{% static 'image/heure.png' %}" alt="heure" class="heure">
+        </div>
     </div>
-<script>
-        // Liste des emails
-        const emails = [
-            {
-                subject: "Félicitations ! Vous avez gagné un iPhone !",
-                body: "Cliquez sur ce lien pour récupérer votre prix : <a href='http://ceci-nest-pas-un-virus.co'>http://ceci-nest-pas-un-virus.co</a>",
-                color: "black",
-                isPhishing: true
-            },
-            {
-                subject: "Attention au phishing !",
-                body: "Soyez vigilant. Ne cliquez sur aucun lien suspect. Votre sécurité est importante.",
-                color: "black",
-                isPhishing: false
-            },
-            {
-                subject: "Urgent : Attention au phishing",
-                body: "Bonjour, il est important de rester vigilant. Cliquez ici pour apprendre à détecter le phishing : <a href='http://secure-phish-form.com'>http://secure-phish-form.com</a>",
-                sender: "patron@entreprisex.com",
-                actualSender: "patrron@entreprisex.com",
-                color: "black",
-                isPhishing: true
-            }
-        ];
 
-        let currentEmailIndex = 0;
+    <div id="email-window">
+        <header>
+            <span>Boîte de réception</span>
+            <img src="{% static 'image/close.png' %}" alt="Fermer" id="close-email-window" class="a">
+        </header>
+        <div class="email-interface">
+            <div class="email-list">
+                <ul id="email-titles">
+                </ul>
+            </div>
+            <div class="email-content" id="email-content">
+            </div>
+        </div>
+    </div>
 
-        // Ouvrir la fenêtre des emails
-        function openEmailWindow() {
-            document.getElementById('email-window').style.display = 'block';
-            displayEmail(emails[currentEmailIndex]);
-        }
-
-        // Fermer la fenêtre des emails
-        function closeEmailWindow() {
-            document.getElementById('email-window').style.display = 'none';
-        }
-
-        // Afficher un email
-        function displayEmail(email) {
-            const emailContainer = document.getElementById('emails');
-            emailContainer.innerHTML = `
-                <div class="email">
-                    <p><strong>Objet :</strong> ${email.subject}</p>
-                    <p><strong>Corps :</strong> ${email.body}</p>
-                    ${email.actualSender ? `<p><strong>Expéditeur :</strong> ${email.actualSender}</p>` : ""}
-                    <button onclick="checkEmail(true)">Phishing</button>
-                    <button onclick="checkEmail(false)">Pas Phishing</button>
-                </div>
-            `;
-        }
-
-        // Vérifier si l'email est du phishing
-        function checkEmail(isPhishing) {
-            const feedbackContainer = document.getElementById('feedback');
-            const email = emails[currentEmailIndex];
-
-            if (isPhishing === email.isPhishing) {
-                feedbackContainer.textContent = "Correct !";
-                feedbackContainer.style.color = "green";
-            } else {
-                feedbackContainer.textContent = "Incorrect. Réessayez.";
-                feedbackContainer.style.color = "red";
-            }
-
-            // Afficher le bouton suivant
-            const nextButton = document.getElementById('next-email');
-            nextButton.style.display = "block";
-            nextButton.onclick = nextEmail;
-        }
-
-        // Passer au prochain email
-        function nextEmail() {
-            currentEmailIndex++;
-            const feedbackContainer = document.getElementById('feedback');
-            feedbackContainer.textContent = "";
-
-            if (currentEmailIndex < emails.length) {
-                displayEmail(emails[currentEmailIndex]);
-                document.getElementById('next-email').style.display = 'none';
-            } else {
-                document.getElementById('emails').innerHTML = "<p>Jeu terminé ! Merci d'avoir participé.</p>";
-                document.getElementById('next-email').style.display = 'none';
-            }
-        }
-    </script>
+    <script src="{% static 'js/emailWindow.js' %}"></script>
 </body>
 </html>
