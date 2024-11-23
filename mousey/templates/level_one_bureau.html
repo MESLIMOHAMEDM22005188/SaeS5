@@ -8,12 +8,11 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/Bureau.css' %}">
 </head>
 <body>
-
     <div class="content">
         <img src="{% static 'image/outlook.png' %}" alt="Outlook App" class="outlook-app" onclick="openEmailWindow()">
     </div>
 
-    <!-- Barre inférieure
+    <!-- Barre inférieure -->
     <div class="bottom-bar">
         <div class="left-info">
             <img src="{% static 'image/bouttonMA.png' %}" alt="Bouton Menu" class="bouttonMA">
@@ -23,17 +22,15 @@
             <img src="{% static 'image/outlook.png' %}" alt="Outlook Icon" class="outlook" onclick="openEmailWindow()">
         </div>
         <div class="right-info">
-
             <img src="{% static 'image/eternaite.png' %}" alt="Internet Icon" class="icon1">
             <img src="{% static 'image/batterie.png' %}" alt="Batterie Icon" class="batterie">
             <img src="{% static 'image/son.png' %}" alt="Volume Icon" class="sound">
             <img src="{% static 'image/heure.png' %}" alt="Horloge" class="heure">
         </div>
     </div>
-    -->
 
     <!-- Fenêtre des emails -->
-    <div class="email-window" id="email-window">
+    <div id="email-window" class="email-window">
         <header>
             <span>Boîte de réception</span>
             <img src="{% static 'image/close.png' %}" alt="Fermer" id="close-email-window" class="close-btn">
@@ -41,11 +38,11 @@
         <div class="email-interface">
             <div class="email-list">
                 <ul id="email-titles">
-                    <!-- Titres des emails -->
+                    <!-- Les titres des emails seront chargés ici -->
                 </ul>
             </div>
             <div class="email-content" id="email-content">
-                <!-- Contenu des emails -->
+                <!-- Contenu de l'email -->
             </div>
         </div>
     </div>
