@@ -140,55 +140,72 @@ body, html {
 }
 
 
-.email-window {
-    display: none;
-    position: absolute;
-    top: 20%;
-    left: 50%;
-    transform: translate(-50%, -20%);
-    width: 60%;
-    height: 50%;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
-    z-index: 1000;
-}
-
-.email-window header {
-    background-color: #3b82f6;
+/* Bouton de fermeture */
+.close-btn {
+    cursor: pointer;
+    font-size: 1em; /* Taille réduite */
     color: white;
-    padding: 10px;
-    font-size: 1.2em;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    line-height: 1;
 }
 
+/* Interface de la boîte de réception */
 .email-interface {
     display: flex;
-    height: calc(100% - 40px);
+    height: calc(100% - 40px); /* Ajuste la hauteur pour l'en-tête */
 }
 
+/* Liste des emails */
 .email-list {
-    width: 30%;
-    background-color: #f4f4f4;
+    width: 35%;
+    background: #f4f4f4; /* Fond gris clair */
+    border-right: 1px solid #ddd; /* Séparation visuelle */
+    overflow-y: auto; /* Ajoute un défilement */
     padding: 10px;
-    overflow-y: auto;
 }
 
+/* Contenu des emails */
 .email-content {
     flex: 1;
     padding: 15px;
-    overflow-y: auto;
     font-size: 14px;
+    overflow-y: auto;
 }
 
-.close-btn {
+/* Style des items de la liste */
+.email-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.email-list ul li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
     cursor: pointer;
-    font-size: 1.2em;
-    padding: 5px;
-    color: red;
-    background: transparent;
-    border: none;
+}
+
+.email-list ul li:hover {
+    background: #eaeaea;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .email-window {
+        width: 80%;
+        height: 70%;
+    }
+
+    .email-interface {
+        flex-direction: column;
+    }
+
+    .email-list {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+    }
 }
