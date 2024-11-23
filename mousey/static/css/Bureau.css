@@ -5,37 +5,29 @@ body, html {
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #3b82f6, #9333ea);
     color: #ffffff;
-
+    display: flex;
+    flex-direction: column;
 }
 
 .content {
-    text-align: center;
-    flex: 1;
+    display: flex;
     align-items: center;
     justify-content: center;
-
-    width: 90%;
-    height: 90%;
-    display: grid;
-    grid-template-columns: [col1] 8% [col2] 10% [col3] 10% [col4] 10% [col5] 10% [col6] 10% [col7] 10% [col8] 10% [col9] 10% [col10] 10%;
-    grid-template-rows: [row1] 10% [row2] 10% [row3] 10% [row4] 10% [row5] 10% [row6] 10% [row7] 10% [row8] 10% [row9] 10% [row10] 10%;
+    flex: 1;
+    position: relative;
 }
 
-.outlook-app{
+.outlook-app {
     height: 80px;
     width: 80px;
-    grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 2;
-    grid-row-end: 3;
-    margin-left: auto;
-    margin-right: auto;
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    margin: 0 auto;
 }
 
-.email-list{
+.email-list {
     color: black;
 }
-
 
 .bottom-bar {
     position: fixed;
@@ -44,8 +36,9 @@ body, html {
     height: 60px;
     background-color: #ffffff;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
+    padding: 0 10px;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -55,23 +48,21 @@ body, html {
     cursor: pointer;
 }
 
-.right-info{
-    position: fixed;
-    right: 10px;
+.right-info, .left-info {
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
 
-.left-info{
-    position: fixed;
-    left: 10px;
+.center-app {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
 }
 
-.center-app{
-    position: fixed;
-    
-}
-
-.icon1 {
-    height: 35px;
+.icon1, .batterie, .heure, .window, .sound, .outlook {
+    height: 40px;
+    width: auto;
 }
 
 .batterie {
@@ -79,29 +70,60 @@ body, html {
 }
 
 .heure {
-    height: 30px;
     width: 100px;
 }
 
-.window {
-    width: 40px;
-    height: 40px;
+.email-window {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 60%;
+    background-color: #ffffff;
+    color: #000;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    z-index: 1000;
 }
 
-.sound {
-    width: 50px;
-    height: auto;
+.email-window header {
+    background-color: #3b82f6;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2em;
 }
 
-.outlook {
-    width: 50px;
-    height: 40px;
+.email-window .email-interface {
+    display: flex;
+    height: calc(100% - 40px);
+}
+
+.email-list {
+    width: 30%;
+    border-right: 1px solid #ccc;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.email-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
 }
 
 @media screen and (max-width: 768px) {
     .bottom-bar {
         height: 70px;
-        justify-content: space-evenly;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 0;
     }
 
     .bottom-bar img {
