@@ -8,7 +8,9 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/Bureau.css' %}">
 </head>
 <body>
+    <!-- Zone de contenu -->
     <div class="content">
+        <!-- Icône Outlook -->
         <img src="{% static 'image/outlook.png' %}" alt="Outlook App" class="outlook-app" onclick="openEmailWindow()">
     </div>
 
@@ -47,6 +49,7 @@
         </div>
     </div>
 
+    <!-- Script pour gérer l'interface email -->
     <script src="{% static 'js/emailWindow.js' %}"></script>
 </body>
 </html>
