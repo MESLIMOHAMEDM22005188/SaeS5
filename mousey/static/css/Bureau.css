@@ -18,11 +18,13 @@ body, html {
 }
 
 .outlook-app {
-    height: 80px;
-    width: 80px;
-    grid-column: 1 / 2;
-    grid-row: 2 / 3;
-    margin: 0 auto;
+    height: 80px; /* Taille fixe en hauteur */
+    width: auto; /* Ajustement automatique de la largeur */
+    margin: 20px; /* Espacement autour de l'image */
+    cursor: pointer; /* Ajout du pointeur pour indiquer qu'il est cliquable */
+    position: absolute; /* Positionnement absolu pour définir sa place sur la page */
+    top: 10%; /* Ajustez la position verticale */
+    left: 10%; /* Ajustez la position horizontale */
 }
 
 .email-list {
