@@ -29,6 +29,16 @@ body, html {
     left: 5%; /* Ajustement horizontal */
 }
 
+
+.close-btn {
+    cursor: pointer;
+    font-size: 1.2em;
+    padding: 5px;
+    color: red;
+    background: transparent;
+    border: none;
+}
+
 /* Fenêtre email */
 .email-window {
     display: none; /* Masquée par défaut */
