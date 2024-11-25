@@ -1,14 +1,17 @@
+import uuid
 
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, get_user_model
 from django.contrib.auth.decorators import login_required
+from django.core.management import BaseCommand
 from django.shortcuts import render, redirect
 from django.utils.timezone import now
 from python_http_client import Client
 from django.core.mail import send_mail
 from .forms import  UserCreationFormWithPhone
 from .models import PhoneVerification
+from .models import EmailVerification
 
 
 def user_login(request):
@@ -39,38 +42,77 @@ def envoyer_email():
         fail_silently=False,
     )
 
+
+def send_verification_email(user):
+    code = uuid.uuid4().hex[:6].upper()
+    EmailVerification.objects.create(user=user, code=code)
+    send_mail(
+        subject="Vérification de votre adresse e-mail",
+        message=f"Votre code de vérification est : {code}",
+        from_email="votre_email@domaine.com",
+        recipient_list=[user.email],
+    )
+
+
 def send_verification_sms(phone_number, code):
     """Envoi d'un SMS de vérification."""
     client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
     try:
         client.messages.create(
-            body=f"Votre code de vérification est : {code}",
+            body=f"Votre code de vérification est: {code}",
             from_=settings.TWILIO_PHONE_NUMBER,
             to=phone_number,
         )
     except Exception as e:
-        print(f"Erreur lors de l'envoi du SMS : {e}")
+        print(f"Erreur lors de l'envoi du SMS: {e}")
+
+
+def verify_email(request):
+    if request.method == 'POST':
+        code = request.POST.get('code')
+        email_verification = EmailVerification.objects.filter(verification_code=code).first()
+        if email_verification:
+            email_verification.is_verified = True
+            email_verification.save()
+            return redirect('verify_phone')
+        else:
+            messages.error(request, "Code invalide.")
+    return render(request, 'verify_email.html')
+
 def register(request):
-    """Vue pour enregistrer un utilisateur et ajouter un numéro de téléphone."""
+    """Vue pour enregistrer un utilisateur et ajouter un numéro de téléphone et un email."""
     if request.method == 'POST':
         form = UserCreationFormWithPhone(request.POST)
         if form.is_valid():
+            # Création de l'utilisateur
             user = form.save()
             phone_number = form.cleaned_data['phone_number']
+            email = form.cleaned_data['email']
 
-            # Création de l'entrée dans PhoneVerification
+            # Création des entrées dans PhoneVerification et EmailVerification
             phone_verification = PhoneVerification.objects.create(
                 user=user,
                 phone_number=phone_number
             )
+            email_verification = EmailVerification.objects.create(
+                user=user,
+                email=email
+            )
 
-            # Génération du code de vérification
+            # Génération des codes de vérification
             phone_verification.generate_code()
+            email_verification.generate_code()
 
             # Envoi du code par SMS
             send_verification_sms(phone_number, phone_verification.verification_code)
 
-            messages.success(request, "Un code de vérification a été envoyé à votre téléphone.")
+            # Envoi du code par e-mail
+            send_verification_email(user)
+
+            messages.success(
+                request,
+                "Un code de vérification a été envoyé à votre téléphone et à votre adresse e-mail."
+            )
             return redirect('verify', identifier=user.username)
         else:
             messages.error(request, "Erreur dans le formulaire. Veuillez vérifier vos informations.")
@@ -78,6 +120,7 @@ def register(request):
         form = UserCreationFormWithPhone()
 
     return render(request, 'register.html', {'form': form})
+
 """
 def send_email(subject, to_email, body):
     Envoi d'un e-mail via Django SendMail.
@@ -159,3 +202,12 @@ def level_two(request):
 def level_three(request):
     """Page pour le niveau 3."""
     return render(request, 'level_three.html')
+
+
+class Command(BaseCommand):
+    help = 'Supprime les codes de vérification expirés'
+
+    def handle(self, *args, **kwargs):
+        EmailVerification.objects.filter(code_expiration__lt=now()).delete()
+        PhoneVerification.objects.filter(code_expiration__lt=now()).delete()
+        self.stdout.write("Codes expirés supprimés.")
