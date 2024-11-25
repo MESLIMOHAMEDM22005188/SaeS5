@@ -155,6 +155,7 @@ def send_verification_email(user_email, code):
     body = f"Votre code de vérification est : {code}. Ce code est valide pendant 10 minutes."
     send_email(subject, user_email, body)
 """
+
 def verify(request, identifier):
     """Vérification du compte via un code SMS."""
     user = get_user_model().objects.filter(username=identifier).first()
@@ -170,15 +171,15 @@ def verify(request, identifier):
             if phone_verification.code_expiration > now():
                 phone_verification.is_verified = True
                 phone_verification.save()
-                auth_login(request, user)
                 messages.success(request, "Votre numéro a été vérifié avec succès.")
-                return redirect('home')
+                return redirect('verify_email')  # Redirige vers la vérification de l'email
             else:
                 messages.error(request, "Le code a expiré.")
         else:
             messages.error(request, "Code incorrect.")
 
     return render(request, 'verify.html', {'identifier': identifier})
+
 @login_required
 def home(request):
     """Page d'accueil."""
