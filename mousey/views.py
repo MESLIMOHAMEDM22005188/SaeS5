@@ -45,7 +45,7 @@ def envoyer_email():
 
 def send_verification_email(user):
     code = uuid.uuid4().hex[:6].upper()
-    EmailVerification.objects.create(user=user, code=code)
+    EmailVerification.objects.create(user=user, email=user.email, verification_code=code)
     send_mail(
         subject="Vérification de votre adresse e-mail",
         message=f"Votre code de vérification est : {code}",
