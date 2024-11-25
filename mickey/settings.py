@@ -17,6 +17,8 @@ CSRF_TRUSTED_ORIGINS = [
 AUTH_USER_MODEL = 'auth.User'
 
 LOGIN_REDIRECT_URL = '/home/'
+LOGIN_URL = '/login/'
+
 
 # Secret Key
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-gb6$j!l#(iokk_x+8yq@mo46%g@dai)s+w&2&f%hyk(vrwjmam')
