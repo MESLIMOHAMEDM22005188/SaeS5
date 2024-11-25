@@ -70,6 +70,8 @@ DATABASES = {
     }
 }
 
+
+
 # Static files
 STATIC_URL = '/static/'
 
@@ -100,6 +102,24 @@ TEMPLATES = [
 ]
 
 
+SMTP_CONFIG = {
+    "SERVER": "smtp-cybermouse.alwaysdata.net",
+    "PORT": 587,
+    "USERNAME": os.getenv("SMTP_USERNAME", "cybermouse@alwaysdata.net"),
+    "PASSWORD": os.getenv("SMTP_PASSWORD", "A(h0U1ch0U!"),
+}
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = SMTP_CONFIG["SERVER"]
+EMAIL_PORT = SMTP_CONFIG["PORT"]
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = SMTP_CONFIG["USERNAME"]
+EMAIL_HOST_PASSWORD = SMTP_CONFIG["PASSWORD"]
+
+API_CONFIG = {
+    "HOST": "O.0.0.0",
+    "PORT": 8000,
+}
 # Localization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'

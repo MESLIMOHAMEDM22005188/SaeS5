@@ -1,15 +1,12 @@
-from random import randint
 
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, get_user_model
 from django.contrib.auth.decorators import login_required
-from django.core.cache import cache
-from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from django.utils.timezone import now
 from python_http_client import Client
-
+from django.core.mail import send_mail
 from .forms import  UserCreationFormWithPhone
 from .models import PhoneVerification
 
@@ -33,6 +30,14 @@ def user_login(request):
     return render(request, 'registration/login.html')
 
 
+def envoyer_email():
+    send_mail(
+        subject="test email",
+        message="Ceci est un test envoyé via AlwaysData",
+        from_email="cybermouse@alwaysdata.net",
+        recipient_list=["pacmanthebossofhack@gmail.com"],
+        fail_silently=False,
+    )
 
 def send_verification_sms(phone_number, code):
     """Envoi d'un SMS de vérification."""
