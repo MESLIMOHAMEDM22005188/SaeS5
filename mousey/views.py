@@ -86,7 +86,7 @@ def verify_email(request):
         if email_verification:
             email_verification.is_verified = True
             email_verification.save()
-            return redirect('verify', identifier=email_verification.user.username)
+            return redirect('home')
         else:
             messages.error(request, "Code invalide.")
     return render(request, 'verify_email.html')
