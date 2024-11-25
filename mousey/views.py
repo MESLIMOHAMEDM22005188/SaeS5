@@ -45,12 +45,24 @@ def envoyer_email():
 
 def send_verification_email(user):
     code = uuid.uuid4().hex[:6].upper()
-    EmailVerification.objects.create(user=user, email=user.email, verification_code=code)
+    email_verification, created = EmailVerification.objects.get_or_create(
+        user=user,
+        defaults={
+            "email": user.email,
+            "verification_code": code,
+        }
+    )
+    if not created:
+        email_verification.verification_code = code
+        email_verification.save()
+
+        # Envoyer l'email
     send_mail(
         subject="Vérification de votre adresse e-mail",
         message=f"Votre code de vérification est : {code}",
-        from_email="votre_email@domaine.com",
+        from_email="cybermouse@alwaysdata.net",
         recipient_list=[user.email],
+        fail_silently=False,
     )
 
 
