@@ -7,7 +7,9 @@
     <title>Vérification du téléphone</title>
 <link rel="stylesheet" href="{% static 'css/verify.css' %}"></head>
 <body>
+
     <form method="POST">
+        {% csrf_token %}
         <h1>Vérification du téléphone</h1>
         <p>Un code de vérification a été envoyé à votre numéro de téléphone. Veuillez le saisir ci-dessous :</p>
 
