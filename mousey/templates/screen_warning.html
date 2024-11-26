@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Alerte de sécurité</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .message {
+            max-width: 600px;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        .highlight {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        // Redirection après 5 secondes
+        setTimeout(function() {
+            window.location.href = "{% url 'level_one_bureau' %}";
+        }, 5000);
+    </script>
+</head>
+<body>
+    <div class="message">
+        <p>
+            Comme vous pouvez le voir, vous avez accédé à cet ordinateur grâce au
+            <span class="highlight">Post-it</span> contenant les identifiants laissé sur l'écran.
+        </p>
+        <p>
+            Cela montre pourquoi il est <span class="highlight">crucial</span> de ne jamais écrire ou laisser les informations sensibles visibles.
+            Ce type de comportement expose le système à des risques importants.
+        </p>
+        <p>
+            Pensez toujours à sécuriser vos identifiants et à sensibiliser votre entourage.
+        </p>
+        <p>
+            <strong>Vous serez redirigé dans quelques secondes...</strong>
+        </p>
+    </div>
+</body>
+</html>

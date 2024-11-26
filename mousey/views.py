@@ -56,7 +56,6 @@ def send_verification_email(user):
         email_verification.verification_code = code
         email_verification.save()
 
-        # Envoyer l'email
     send_mail(
         subject="Vérification de votre adresse e-mail",
         message=f"Votre code de vérification est : {code}",
@@ -96,12 +95,10 @@ def register(request):
     if request.method == 'POST':
         form = UserCreationFormWithPhone(request.POST)
         if form.is_valid():
-            # Création de l'utilisateur
             user = form.save()
             phone_number = form.cleaned_data['phone_number']
             email = form.cleaned_data['email']
 
-            # Création des entrées dans PhoneVerification et EmailVerification
             phone_verification = PhoneVerification.objects.create(
                 user=user,
                 phone_number=phone_number
@@ -110,15 +107,11 @@ def register(request):
                 user=user,
                 email=email
             )
-
-            # Génération des codes de vérification
             phone_verification.generate_code()
             email_verification.generate_code()
 
-            # Envoi du code par SMS
             send_verification_sms(phone_number, phone_verification.verification_code)
 
-            # Envoi du code par e-mail
             send_verification_email(user)
 
             messages.success(
@@ -133,28 +126,6 @@ def register(request):
 
     return render(request, 'register.html', {'form': form})
 
-"""
-def send_email(subject, to_email, body):
-    Envoi d'un e-mail via Django SendMail.
-    try:
-        send_mail(
-            subject=subject,
-            message=body,
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[to_email],
-            fail_silently=False,
-        )
-    except Exception as e:
-        print(f"Erreur lors de l'envoi de l'e-mail : {e}")
-    
-
-
-def send_verification_email(user_email, code):
-    "Envoi d'un e-mail de vérification.
-    subject = "Code de vérification"
-    body = f"Votre code de vérification est : {code}. Ce code est valide pendant 10 minutes."
-    send_email(subject, user_email, body)
-"""
 
 def verify(request, identifier):
     """Vérification du compte via un code SMS."""
@@ -185,6 +156,10 @@ def home(request):
     """Page d'accueil."""
     return render(request, 'home.html')
 
+@login_required
+def screen_warning(request):
+    """Affiche un écran noir avec un message de sensibilisation."""
+    return render(request, 'screen_warning.html')
 
 @login_required
 def level_one(request):
@@ -193,7 +168,7 @@ def level_one(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         if username == "utilisateur4" and password == "01234":
-            return redirect('level_one_bureau')
+            return redirect('screen_warning')
         else:
             messages.error(request, "Identifiant ou mot de passe incorrect.")
     return render(request, 'level_one.html')
