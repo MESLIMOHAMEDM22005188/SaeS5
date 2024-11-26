@@ -1,4 +1,3 @@
-/* Réinitialisation globale */
 body, html {
     margin: 0;
     padding: 0;
@@ -10,7 +9,6 @@ body, html {
     flex-direction: column;
 }
 
-/* Contenu principal */
 .content {
     display: flex;
     align-items: flex-start;
@@ -19,7 +17,6 @@ body, html {
     padding: 20px;
 }
 
-/* Icône Outlook */
 .outlook-app {
     height: 80px; /* Taille fixe */
     width: auto; /* Garde les proportions */
@@ -29,72 +26,6 @@ body, html {
     left: 5%; /* Ajustement horizontal */
 }
 
-
-.close-btn {
-    cursor: pointer;
-    font-size: 1.2em;
-    padding: 5px;
-    color: red;
-    background: transparent;
-    border: none;
-}
-
-.email-window.email-window{
-     cursor: pointer;
-    font-size: 1.2em;
-    padding: 5px;
-    color: red;
-    background: transparent;
-    border: none;
-}
-/* Fenêtre email */
-.email-window {
-    display: none; /* Masquée par défaut */
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 70%;
-    height: 60%;
-    background-color: #ffffff;
-    color: #000;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-}
-
-/* En-tête de la fenêtre email */
-.email-window header {
-    background-color: #3b82f6;
-    color: white;
-    padding: 10px;
-    font-size: 1.2em;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-/* Contenu interne */
-.email-interface {
-    display: flex;
-    height: calc(100% - 50px);
-}
-
-.email-list {
-    width: 30%;
-    background: #f4f4f4;
-    border-right: 1px solid #ccc;
-    overflow-y: auto;
-    padding: 10px;
-}
-
-.email-content {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-}
-
-/* Barre inférieure */
 .bottom-bar {
     position: fixed;
     bottom: 0;
@@ -108,8 +39,7 @@ body, html {
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* Éléments de la barre */
-.bottom-bar img {
+.bottom-ar img {
     height: 40px;
     width: auto;
 }
@@ -127,12 +57,10 @@ body, html {
 }
 
 
-/* Icônes spécifiques */
 .icon1, .batterie, .heure, .sound, .window {
     height: 35px;
 }
 
-/* Responsive Design */
 @media screen and (max-width: 768px) {
     .bottom-bar {
         height: 70px;
@@ -160,60 +88,54 @@ body, html {
     line-height: 1;
 }
 
-/* Interface de la boîte de réception */
-.email-interface {
-    display: flex;
-    height: calc(100% - 40px); /* Ajuste la hauteur pour l'en-tête */
-}
-
-/* Liste des emails */
-.email-list {
-    width: 35%;
-    background: #f4f4f4; /* Fond gris clair */
-    border-right: 1px solid #ddd; /* Séparation visuelle */
-    overflow-y: auto; /* Ajoute un défilement */
-    padding: 10px;
-}
-
-/* Contenu des emails */
-.email-content {
-    flex: 1;
-    padding: 15px;
-    font-size: 14px;
-    overflow-y: auto;
-}
-
-/* Style des items de la liste */
-.email-list ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.email-list ul li {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+.close-btn {
+    width: 40px;
+    height: 40px;
     cursor: pointer;
+    display: inline-block;
 }
 
-.email-list ul li:hover {
-    background: #eaeaea;
+.email-window{
+    display: none;
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -20%);
+    width: 60%;
+    heigh: 60%;
+    background: white;
+    color: black;
+    border: 2px solid #3b82f6;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    z-index: 1000;
+    overflow: hidden;
 }
 
-/* Responsive Design */
-@media screen and (max-width: 768px) {
-    .email-window {
-        width: 80%;
-        height: 70%;
-    }
+.email-window header {
+    background: #3b82f6;
+    color: #ffffff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}
 
-    .email-interface {
-        flex-direction: column;
-    }
+.email-window .email-interface {
+    display: flex;
+    height: calc(100% - 40px);
+}
 
-    .email-list {
-        width: 100%;
-        border-right: none;
-        border-bottom: 1px solid #ddd;
-    }
+.email-window .email-list {
+    width: 30%;
+    border-right: 1px solid #ccc;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.email-window .email-content {
+    width: 70%;
+    padding: 10px;
+    overflow-y: auto;
 }
