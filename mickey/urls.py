@@ -16,7 +16,6 @@ urlpatterns = [
     path('levelThree/', views.level_three, name='level_three'),
     path('verify-email/', views.verify_email, name='verify_email'),
     path('screen-warning/', views.screen_warning, name='screen_warning')
-
 ]
 
 
