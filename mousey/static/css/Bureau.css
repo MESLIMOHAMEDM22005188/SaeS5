@@ -57,7 +57,7 @@ body, html {
 }
 
 
-.icon1, .batterie, .heure, .sound, .window {
+.icon1, .batterie, .heure, .sound, .window, .bouttonMA{
     height: 35px;
 }
 
@@ -127,15 +127,46 @@ body, html {
     height: calc(100% - 40px);
 }
 
-.email-window .email-list {
+.email-list {
     width: 30%;
-    border-right: 1px solid #ccc;
-    overflow-y: auto;
+    background: #f3f3f3;
     padding: 10px;
+    overflow-y: auto;
 }
 
-.email-window .email-content {
-    width: 70%;
-    padding: 10px;
+
+.email-details p {
+    line-height: 1.5;
+    font-size: 1em;
+    color: #333;
+}
+.email-content {
+    flex-grow: 1;
+    padding: 20px;
     overflow-y: auto;
+    background: #fff;
+}
+.email-details h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #3b82f6;
+}
+
+
+.email-item {
+    padding: 10px;
+    background: #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+
+.email-item:hover {
+    background: #ccc;
+}
+#email-titles{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
