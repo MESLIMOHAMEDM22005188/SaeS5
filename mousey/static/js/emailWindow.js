@@ -9,7 +9,6 @@ document.getElementById("close-email-window").addEventListener("click", function
 const emails = [
     { subject: "...", content: "Bonjour, merci d'avoir choisi Outlook." },
     { subject: "Mise à jour de votre compte", content: "Votre compte a été mis à jour avec succès." },
-    { subject: "Offre spéciale", content: "Découvrez nos nouvelles fonctionnalités." }
 ];
 
 function loadEmails() {
