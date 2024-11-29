@@ -9,6 +9,14 @@ body, html {
     flex-direction: column;
 }
 
+.logo-app{
+     height: 80px; /* Taille fixe */
+    width: auto; /* Garde les proportions */
+    cursor: pointer; /* Indique que l'icône est cliquable */
+    position: absolute;
+    top: 10%; /* Ajustement vertical */
+    left: 5%; /* Ajustement horizontal */
+}
 .content {
     display: flex;
     align-items: flex-start;
