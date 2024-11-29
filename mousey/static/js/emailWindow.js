@@ -6,6 +6,7 @@ document.getElementById("close-email-window").addEventListener("click", function
     const emailWindow = document.getElementById("email-window");
     emailWindow.style.display = "none";
 });
+
 const emails = [
     {
         subject: "Urgent : Mise à jour obligatoire de votre compte RH",

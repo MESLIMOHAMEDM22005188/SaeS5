@@ -173,6 +173,7 @@ def level_one(request):
     return render(request, 'level_one.html')
 
 
+
 @login_required
 def level_one_bureau(request):
     """Page pour le bureau du niveau 1."""
