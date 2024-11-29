@@ -10,8 +10,7 @@ from django.utils.timezone import now
 from python_http_client import Client
 from django.core.mail import send_mail
 from .forms import  UserCreationFormWithPhone
-from .models import PhoneVerification
-from .models import EmailVerification
+from .models import PhoneVerification, EmailVerification
 
 
 def user_login(request):

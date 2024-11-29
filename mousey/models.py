@@ -3,6 +3,15 @@ from django.contrib.auth.models import User
 from django.utils.timezone import now, timedelta
 
 
+class EmailGame(models.Model):
+    id = models.AutoField(primary_key=True)
+    subject = models.CharField(max_length=255)
+    content = models.TextField()
+
+    def __str__(self):
+        return self.subject
+
+
 class PhoneVerification(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='phone_verification')
     phone_number = models.CharField(max_length=15, unique=True)
