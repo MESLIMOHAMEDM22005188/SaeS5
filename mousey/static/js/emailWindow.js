@@ -47,8 +47,11 @@ function displayEmailContent(emailId) {
     const email = emails.find(e => e.id === emailId);
     const emailContent = document.getElementById('email-content');
     emailContent.innerHTML = `
-        <p><strong>De :</strong> ${email.sender}</p>
-        <p><strong>Objet :</strong> ${email.subject}</p>
+        <p class="email-Plus">
+            <img src="/static/image/plusOption.png" class="plus-Option" onclick="openMoreOption(event)">
+        </p>
+        <p class="email-Sender"><strong>De :</strong> ${email.sender}</p>
+        <p class="email-Object"><strong>Objet :</strong> ${email.subject}</p>
         <p>${email.body}</p>
     `;
 }
