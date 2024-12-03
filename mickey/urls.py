@@ -31,6 +31,7 @@ urlpatterns = [
     path('levelOne/bureau/', views.level_one_bureau, name='level_one_bureau'),
     path('levelTwo/', views.level_two, name='level_two'),
     path('levelThree/', views.level_three, name='level_three'),
+    path('levelOne/bureau/browser', views.browser_level_one, name='browser_level_one'),
 ]
 if settings.DEBUG:
     urlpatterns += [
