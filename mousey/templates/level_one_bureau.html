@@ -9,11 +9,14 @@
 </head>
 <body>
     <div class="content">
-        <img src="{% static 'image/outlook.png' %}" alt="Outlook App" class="outlook-app" onclick="openEmailWindow()">
+        <img src="{% static 'image/outlook.png' %}" alt="Outlook App" class="outlook-app" id="open-email-window">
     </div>
-    <img src="{% static 'image/logo_bureau.png' %}" alt="Logo App" class="logo-app" onclick="openGameWindow()">
+    <img src="{% static 'image/logo_bureau.png' %}" alt="Logo App" class="logo-app" id="open-game-window">
 
-    <!-- Barre inférieure -->
+    <button onclick="myFunction()"> Click sur moi</button>
+    <div id="myDIV">
+        This is my DIV element. m.iprvv
+    </div>
     <div class="bottom-bar">
         <div class="left-info">
             <img src="{% static 'image/bouttonMA.png' %}" alt="Bouton Menu" class="bouttonMA">
@@ -30,23 +33,29 @@
         </div>
     </div>
 
-     <div id="email-window" class="email-window">
+    <div id="game-window" class="game-window">
+        <header>
+            <span>Fenêtre de jeu</span>
+            <img src="{% static 'image/close.png' %}" alt="Fermer" id="close-game-window" class="close-btn">
+        </header>
+        <div id="game-content">
+        </div>
+    </div>
+
+    <div id="email-window" class="email-window">
         <header>
             <span>Boîte de réception</span>
             <img src="{% static 'image/close.png' %}" alt="Fermer" id="close-email-window" class="close-btn">
         </header>
         <div class="email-interface">
             <div class="email-list">
-                <ul id="email-titles">
-                </ul>
+                <ul id="email-titles"></ul>
             </div>
-            <div class="email-content" id="email-content">
-            </div>
+            <div class="email-content" id="email-content"></div>
         </div>
     </div>
 
-
-    <!-- Script pour gérer l'interface email -->
     <script src="{% static 'js/emailWindow.js' %}"></script>
+    <script src="{% static 'js/gameWindow.js' %}"></script>
 </body>
 </html>
