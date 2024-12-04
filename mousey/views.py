@@ -151,17 +151,17 @@ def verify(request, identifier):
 
     return render(request, 'verify.html', {'identifier': identifier})
 
-#@login_required
+@login_required
 def home(request):
     """Page d'accueil."""
     return render(request, 'home.html')
 
-#@login_required
+@login_required
 def screen_warning(request):
     """Affiche un écran noir avec un message de sensibilisation."""
     return render(request, 'screen_warning.html')
 
-#@login_required
+@login_required
 def level_one(request):
     """Page pour le niveau 1."""
     if request.method == "POST":
@@ -175,19 +175,19 @@ def level_one(request):
 
 
 
-#@login_required
+@login_required
 def level_one_bureau(request):
     """Page pour le bureau du niveau 1."""
     return render(request, 'level_one_bureau.html')
 
 
-#@login_required
+@login_required
 def level_two(request):
     """Page pour le niveau 2."""
     return render(request, 'level_two.html')
 
 
-#@login_required
+@login_required
 def level_three(request):
     """Page pour le niveau 3."""
     return render(request, 'level_three.html')
