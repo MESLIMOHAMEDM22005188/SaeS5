@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bureau Niveau 1</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/Bureau.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/browserStyle.css' %}">
+</head>
+<body>
+
+    <div class="content">
+        <div class="browser_window">
+            <div class="tab_bar">
+                <div class="gogole_tab">
+                    <img src="{% static 'image/gogoleFlavicon.png' %}" class="tab_gogole_ico">
+                    <div class="tab_text"> Nouvel onglet </div>
+                    <img src="{% static 'image/croixBlanche.png' %}" class="tab_close_ico">
+                </div>
+                <div class="close_browser">
+
+                </div>
+            </div>
+            <div class="search_bar">
+
+            </div>
+            <div class="boolmark">
+
+            </div>
+            <div class="browser_content">
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Barre inférieure -->
+    <div class="bottom-bar">
+                <div class="left-info">
+            <img src="{% static 'image/bouttonMA.png' %}" alt="boutton" class="bouttonMA">
+        </div>
+        <div class="center-app">
+           <img src="{% static 'image/window11.png' %}" alt="window" class="window">
+            <img src="{% static 'image/outlook.png' %}" alt="outlook" class="outlook" onclick="openEmailWindow()">
+        </div>
+        <div class="right-info">
+            <img src="{% static 'image/eternaite.png' %}" alt="internet" class="icon1">
+            <img src="{% static 'image/batterie.png' %}" alt="batterie" class="batterie">
+            <img src="{% static 'image/son.png' %}" alt="Son" class="icon">
+            <img src="{% static 'image/heure.png' %}" alt="heure" class="heure">
+        </div>
+    </div>
+</body>
+</html>
