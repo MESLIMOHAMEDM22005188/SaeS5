@@ -108,6 +108,7 @@ function reportEmail(emailId) {
     savePoints();
     saveEmails();
     updatePointsDisplay();
+    checkAllPhishingReported();
 }
 
 function deleteEmail(emailId) {
@@ -179,6 +180,36 @@ function openMoreOption(event, emailId) {
     options.style.left = `${rect.left - options.offsetWidth - 135}px`;
     options.style.top = `${rect.bottom + 3}px`;
     options.classList.add('visible');
+}
+
+
+// Gestion reussite à signaler les mails de phishing
+
+function checkAllPhishingReported() {
+    const allReported = emails.every(email => !email.isPhishing || email.reported);
+    if (allReported) {
+        sendCongratulationsMail();
+    }
+}
+
+function sendCongratulationsMail() {
+    const congratulationsEmail = {
+        id: 4,
+        sender: "admin@cybersecure.com",
+        subject: "Félicitations pour votre vigilance !",
+        body: `
+            Bravo, vous avez signalé tous les emails de phishing avec succès !<br>
+            Vous pouvez maintenant passer au quiz final pour tester vos connaissances.<br>
+            Cliquez ici pour commencer : <a href="a" onclick="openFirefoxWindow()">Commencer le quiz</a>
+        `,
+        read: false,
+        isPhishing: false,
+        reported: false
+    };
+
+    emails.push(congratulationsEmail);
+    saveEmails();
+    loadEmailTitles();
 }
 
 
