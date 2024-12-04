@@ -132,11 +132,11 @@ function deleteEmail(emailId) {
 // Fonctions liées aux points
 
 function savePoints() {
-    localStorage.setItem('points', points);
+    sessionStorage.setItem('points', points);
 }
 
 function loadPoints() {
-    const savedPoints = localStorage.getItem('points');
+    const savedPoints = sessionStorage.getItem('points');
     points = savedPoints !== null ? parseInt(savedPoints, 10) : 0;
 }
 
@@ -149,7 +149,7 @@ function updatePointsDisplay() {
 // Fonctions liées à la gestion des données
 
 function loadEmails() {
-    const savedEmails = JSON.parse(localStorage.getItem('emails'));
+    const savedEmails = JSON.parse(sessionStorage.getItem('emails'));
     if (savedEmails) {
         emails.length = 0;
         emails.push(...savedEmails);
@@ -157,7 +157,7 @@ function loadEmails() {
 }
 
 function saveEmails() {
-    localStorage.setItem('emails', JSON.stringify(emails));
+    sessionStorage.setItem('emails', JSON.stringify(emails));
 }
 
 
@@ -200,7 +200,7 @@ function sendCongratulationsMail() {
         body: `
             Bravo, vous avez signalé tous les emails de phishing avec succès !<br>
             Vous pouvez maintenant passer au quiz final pour tester vos connaissances.<br>
-            Cliquez ici pour commencer : <a href="a" onclick="openFirefoxWindow()">Commencer le quiz</a>
+            Cliquez ici pour commencer : <a href="browser/quiz" onclick="openFirefoxWindow()">Commencer le quiz</a>
         `,
         read: false,
         isPhishing: false,
