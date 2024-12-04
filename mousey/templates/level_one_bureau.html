@@ -11,7 +11,16 @@
 <body>
 
 <div class="content">
-    <img src="{% static 'image/outlook.png' %}" alt="outlook" class="outlook" onclick="openEmailWindow()">
+    <div class="bureau">
+        <div class="app-ico">
+            <img src="{% static 'image/bouklook.png' %}" alt="outlook" class="outlook-app" onclick="openEmailWindow()">
+            <div class="app-name">Bouklook</div>
+        </div>
+        <div class="app-ico">
+            <img src="{% static 'image/gogole.png' %}" alt="gogole" class="gogole-app">
+            <div class="app-name">Gogole</div>
+        </div>
+    </div>
 </div>
 <div class="points-display" id="points-display">
     Points: 0
