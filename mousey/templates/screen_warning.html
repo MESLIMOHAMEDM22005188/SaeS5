@@ -1,35 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
-        <link rel="icon" type="image/png" href="{% static 'image/logo_bureau.png' %}">
+    <link rel="icon" type="image/png" href="{% static 'image/logo_bureau.png' %}">
+    <title>Screen Warning</title>
 
-    <title>Alerte de sécurité</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: black;
-            color: white;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
-        }
-        .message {
-            max-width: 600px;
-            font-size: 18px;
-            line-height: 1.6;
-        }
-        .highlight {
-            color: red;
-            font-weight: bold;
-        }
-    </style>
     <script>
-        // Redirection après 5 secondes
         setTimeout(function() {
             window.location.href = "{% url 'level_one_bureau' %}";
         }, 5000);
