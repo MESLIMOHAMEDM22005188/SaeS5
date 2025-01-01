@@ -45,12 +45,12 @@ body, html {
 
 
 .outlook-app {
-    height: 80px; /* Taille fixe */
-    width: auto; /* Garde les proportions */
-    cursor: pointer; /* Indique que l'icône est cliquable */
+    height: 20px;
+    width: auto;
+    cursor: pointer;
     position: absolute;
-    top: 10%; /* Ajustement vertical */
-    left: 5%; /* Ajustement horizontal */
+    top: 10%;
+    left: 5%;
 }
 
 .bottom-bar {
