@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect
 from django.utils.timezone import now
 from python_http_client import Client
 from django.core.mail import send_mail
-from ratelimit.decorators import ratelimit
+from django_ratelimit.decorators import ratelimit
 from .forms import UserCreationFormWithPhone
 from .models import PhoneVerification, EmailVerification
 
