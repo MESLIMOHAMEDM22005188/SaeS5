@@ -55,11 +55,11 @@ TWILIO_PHONE_NUMBER = os.environ.get('TWILIO_PHONE_NUMBER', '+33XXXXXXXXX')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': config('DB_PORT', cast=int),
+        'NAME': os.environ.get('DB_NAME', 'cybermouse_db'),
+        'USER': os.environ.get('DB_USER', '384089'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'A(h0U1ch0U!'),
+        'HOST': os.environ.get('DB_HOST', 'mysql-cybermouse.alwaysdata.net'),
+        'PORT': os.environ.get('DB_PORT', '3306'),
     }
 }
 
@@ -90,12 +90,11 @@ TEMPLATES = [
     },
 ]
 
-
 SMTP_CONFIG = {
-    "SERVER": config("SMTP_SERVER"),
-    "PORT": config("SMTP_PORT", cast=int),
-    "USERNAME": config("SMTP_USERNAME"),
-    "PASSWORD": config("SMTP_PASSWORD"),
+    "SERVER": "smtp-cybermouse.alwaysdata.net",
+    "PORT": 587,
+    "USERNAME": os.getenv("SMTP_USERNAME", "cybermouse@alwaysdata.net"),
+    "PASSWORD": os.getenv("SMTP_PASSWORD", "A(h0U1ch0U!"),
 }
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = SMTP_CONFIG["SERVER"]
