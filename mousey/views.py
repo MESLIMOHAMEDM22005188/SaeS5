@@ -1,6 +1,5 @@
 import re
 import uuid
-
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, get_user_model
@@ -10,10 +9,11 @@ from django.shortcuts import render, redirect
 from django.utils.timezone import now
 from python_http_client import Client
 from django.core.mail import send_mail
-from .forms import  UserCreationFormWithPhone
+from ratelimit.decorators import ratelimit
+from .forms import UserCreationFormWithPhone
 from .models import PhoneVerification, EmailVerification
 
-
+@ratelimit(key='ip', rate='5/m', block=True)
 def user_login(request):
     """Vue pour la connexion utilisateur."""
     if request.method == "POST":

@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-
+from decouple import config
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -18,9 +18,9 @@ LOGIN_URL = '/login/'
 
 
 
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-gb6$j!l#(iokk_x+8yq@mo46%g@dai)s+w&2&f%hyk(vrwjmam')
+SECRET_KEY = config('SECRET_KEY', default='fallback_key')
 
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'saes5.onrender.com']
 
@@ -55,15 +55,13 @@ TWILIO_PHONE_NUMBER = os.environ.get('TWILIO_PHONE_NUMBER', '+33XXXXXXXXX')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('DB_NAME', 'cybermouse_db'),
-        'USER': os.environ.get('DB_USER', '384089'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'A(h0U1ch0U!'),
-        'HOST': os.environ.get('DB_HOST', 'mysql-cybermouse.alwaysdata.net'),
-        'PORT': os.environ.get('DB_PORT', '3306'),
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT', cast=int),
     }
 }
-
-
 
 STATIC_URL = '/static/'
 
@@ -94,12 +92,11 @@ TEMPLATES = [
 
 
 SMTP_CONFIG = {
-    "SERVER": "smtp-cybermouse.alwaysdata.net",
-    "PORT": 587,
-    "USERNAME": os.getenv("SMTP_USERNAME", "cybermouse@alwaysdata.net"),
-    "PASSWORD": os.getenv("SMTP_PASSWORD", "A(h0U1ch0U!"),
+    "SERVER": config("SMTP_SERVER"),
+    "PORT": config("SMTP_PORT", cast=int),
+    "USERNAME": config("SMTP_USERNAME"),
+    "PASSWORD": config("SMTP_PASSWORD"),
 }
-
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = SMTP_CONFIG["SERVER"]
 EMAIL_PORT = SMTP_CONFIG["PORT"]
@@ -121,36 +118,35 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_ACCOUNT_SID', 'votre_account_sid')
 TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_AUTH_TOKEN', 'votre_auth_token')
 TWILIO_PHONE_NUMBER = os.environ.get('TWILIO_PHONE_NUMBER', '+1 904 637 7917')
-# Sécurise les cookies de session
-# SESSION_COOKIE_SECURE = True
+# Sécurise les cookies de sessionSESSION_COOKIE_SECURE = True
 # Empêche l'accès aux cookies via JavaScript
-# SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_HTTPONLY = True
 # Options possibles : 'Lax', 'Strict', 'None'
-# SESSION_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SAMESITE = 'Lax'
 # La session expire à la fermeture du navigateur
-# SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 # Durée de vie en secondes (ici, 1 heure)
-# SESSION_COOKIE_AGE = 3600
+SESSION_COOKIE_AGE = 3600
 
 # Utilise HTTPS pour tous les cookies (les cookies ne seront transmis qu'à travers des connexions sécurisées).
-# CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 # Empêche JavaScript d'accéder aux cookies CSRF.
-# CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = True
 
 # Définir la politique SameSite pour les cookies CSRF.
-# CSRF_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_SAMESITE = 'Lax'
 
 # Protège contre le "clickjacking".
-# X_FRAME_OPTIONS = 'DENY'
+X_FRAME_OPTIONS = 'DENY'
 
 # Redirige automatiquement vers HTTPS.
-# SECURE_SSL_REDIRECT = True  # Redirige automatiquement les requêtes HTTP vers HTTPS
+SECURE_SSL_REDIRECT = True  # Redirige automatiquement les requêtes HTTP vers HTTPS
 
 # Active le HSTS (HTTP Strict Transport Security) pour forcer les navigateurs à n'utiliser que HTTPS.
-# SECURE_HSTS_SECONDS = 31536000  # Durée d'activation (1 an)
-# SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Applique le HSTS aux sous-domaines
-# SECURE_HSTS_PRELOAD = True  # Prépare le site pour le préchargement HSTS
+SECURE_HSTS_SECONDS = 31536000  # Durée d'activation (1 an)
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Applique le HSTS aux sous-domaines
+SECURE_HSTS_PRELOAD = True  # Prépare le site pour le préchargement HSTS
 
 # Utilisation du backend de session par défaut qui stocke les sessions sur le serveur
-# SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
