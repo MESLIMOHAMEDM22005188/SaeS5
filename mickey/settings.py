@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 ROOT_URLCONF = 'mickey.urls'
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "staticfiles")]
 CSRF_TRUSTED_ORIGINS = [
     'https://saes5.onrender.com',
 ]
@@ -62,7 +62,7 @@ MIDDLEWARE = [
 ]
 
 
-STATIC_URL = '/static/'
+STATIC_URL = '/staticfiles/'
 
 if not DEBUG:
     STATIC_ROOT = BASE_DIR / 'staticfiles'
