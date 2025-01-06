@@ -28,11 +28,11 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'saes5.onrender.com']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': config('DB_NAME'),        # pas de default
-        'USER': config('DB_USER'),        # pas de default
-        'PASSWORD': config('DB_PASSWORD'),# pas de default
-        'HOST': config('DB_HOST', default='127.0.0.1'),  # éventuellement un fallback
-        'PORT': config('DB_PORT', default='3306'),       # éventuellement un fallback
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST', default='127.0.0.1'),
+        'PORT': config('DB_PORT', default='3306'),
     }
 }
 
@@ -60,11 +60,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_otp.middleware.OTPMiddleware',
 ]
-
-TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_ACCOUNT_SID', 'votre_account_sid')
-TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_AUTH_TOKEN', 'votre_auth_token')
-TWILIO_PHONE_NUMBER = os.environ.get('TWILIO_PHONE_NUMBER', '+33XXXXXXXXX')
-
 
 
 STATIC_URL = '/static/'
@@ -135,10 +130,11 @@ CSRF_COOKIE_SAMESITE = 'Lax'
 
 X_FRAME_OPTIONS = 'DENY'
 
-SECURE_SSL_REDIRECT = True  # Redirige automatiquement les requêtes HTTP vers HTTPS
 
-SECURE_HSTS_SECONDS = 31536000  # Durée d'activation (1 an)
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Applique le HSTS aux sous-domaines
-SECURE_HSTS_PRELOAD = True  # Prépare le site pour le préchargement HSTS
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
