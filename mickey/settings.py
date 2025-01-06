@@ -24,6 +24,19 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'saes5.onrender.com']
 
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': config('DB_NAME'),        # pas de default
+        'USER': config('DB_USER'),        # pas de default
+        'PASSWORD': config('DB_PASSWORD'),# pas de default
+        'HOST': config('DB_HOST', default='127.0.0.1'),  # éventuellement un fallback
+        'PORT': config('DB_PORT', default='3306'),       # éventuellement un fallback
+    }
+}
+
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -52,16 +65,7 @@ TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_ACCOUNT_SID', 'votre_account_sid')
 TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_AUTH_TOKEN', 'votre_auth_token')
 TWILIO_PHONE_NUMBER = os.environ.get('TWILIO_PHONE_NUMBER', '+33XXXXXXXXX')
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('DB_NAME', 'cybermouse_db'),
-        'USER': os.environ.get('DB_USER', '384089'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'A(h0U1ch0U!'),
-        'HOST': os.environ.get('DB_HOST', 'mysql-cybermouse.alwaysdata.net'),
-        'PORT': os.environ.get('DB_PORT', '3306'),
-    }
-}
+
 
 STATIC_URL = '/static/'
 
@@ -91,11 +95,15 @@ TEMPLATES = [
 ]
 
 SMTP_CONFIG = {
-    "SERVER": "smtp-cybermouse.alwaysdata.net",
-    "PORT": 587,
-    "USERNAME": os.getenv("SMTP_USERNAME", "cybermouse@alwaysdata.net"),
-    "PASSWORD": os.getenv("SMTP_PASSWORD", "A(h0U1ch0U!"),
+    # On peut garder des valeurs par défaut pour les éléments non-sensibles
+    "SERVER": config('SMTP_SERVER', default="smtp-cybermouse.alwaysdata.net"),
+    "PORT": config('SMTP_PORT', default=587, cast=int),
+
+    # Pour les credentials, on ne met PAS de défaut
+    "USERNAME": config('SMTP_USERNAME'),
+    "PASSWORD": config('SMTP_PASSWORD'),
 }
+
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = SMTP_CONFIG["SERVER"]
 EMAIL_PORT = SMTP_CONFIG["PORT"]
@@ -114,38 +122,23 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_ACCOUNT_SID', 'votre_account_sid')
-TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_AUTH_TOKEN', 'votre_auth_token')
-TWILIO_PHONE_NUMBER = os.environ.get('TWILIO_PHONE_NUMBER', '+1 904 637 7917')
-# Sécurise les cookies de sessionSESSION_COOKIE_SECURE = True
-# Empêche l'accès aux cookies via JavaScript
 SESSION_COOKIE_HTTPONLY = True
-# Options possibles : 'Lax', 'Strict', 'None'
 SESSION_COOKIE_SAMESITE = 'Lax'
-# La session expire à la fermeture du navigateur
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-# Durée de vie en secondes (ici, 1 heure)
 SESSION_COOKIE_AGE = 3600
 
-# Utilise HTTPS pour tous les cookies (les cookies ne seront transmis qu'à travers des connexions sécurisées).
 CSRF_COOKIE_SECURE = True
 
-# Empêche JavaScript d'accéder aux cookies CSRF.
 CSRF_COOKIE_HTTPONLY = True
 
-# Définir la politique SameSite pour les cookies CSRF.
 CSRF_COOKIE_SAMESITE = 'Lax'
 
-# Protège contre le "clickjacking".
 X_FRAME_OPTIONS = 'DENY'
 
-# Redirige automatiquement vers HTTPS.
 SECURE_SSL_REDIRECT = True  # Redirige automatiquement les requêtes HTTP vers HTTPS
 
-# Active le HSTS (HTTP Strict Transport Security) pour forcer les navigateurs à n'utiliser que HTTPS.
 SECURE_HSTS_SECONDS = 31536000  # Durée d'activation (1 an)
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Applique le HSTS aux sous-domaines
 SECURE_HSTS_PRELOAD = True  # Prépare le site pour le préchargement HSTS
 
-# Utilisation du backend de session par défaut qui stocke les sessions sur le serveur
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
