@@ -1,12 +1,28 @@
 import os
 from pathlib import Path
 from decouple import config
+
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 ROOT_URLCONF = 'mickey.urls'
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "staticfiles")]
+SECRET_KEY = config('SECRET_KEY', default='fallback_key')
+
+DEBUG = config('DEBUG', default=False, cast=bool)
+
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'saes5.onrender.com']
+
+# --- Static files ---
+STATIC_URL = '/static/'
+if DEBUG:
+    # Utilisé en mode développement uniquement
+    STATICFILES_DIRS = [BASE_DIR / "static"]
+else:
+    # En production, tous les fichiers collectés iront dans STATIC_ROOT
+    STATICFILES_DIRS = []
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 CSRF_TRUSTED_ORIGINS = [
     'https://saes5.onrender.com',
 ]
@@ -16,15 +32,7 @@ AUTH_USER_MODEL = 'auth.User'
 LOGIN_REDIRECT_URL = '/home/'
 LOGIN_URL = '/login/'
 
-
-
-SECRET_KEY = config('SECRET_KEY', default='fallback_key')
-
-DEBUG = config('DEBUG', default=False, cast=bool)
-
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'saes5.onrender.com']
-
-
+# --- Database ---
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -36,7 +44,7 @@ DATABASES = {
     }
 }
 
-
+# --- Installed apps ---
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -50,6 +58,7 @@ INSTALLED_APPS = [
     'django_otp.plugins.otp_static',
 ]
 
+# --- Middleware ---
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -61,23 +70,12 @@ MIDDLEWARE = [
     'django_otp.middleware.OTPMiddleware',
 ]
 
-
-STATIC_URL = '/staticfiles/'
-
-if not DEBUG:
-    STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
-]
+# --- Templates ---
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # Assurez-vous que ce répertoire existe et contient vos fichiers HTML.
-        'APP_DIRS': True,  # Permet à Django de chercher des templates dans les applications installées.
+        'DIRS': [BASE_DIR / 'templates'],  # Chemin vers vos templates personnalisés
+        'APP_DIRS': True,  # Rechercher les templates dans les apps installées
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -89,12 +87,10 @@ TEMPLATES = [
     },
 ]
 
+# --- Email configuration ---
 SMTP_CONFIG = {
-    # On peut garder des valeurs par défaut pour les éléments non-sensibles
     "SERVER": config('SMTP_SERVER', default="smtp-cybermouse.alwaysdata.net"),
     "PORT": config('SMTP_PORT', default=587, cast=int),
-
-    # Pour les credentials, on ne met PAS de défaut
     "USERNAME": config('SMTP_USERNAME'),
     "PASSWORD": config('SMTP_PASSWORD'),
 }
@@ -106,16 +102,13 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = SMTP_CONFIG["USERNAME"]
 EMAIL_HOST_PASSWORD = SMTP_CONFIG["PASSWORD"]
 
-API_CONFIG = {
-    "HOST": "O.0.0.0",
-    "PORT": 8000,
-}
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
-USE_I18N = True
-USE_TZ = True
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# --- Authentication and security ---
+AUTH_PASSWORD_VALIDATORS = [
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
+]
 
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'
@@ -123,18 +116,22 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 3600
 
 CSRF_COOKIE_SECURE = True
-
 CSRF_COOKIE_HTTPONLY = True
-
 CSRF_COOKIE_SAMESITE = 'Lax'
 
 X_FRAME_OPTIONS = 'DENY'
-
 
 SECURE_HSTS_SECONDS = 31536000
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
+# --- Other settings ---
+LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'UTC'
+USE_I18N = True
+USE_TZ = True
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
