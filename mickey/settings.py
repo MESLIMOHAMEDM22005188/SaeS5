@@ -21,7 +21,7 @@ if DEBUG:
 else:
     # En production, tous les fichiers collectés iront dans STATIC_ROOT
     STATICFILES_DIRS = []
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT = BASE_DIR / "static"
 
 CSRF_TRUSTED_ORIGINS = [
     'https://saes5.onrender.com',
@@ -74,8 +74,8 @@ MIDDLEWARE = [
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # Chemin vers vos templates personnalisés
-        'APP_DIRS': True,  # Rechercher les templates dans les apps installées
+        'DIRS': [BASE_DIR / 'templates'],
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
