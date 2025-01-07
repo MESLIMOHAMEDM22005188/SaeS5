@@ -12,11 +12,41 @@ from django.core.mail import send_mail
 from django_ratelimit.decorators import ratelimit
 from .forms import UserCreationFormWithPhone
 from .models import PhoneVerification, EmailVerification
+from .models import QuestionLevelOne, ResultatLevelOne, ReponseLevelOne
 
 
 @login_required
 def test_level1_view(request):
-    return render(request, 'test_level1.html')
+    if request.method == "POST":
+        # Récupérer les réponses soumises par l'utilisateur
+        user_answers = request.POST
+
+        # Calculer le score
+        questions = QuestionLevelOne.objects.all().order_by('numero')
+        score = 0
+        total_questions = questions.count()
+
+        for question in questions:
+            # Obtenir la réponse correcte pour la question
+            correct_answer = question.reponses.filter(est_correcte=True).first()
+
+            # Comparer avec la réponse de l'utilisateur
+            user_answer_id = user_answers.get(f'q{question.id}')
+            if user_answer_id and str(correct_answer.id) == user_answer_id:
+                score += 1
+
+        # Sauvegarder le résultat en base
+        ResultatLevelOne.objects.create(utilisateur=request.user.username, score=score)
+
+        # Afficher un message de résultat et rediriger
+        messages.success(request, f"Vous avez obtenu {score}/{total_questions} bonne(s) réponse(s) !")
+        return redirect('test_level1')
+
+    # Si ce n'est pas une requête POST, afficher les questions
+    questions = QuestionLevelOne.objects.all().order_by('numero')
+    return render(request, 'test_level1.html', {'questions': questions})
+
+
 @ratelimit(key='ip', rate='5/m', block=True)
 def user_login(request):
     """Vue pour la connexion utilisateur."""

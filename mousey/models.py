@@ -12,6 +12,31 @@ class EmailGame(models.Model):
         return self.subject
 
 
+class QuestionLevelOne(models.Model):
+    texte = models.TextField()
+    numero = models.IntegerField()
+    image = models.ImageField(upload_to='quiz_images/', blank=True, null=True)
+
+    def __str__(self):
+        return f"Question{self.numero}: {self.texte}"
+
+class ReponseLevelOne(models.Model):
+    question = models.ForeignKey(QuestionLevelOne, on_delete=models.CASCADE)
+    texte = models.CharField(max_length=200)
+    est_correcte = models.BooleanField(default=False)
+
+
+    def __str__(self):
+        return f"Réponse: {self.texte} (Correcte: {self.est_correcte})"
+
+class ResultatLevelOne(models.Model):
+    utilisateur = models.CharField(max_length=100)
+    score= models.IntegerField()
+    date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.utilisateur} - {self.score} points"
+
 class PhoneVerification(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='phone_verification')
     phone_number = models.CharField(max_length=15, unique=True)

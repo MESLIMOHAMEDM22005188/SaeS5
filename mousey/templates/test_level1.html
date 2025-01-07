@@ -2,129 +2,44 @@
 <html lang="fr">
 <head>
   {% load static %}
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz Cyber Sécu </title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/quizz_1.css' %}">
-    <link rel="icon" type="image/png" href="{% static 'image/logo_bureau.png' %}">
-
+  <title>Quiz Cyber Sécu</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/quizz_1.css' %}">
 </head>
 <body>
   <div class="quiz-container">
     <h1>Quiz : Initiation à la Cyber Sécurité</h1>
-    <p>Répondez à chaque question puis passez à la suivante. À la fin, cliquez sur "Valider".</p>
+    <p>Répondez à chaque question, puis cliquez sur "Valider".</p>
 
-    <!-- Questions -->
-    <div class="question" data-question="0">
-      <h2>1. Le "phishing", c'est :</h2>
-      <label>
-        <input type="radio" name="q1" value="A" />
-        Une technique de pêche en mer
-      </label>
-      <label>
-        <input type="radio" name="q1" value="B" />
-        Une tentative de récupérer vos informations personnelles par mail ou site factice
-      </label>
-      <label>
-        <input type="radio" name="q1" value="C" />
-        Un logiciel antivirus
-      </label>
-      <label>
-        <input type="radio" name="q1" value="D" />
-        Une mise à jour Windows
-      </label>
-    </div>
-
-    <div class="question" data-question="1">
-      <h2>2. Quel mot de passe est le plus sûr ?</h2>
-      <label>
-        <input type="radio" name="q2" value="A" />
-        123456
-      </label>
-      <label>
-        <input type="radio" name="q2" value="B" />
-        password
-      </label>
-      <label>
-        <input type="radio" name="q2" value="C" />
-        P@ssw0rd2025!
-      </label>
-      <label>
-        <input type="radio" name="q2" value="D" />
-        azerty
-      </label>
-    </div>
-
-    <div class="question" data-question="2">
-      <h2>3. Un VPN sert à :</h2>
-      <label>
-        <input type="radio" name="q3" value="A" />
-        Chiffrer et sécuriser la connexion Internet en masquant l’adresse IP
-      </label>
-      <label>
-        <input type="radio" name="q3" value="B" />
-        Écouter de la musique en ligne
-      </label>
-      <label>
-        <input type="radio" name="q3" value="C" />
-        Purger son historique de navigation
-      </label>
-      <label>
-        <input type="radio" name="q3" value="D" />
-        Bloquer les virus sur un PC
-      </label>
-    </div>
-
-    <div class="question" data-question="3">
-      <h2>4. Pour faire un achat en ligne sécurisé, il vaut mieux :</h2>
-      <label>
-        <input type="radio" name="q4" value="A" />
-        Entrer sa carte bancaire sur n’importe quel site
-      </label>
-      <label>
-        <input type="radio" name="q4" value="B" />
-        Se connecter sur un Wi-Fi public non protégé
-      </label>
-      <label>
-        <input type="radio" name="q4" value="C" />
-        Vérifier que le site utilise HTTPS (cadenas) et qu’il est fiable
-      </label>
-      <label>
-        <input type="radio" name="q4" value="D" />
-        Partager ses identifiants bancaires sur un forum
-      </label>
-    </div>
-
-    <div class="question" data-question="4">
-      <h2>5. Est-il conseillé d’envoyer des données sensibles (ex. mots de passe) via un Wi-Fi public ?</h2>
-      <label>
-        <input type="radio" name="q5" value="A" />
-        Oui, c’est toujours sûr
-      </label>
-      <label>
-        <input type="radio" name="q5" value="B" />
-        Non, il y a des risques élevés d’interception
-      </label>
-      <label>
-        <input type="radio" name="q5" value="C" />
-        Uniquement entre minuit et 5h du matin
-      </label>
-      <label>
-        <input type="radio" name="q5" value="D" />
-        Oui, si la connexion est lente
-      </label>
-    </div>
-
-    <!-- Boutons de navigation + Valider -->
-    <div class="nav-buttons">
-      <button id="prevBtn" onclick="prevQuestion()">Précédent</button>
-      <button id="nextBtn" onclick="nextQuestion()">Suivant</button>
-      <button id="checkBtn" onclick="checkAnswers()">Valider</button>
-    </div>
-
-    <div id="result"></div>
+    <!-- Formulaire du quiz -->
+    <form method="post">
+      {% csrf_token %}
+      {% for question in questions %}
+        <div class="question">
+          <h2>{{ question.numero }}. {{ question.texte }}</h2>
+          {% if question.image %}
+            <img src="{{ question.image.url }}" alt="Image de la question" style="max-width: 400px;">
+          {% endif %}
+          {% for reponse in question.reponses.all %}
+            <label>
+              <input type="radio" name="q{{ question.id }}" value="{{ reponse.id }}">
+              {{ reponse.texte }}
+            </label>
+          {% endfor %}
+        </div>
+      {% endfor %}
+      <button type="submit">Valider</button>
+    </form>
   </div>
 
-    <script src="{% static 'js/jeu.js' %}"></script>
+  <!-- Message de succès -->
+  {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+        <p>{{ message }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
 </body>
 </html>
