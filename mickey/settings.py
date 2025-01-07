@@ -15,17 +15,8 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'saes5.onrender.com']
 
 # --- Static files ---
 STATIC_URL = '/static/'
-if DEBUG:
-    # Utilisé en mode développement uniquement
-    STATICFILES_DIRS = [BASE_DIR / "static"]
-else:
-    # En production, tous les fichiers collectés iront dans STATIC_ROOT
-    STATICFILES_DIRS = []
-STATIC_ROOT = BASE_DIR / "static"
-
-CSRF_TRUSTED_ORIGINS = [
-    'https://saes5.onrender.com',
-]
+STATICFILES_DIRS = [BASE_DIR / 'mousey' / 'static']  # ou BASE_DIR / 'static'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 AUTH_USER_MODEL = 'auth.User'
 
