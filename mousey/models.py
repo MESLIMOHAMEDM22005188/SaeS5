@@ -21,14 +21,16 @@ class QuestionLevelOne(models.Model):
         return f"Question{self.numero}: {self.texte}"
 
 class ReponseLevelOne(models.Model):
-    question = models.ForeignKey(QuestionLevelOne, on_delete=models.CASCADE)
+    question = models.ForeignKey(
+        QuestionLevelOne,
+        on_delete=models.CASCADE,
+        related_name='reponses'
+    )
     texte = models.CharField(max_length=200)
     est_correcte = models.BooleanField(default=False)
 
-
     def __str__(self):
         return f"Réponse: {self.texte} (Correcte: {self.est_correcte})"
-
 class ResultatLevelOne(models.Model):
     utilisateur = models.CharField(max_length=100)
     score= models.IntegerField()
