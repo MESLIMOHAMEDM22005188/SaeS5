@@ -13,6 +13,10 @@ from django_ratelimit.decorators import ratelimit
 from .forms import UserCreationFormWithPhone
 from .models import PhoneVerification, EmailVerification
 
+
+@login_required
+def test_level1_view(request):
+    return render(request, 'test_level1.html')
 @ratelimit(key='ip', rate='5/m', block=True)
 def user_login(request):
     """Vue pour la connexion utilisateur."""

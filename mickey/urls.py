@@ -15,7 +15,8 @@ urlpatterns = [
     path('levelTwo/', views.level_two, name='level_two'),
     path('levelThree/', views.level_three, name='level_three'),
     path('verify-email/', views.verify_email, name='verify_email'),
-    path('screen-warning/', views.screen_warning, name='screen_warning')
+    path('screen-warning/', views.screen_warning, name='screen_warning'),
+    path('levelOneQuizz/', views.level_one_quizz, name='level_one_quizz')
 ]
 
 
