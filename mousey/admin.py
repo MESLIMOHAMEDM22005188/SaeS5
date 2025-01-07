@@ -3,6 +3,7 @@ from django.contrib import admin
 from .models import QuestionLevelOne, ReponseLevelOne, ResultatLevelOne
 
 
+@admin.register(ReponseLevelOne)
 class ReponseInline(admin.TabularInline):
     model = ReponseLevelOne
     extra = 1
