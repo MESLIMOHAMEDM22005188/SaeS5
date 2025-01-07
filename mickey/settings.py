@@ -125,3 +125,6 @@ USE_I18N = True
 USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+TWILIO_ACCOUNT_SID = config('TWILIO_ACCOUNT_SID', default='your_account_sid')
+TWILIO_AUTH_TOKEN = config('TWILIO_AUTH_TOKEN', default='your_auth_token')
+TWILIO_PHONE_NUMBER = config('TWILIO_PHONE_NUMBER', default='+1234567890')
