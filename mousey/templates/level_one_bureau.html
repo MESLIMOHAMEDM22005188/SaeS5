@@ -17,20 +17,20 @@
             <div class="app-name">Bouklook</div>
         </div>
         <div class="app-ico">
-            <img src="{% static 'image/gogole.png' %}" alt="gogole" class="gogole-app">
+            <img src="{% static 'image/gogole.png' %}" alt="gogole" class="gogole-app" onclick="openWhiteBox()">
             <div class="app-name">Gogole</div>
         </div>
     </div>
-</div>
+</div> <!-- Manquait cette fermeture pour "content" -->
+
 <div class="points-display" id="points-display">
     Points: 0
 </div>
 
-
 <!-- Barre inférieure -->
 <div class="bottom-bar">
     <div class="left-info">
-        <img src="{% static 'image/bouttonMA.png' %}" alt="boutton" class="bouttonMA">
+        <img src="{% static 'image/bouttonMA.png' %}" alt="bouton" class="bouttonMA"> <!-- Corrected spelling "bouton" -->
     </div>
     <div class="center-app">
         <img src="{% static 'image/window11.png' %}" alt="window" class="window">
@@ -39,28 +39,41 @@
     <div class="right-info">
         <img src="{% static 'image/eternaite.png' %}" alt="internet" class="icon1">
         <img src="{% static 'image/batterie.png' %}" alt="batterie" class="batterie">
-        <img src="{% static 'image/son.png' %}" alt="Son" class="icon">
+        <img src="{% static 'image/son.png' %}" alt="son" class="icon"> <!-- Corrected spelling "Son" to "son" -->
         <img src="{% static 'image/heure.png' %}" alt="heure" class="heure">
     </div>
 </div>
 
+<div id="white-box" style="display:none; width:200px; height:200px; background-color:white; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);"></div>
+
 <!-- Fenêtre des emails -->
-    <div id="email-window">
-        <header>
-            <span>Boîte de réception</span>
-            <img src="{% static 'image/close.png' %}" alt="Fermer" id="close-email-window" class="a">
-        </header>
-        <div class="email-interface">
-            <div class="email-list">
-                <ul id="email-titles">
-                    <!-- Titres des emails -->
-                </ul>
-            </div>
-            <div class="email-content" id="email-content">
-            </div>
+<div id="email-window">
+    <header>
+        <span>Boîte de réception</span>
+        <img src="{% static 'image/close.png' %}" alt="Fermer" id="close-email-window" class="a">
+    </header>
+    <div class="email-interface">
+        <div class="email-list">
+            <ul id="email-titles">
+                <!-- Titres des emails -->
+            </ul>
+        </div>
+        <div class="email-content" id="email-content">
+            <!-- Contenu des emails -->
         </div>
     </div>
+</div>
 
-    <script src="{% static 'js/emailWindow.js' %}"></script>
+<script src="{% static 'js/emailWindow.js' %}"></script>
+<script>
+function openWhiteBox() {
+    var whiteBox = document.getElementById('white-box');
+    if (whiteBox.style.display === 'none') {
+        whiteBox.style.display = 'block';
+    } else {
+        whiteBox.style.display = 'none';
+    }
+}
+</script>
 </body>
 </html>
