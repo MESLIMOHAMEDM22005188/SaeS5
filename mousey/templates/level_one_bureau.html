@@ -7,28 +7,6 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/Bureau.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/emailWindow.css' %}">
-    <style>
-        #white-box {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: white;
-            z-index: 1000;
-            opacity: 0.9; /* Légère transparence */
-        }
-        #close-btn {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            cursor: pointer;
-            font-size: 24px;
-            font-weight: bold;
-            color: black; /* Couleur de la croix */
-        }
-    </style>
 </head>
 <body>
 
@@ -39,40 +17,58 @@
             <div class="app-name">Bouklook</div>
         </div>
         <div class="app-ico">
-            <img src="{% static 'image/gogole.png' %}" alt="gogole" class="gogole-app" onclick="toggleWhiteBox()">
+            <img src="{% static 'image/gogole.png' %}" alt="gogole" class="gogole-app" onclick="openWhiteBox()">
             <div class="app-name">Gogole</div>
         </div>
     </div>
 </div>
 
-<div id="white-box">
-    <span id="close-btn" onclick="toggleWhiteBox()">×</span>
+<div class="points-display" id="points-display">
+    Points: 0
 </div>
 
-<!-- Fenêtre des emails -->
+<div class="bottom-bar">
+    <div class="left-info">
+        <img src="{% static 'image/bouttonMA.png' %}" alt="bouton" class="bouttonMA">
+    </div>
+    <div class="center-app">
+        <img src="{% static 'image/window11.png' %}" alt="window" class="window">
+        <img src="{% static 'image/outlook.png' %}" alt="outlook" class="outlook" onclick="openEmailWindow()">
+    </div>
+    <div class="right-info">
+        <img src="{% static 'image/eternaite.png' %}" alt="internet" class="icon1">
+        <img src="{% static 'image/batterie.png' %}" alt="batterie" class="batterie">
+        <img src="{% static 'image/son.png' %}" alt="son" class="icon">
+        <img src="{% static 'image/heure.png' %}" alt="heure" class="heure">
+    </div>
+</div>
+
+<div id="white-box" style="display:none; width:1200px; height:1000px; background-color:white; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);"></div>
+
 <div id="email-window">
     <header>
         <span>Boîte de réception</span>
-        <img src="{% static 'image/close.png' %}" alt="Fermer" id="close-email-window" onclick="closeEmailWindow()">
+        <img src="{% static 'image/close.png' %}" alt="Fermer" id="close-email-window" class="a">
     </header>
     <div class="email-interface">
         <div class="email-list">
             <ul id="email-titles">
-                <!-- Titres des emails -->
             </ul>
         </div>
         <div class="email-content" id="email-content">
-            <!-- Contenu des emails -->
         </div>
     </div>
 </div>
 
 <script src="{% static 'js/emailWindow.js' %}"></script>
 <script>
-function toggleWhiteBox() {
+function openWhiteBox() {
     var whiteBox = document.getElementById('white-box');
-    var display = whiteBox.style.display;
-    whiteBox.style.display = display === 'block' ? 'none' : 'block';
+    if (whiteBox.style.display === 'none') {
+        whiteBox.style.display = 'block';
+    } else {
+        whiteBox.style.display = 'none';
+    }
 }
 </script>
 </body>
