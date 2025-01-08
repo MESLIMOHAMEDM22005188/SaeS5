@@ -5,56 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bureau Niveau 1</title>
     {% load static %}
-        <link rel="icon" type="image/png" href="{% static 'image/logo_bureau.png' %}">
-
     <link rel="stylesheet" type="text/css" href="{% static 'css/Bureau.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/emailWindow.css' %}">
 </head>
 <body>
-    <div class="content">
-        <img src="{% static 'image/outlook.png' %}" alt="Outlook App" class="outlook-app" id="open-email-window">
-    </div>
 
-
-    <div class="bottom-bar">
-        <div class="left-info">
-            <img src="{% static 'image/bouttonMA.png' %}" alt="Bouton Menu" class="bouttonMA">
+<div class="content">
+    <div class="bureau">
+        <div class="app-ico">
+            <img src="{% static 'image/bouklook.png' %}" alt="outlook" class="outlook-app" onclick="openEmailWindow()">
+            <div class="app-name">Bouklook</div>
         </div>
-        <div class="center-app">
-            <img src="{% static 'image/window11.png' %}" alt="Windows Icon" class="window">
-
-            <img src="{% static 'image/outlook.png' %}" alt="Outlook App" class="outlook-app" onclick="openEmailWindow()">
-        </div>
-        <div class="right-info">
-            <img src="{% static 'image/eternaite.png' %}" alt="Internet Icon" class="icon1">
-            <img src="{% static 'image/batterie.png' %}" alt="Batterie Icon" class="batterie">
-            <img src="{% static 'image/son.png' %}" alt="Volume Icon" class="sound">
-            <img src="{% static 'image/heure.png' %}" alt="Horloge" class="heure">
+        <div class="app-ico">
+            <img src="{% static 'image/gogole.png' %}" alt="gogole" class="gogole-app">
+            <div class="app-name">Gogole</div>
         </div>
     </div>
+</div>
+<div class="points-display" id="points-display">
+    Points: 0
+</div>
 
-    <div id="game-window" class="game-window">
-        <header>
-            <span>Fenêtre de jeu</span>
-            <img src="{% static 'image/close.png' %}" alt="Fermer" id="close-game-window" class="close-btn">
-        </header>
-        <div id="game-content">
-        </div>
+
+<!-- Barre inférieure -->
+<div class="bottom-bar">
+    <div class="left-info">
+        <img src="{% static 'image/bouttonMA.png' %}" alt="boutton" class="bouttonMA">
     </div>
+    <div class="center-app">
+        <img src="{% static 'image/window11.png' %}" alt="window" class="window">
+        <img src="{% static 'image/outlook.png' %}" alt="outlook" class="outlook" onclick="openEmailWindow()">
+    </div>
+    <div class="right-info">
+        <img src="{% static 'image/eternaite.png' %}" alt="internet" class="icon1">
+        <img src="{% static 'image/batterie.png' %}" alt="batterie" class="batterie">
+        <img src="{% static 'image/son.png' %}" alt="Son" class="icon">
+        <img src="{% static 'image/heure.png' %}" alt="heure" class="heure">
+    </div>
+</div>
 
-    <div id="email-window" class="email-window">
+<!-- Fenêtre des emails -->
+    <div id="email-window">
         <header>
             <span>Boîte de réception</span>
-            <img src="{% static 'image/close.png' %}" alt="Fermer" id="close-email-window" class="close-btn">
+            <img src="{% static 'image/close.png' %}" alt="Fermer" id="close-email-window" class="a">
         </header>
         <div class="email-interface">
             <div class="email-list">
-                <ul id="email-titles"></ul>
+                <ul id="email-titles">
+                    <!-- Titres des emails -->
+                </ul>
             </div>
-            <div class="email-content" id="email-content"></div>
+            <div class="email-content" id="email-content">
+            </div>
         </div>
     </div>
 
     <script src="{% static 'js/emailWindow.js' %}"></script>
-    <script src="{% static 'js/gameWindow.js' %}"></script>
 </body>
 </html>
