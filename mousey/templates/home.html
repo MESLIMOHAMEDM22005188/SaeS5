@@ -10,21 +10,34 @@
 
 </head>
 <body>
-
 <div class="container">
-    <a href="{% url 'level_one' %}" class="card">
-        <div>Niveau 1</div>
-        <div>0/7</div>
-    </a>
-    <a href="{% url 'level_two' %}" class="card">
-        <div>Niveau 2</div>
-        <div>0/5</div>
-    </a>
-    <a href="{% url 'level_three' %}" class="card">
-        <div>Niveau 3</div>
-        <div>0/6</div>
-    </a>
-</div>
+    <!-- Niveau 1 -->
+    <div class="level">
+        <a href="{% url 'level_one' %}" class="card">
+            <div>Niveau 1</div>
+            <div>0/7</div>
+        </a>
+        <a href="{% url 'level_one_quizz' %}" class="test-card">FAIRE LE TEST</a>
+    </div>
 
+    <!-- Niveau 2 -->
+    <div class="level">
+        <a href="{% url 'level_two' %}" class="card">
+            <div>Niveau 2</div>
+            <div>0/5</div>
+        </a>
+        <a href="{% url 'level_two_quizz' %}" class="test-card">FAIRE LE TEST</a>
+    </div>
+
+    <!-- Niveau 3 -->
+    <div class="level">
+        <a href="{% url 'level_three' %}" class="card">
+            <div>Niveau 3</div>
+            <div>0/6</div>
+        </a>
+        <a href="{% url 'level_three_quizz' %}" class="test-card">FAIRE LE TEST</a>
+    </div>
+</div>
 </body>
 </html>
+

@@ -1,39 +1,74 @@
 body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #000;
-  margin: 0;
-  font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000;
+    margin: 0;
+    font-family: Arial, sans-serif;
 }
 
 .container {
-  display: flex;
-  gap: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.level {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Espacement entre le niveau et le test */
 }
 
 .card {
-  width: 280px;
-  height: 400px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 15px;
-  color: #000;
-  font-weight: bold;
-  font-size: 3em;
+    width: 280px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    color: #000;
+    font-weight: bold;
+    font-size: 2em;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.05); /* Zoom au survol */
 }
 
 .card:nth-child(1) {
-  background: linear-gradient(135deg, #32CD32, #98FB98);
+    background: linear-gradient(135deg, #32CD32, #98FB98);
 }
 
 .card:nth-child(2) {
-  background: linear-gradient(135deg, #FFD700, #ADFF2F);
+    background: linear-gradient(135deg, #FFD700, #ADFF2F);
 }
 
 .card:nth-child(3) {
-  background: linear-gradient(135deg, #8A2BE2, #FF6347);
+    background: linear-gradient(135deg, #8A2BE2, #FF6347);
+}
+
+.test-card {
+    width: 180px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    color: white;
+    font-weight: bold;
+    font-size: 1em;
+    text-align: center;
+    cursor: pointer;
+    background: linear-gradient(135deg, #6A5ACD, #9370DB); /* Violet gradient */
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.test-card:hover {
+    transform: scale(1.1); /* Zoom au survol */
+    background: linear-gradient(135deg, #9370DB, #6A5ACD); /* Inverse le dégradé */
 }
