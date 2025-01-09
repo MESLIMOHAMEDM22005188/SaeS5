@@ -42,9 +42,6 @@
         <img src="{% static 'image/heure.png' %}" alt="heure" class="heure">
     </div>
 </div>
-
-<div id="white-box" style="display:none; width:1200px; height:1000px; background-color:white; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);"></div>
-
 <div id="email-window">
     <header>
         <span>Boîte de réception</span>
@@ -59,17 +56,10 @@
         </div>
     </div>
 </div>
-
+<div class="white-box" id="white-box">
+    <button class="close-btn" onclick="closeWhiteBox()">X</button>
+</div>
 <script src="{% static 'js/emailWindow.js' %}"></script>
-<script>
-function openWhiteBox() {
-    var whiteBox = document.getElementById('white-box');
-    if (whiteBox.style.display === 'none') {
-        whiteBox.style.display = 'block';
-    } else {
-        whiteBox.style.display = 'none';
-    }
-}
-</script>
+<script src="{% static 'js/googleWindow.js' %}"></script>
 </body>
 </html>

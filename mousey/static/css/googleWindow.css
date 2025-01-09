@@ -1,0 +1,26 @@
+.white-box {
+    width: 200px; /* Largeur du carré */
+    height: 200px; /* Hauteur du carré */
+    background-color: white; /* Couleur de fond blanche */
+    border: 2px solid #000; /* Bordure noire pour distinguer le carré */
+    border-radius: 5px; /* Coins légèrement arrondis */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Effet d'ombre */
+    display: none; /* Caché par défaut */
+    position: absolute; /* Positionnement précis */
+    top: 50%; /* Centrer verticalement */
+    left: 50%; /* Centrer horizontalement */
+    transform: translate(-50%, -50%); /* Ajustement pour le centrage */
+    z-index: 1000; /* Priorité d'affichage au-dessus des autres éléments */
+}
+
+.white-box .close-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: #f44336; /* Rouge */
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 5px;
+    cursor: pointer;
+}
