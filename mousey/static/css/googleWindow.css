@@ -1,26 +1,24 @@
 .white-box {
-    width: 200px; /* Largeur du carré */
-    height: 200px; /* Hauteur du carré */
+    width: 100vw; /* Prend toute la largeur de la fenêtre */
+    height: 100vh; /* Prend toute la hauteur de la fenêtre */
     background-color: white; /* Couleur de fond blanche */
-    border: 2px solid #000; /* Bordure noire pour distinguer le carré */
-    border-radius: 5px; /* Coins légèrement arrondis */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Effet d'ombre */
+    position: fixed; /* Position fixe pour qu'elle reste visible lors du défilement */
+    top: 0; /* Aligne en haut de la fenêtre */
+    left: 0; /* Aligne à gauche de la fenêtre */
     display: none; /* Caché par défaut */
-    position: absolute; /* Positionnement précis */
-    top: 50%; /* Centrer verticalement */
-    left: 50%; /* Centrer horizontalement */
-    transform: translate(-50%, -50%); /* Ajustement pour le centrage */
     z-index: 1000; /* Priorité d'affichage au-dessus des autres éléments */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Effet d'ombre pour un meilleur contraste */
 }
 
 .white-box .close-btn {
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 10px;
+    right: 10px;
     background-color: #f44336; /* Rouge */
     color: white;
     border: none;
     border-radius: 3px;
-    padding: 5px;
+    padding: 10px;
     cursor: pointer;
+    font-size: 16px;
 }

@@ -7,6 +7,7 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/Bureau.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/emailWindow.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/whiteBox.css' %}">
 </head>
 <body>
 
@@ -42,6 +43,8 @@
         <img src="{% static 'image/heure.png' %}" alt="heure" class="heure">
     </div>
 </div>
+
+<!-- Fenêtre de courrier électronique -->
 <div id="email-window">
     <header>
         <span>Boîte de réception</span>
@@ -56,10 +59,14 @@
         </div>
     </div>
 </div>
+
+<!-- Carré blanc -->
 <div class="white-box" id="white-box">
     <button class="close-btn" onclick="closeWhiteBox()">X</button>
 </div>
+
 <script src="{% static 'js/emailWindow.js' %}"></script>
 <script src="{% static 'js/googleWindow.js' %}"></script>
+<script src="{% static 'js/whiteBox.js' %}"></script>
 </body>
 </html>
