@@ -1,42 +1,42 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Connexion</title>
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/loginStyle.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion</title>
+    <link rel="stylesheet" href="{% static 'css/loginStyle.css' %}">
 </head>
 <body>
     <div class="rectangle">
-        <h2 class="titre">Connexion</h2>
-        <form method="POST">
-            {% csrf_token %}
-            <label class="label-username" for="id_username">Nom d'utilisateur</label>
-            {{ form.username }}
-            <br>
+        <header>
+            <h1 class="titre">Connexion</h1>
+        </header>
+        <main>
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <label for="username" class="label-username">Nom d'utilisateur :</label>
+                <input type="text" id="username" name="username" placeholder="Votre nom d'utilisateur" required>
 
-            <label class="label-password" for="id_password">Mot de passe</label>
-            {{ form.password }}
+                <label for="password" class="label-password">Mot de passe :</label>
+                <input type="password" id="password" name="password" placeholder="Votre mot de passe" required>
 
-            <button type="button" id="togglePassword" onclick="togglePasswordVisibility()">Voir mot de passe</button>
+                <label class="toggle-password">
+                    <input type="checkbox" onclick="togglePassword()"> Afficher le mot de passe
+                </label>
 
-            <button type="submit">Se connecter</button>
-        </form>
-        <p class="texte-acceuil">Vous n'avez pas de compte ? <a href="{% url 'register' %}">Inscription</a></p>
+                <input type="hidden" name="next" value="{{ next }}">
+                <button type="submit">Se connecter</button>
+            </form>
+
+            <p class="texte-acceuil">Vous n'avez pas de compte ? <a href="{% url 'register' %}">Inscrivez-vous ici</a>.</p>
+        </main>
     </div>
 
     <script>
-        function togglePasswordVisibility() {
-            const passwordField = document.getElementById("id_password");
-            const toggleButton = document.getElementById("togglePassword");
-
-            if (passwordField.type === "password") {
-                passwordField.type = "text";
-                toggleButton.textContent = "Cacher mot de passe";
-            } else {
-                passwordField.type = "password";
-                toggleButton.textContent = "Voir mot de passe";
-            }
+        function togglePassword() {
+            const passwordField = document.getElementById("password");
+            passwordField.type = passwordField.type === "password" ? "text" : "password";
         }
     </script>
 </body>

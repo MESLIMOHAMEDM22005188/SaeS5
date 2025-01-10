@@ -1,16 +1,24 @@
-from django.contrib.auth.models import User
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from .models import PhoneVerification
 
-class CustomUserCreationForm(UserCreationForm):
-    email = forms.EmailField(required=True, label="Adresse e-mail")
+
+class UserCreationFormWithPhone(UserCreationForm):
+    phone_number = forms.CharField(
+        required=True,
+        label="Numéro de téléphone",
+        widget=forms.TextInput(attrs={'placeholder': 'Ex: +33012345678'}),
+    )
 
     class Meta:
-        model = User  # Utilise maintenant le modèle auth.User
-        fields = ['username', 'email', 'password1', 'password2']
+        model = User
+        fields = ['username','email', 'phone_number', 'password1', 'password2']
 
-    def clean_username(self):
-        username = self.cleaned_data.get('username')
-        if User.objects.filter(username=username).exists():
-            raise forms.ValidationError("Ce nom d'utilisateur est déjà pris.")
-        return username
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data.get('phone_number')
+        if PhoneVerification.objects.filter(phone_number=phone_number).exists():
+            raise forms.ValidationError("Ce numéro de téléphone est déjà utilisé.")
+        return phone_number
+
+

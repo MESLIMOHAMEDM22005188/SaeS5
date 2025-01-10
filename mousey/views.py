@@ -1,127 +1,240 @@
-import os
-
+import re
+import uuid
+from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, get_user_model
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
+from django.core.management import BaseCommand
 from django.shortcuts import render, redirect
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
-
-from mousey.forms import CustomUserCreationForm
-
-
-# Fonction d'envoi d'e-mails
-def send_email(subject, to_email, body):
-    message = Mail(
-        from_email='pacmanthebossofhack@gmail.com',  # Remplacez par une adresse e-mail vérifiée
-        to_emails=to_email,
-        subject=subject,
-        html_content=body
-    )
-    try:
-        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
-        response = sg.send(message)
-        print(f"Email envoyé avec le statut: {response.status_code}")
-        return response
-    except Exception as e:
-        print(f"Erreur lors de l'envoi de l'e-mail: {e}")
-        return None
+from django.utils.timezone import now
+from python_http_client import Client
+from django.core.mail import send_mail
+from django_ratelimit.decorators import ratelimit
+from .forms import UserCreationFormWithPhone
+from .models import PhoneVerification, EmailVerification
+from .models import QuestionLevelOne, ResultatLevelOne, ReponseLevelOne
 
 
-# Vue pour la page d'inscription
-def register(request):
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)  # Utilisation du formulaire personnalisé
-        if form.is_valid():
-            user = form.save()
-            # Envoi d'e-mail de bienvenue
-            email_status = send_email(
-                subject="Bienvenue sur notre plateforme !",
-                to_email=user.email,  # Utilisation de l'e-mail saisi par l'utilisateur
-                body=f"""
-                    <h1>Bonjour {user.username},</h1>
-                    <p>Merci de vous être inscrit sur notre site. Nous espérons que vous apprécierez votre expérience.</p>
-                    <p>Cordialement,</p>
-                    <p>L'équipe</p> 
-
-                    """
-            )
-            if email_status:
-                messages.success(request,
-                                 'Votre compte a été créé avec succès ! Un e-mail de bienvenue vous a été envoyé.')
-            else:
-                messages.warning(request,
-                                 'Votre compte a été créé, mais l\'e-mail de bienvenue n\'a pas pu être envoyé.')
-
-            return redirect('login')
-    else:
-        form = CustomUserCreationForm()
-
-    return render(request, 'register.html', {'form': form})
-
-
-# Vue pour la connexion des utilisateurs
-def login(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                auth_login(request, user)
-                messages.success(request, f'Bienvenue {username} ! Vous êtes connecté.')
-                return redirect('home')
-            else:
-                messages.error(request, 'Identifiants invalides. Veuillez réessayer.')
-        else:
-            messages.error(request, 'Identifiants invalides. Veuillez réessayer.')
-    else:
-        form = AuthenticationForm()
-
-    return render(request, 'login.html', {'form': form})
-
-
-# Vue pour la page d'accueil
 @login_required
-def home(request):
-    return render(request, 'home.html')
+def test_level1_view(request):
+    if request.method == "POST":
+        # Récupérer les réponses soumises par l'utilisateur
+        user_answers = request.POST
+
+        # Calculer le score
+        questions = QuestionLevelOne.objects.all().order_by('numero')
+        score = 0
+        total_questions = questions.count()
+
+        for question in questions:
+            # Obtenir la réponse correcte pour la question
+            correct_answer = question.reponses.filter(est_correcte=True).first()
+
+            # Comparer avec la réponse de l'utilisateur
+            user_answer_id = user_answers.get(f'q{question.id}')
+            if user_answer_id and str(correct_answer.id) == user_answer_id:
+                score += 1
+
+        # Sauvegarder le résultat en base
+        ResultatLevelOne.objects.create(utilisateur=request.user.username, score=score)
+
+        # Afficher un message de résultat et rediriger
+        messages.success(request, f"Vous avez obtenu {score}/{total_questions} bonne(s) réponse(s) !")
+        return redirect('test_level1')
+
+    # Si ce n'est pas une requête POST, afficher les questions
+    questions = QuestionLevelOne.objects.all().order_by('numero')
+    return render(request, 'test_level1.html', {'questions': questions})
 
 
-# Vue pour le niveau 1
-@login_required
-def level_one(request):
+@ratelimit(key='ip', rate='5/m', block=True)
+def user_login(request):
+    """Vue pour la connexion utilisateur."""
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        # Vérifie l'identifiant et le mot de passe
+        user = authenticate(request, username=username, password=password)
+        if user:
+            if not user.is_active:
+                messages.error(request, "Votre compte n'est pas activé. Veuillez vérifier votre e-mail.")
+            else:
+                auth_login(request, user)
+                messages.success(request, "Connexion réussie !")
+                return redirect('home')
+        else:
+            messages.error(request, "Nom d'utilisateur ou mot de passe incorrect.")
+    return render(request, 'registration/login.html')
+
+
+def envoyer_email():
+    send_mail(
+        subject="test email",
+        message="Ceci est un test envoyé via AlwaysData",
+        from_email="cybermouse@alwaysdata.net",
+        recipient_list=["pacmanthebossofhack@gmail.com"],
+        fail_silently=False,
+    )
+
+
+def send_verification_email(user):
+    code = uuid.uuid4().hex[:6].upper()
+    email_verification, created = EmailVerification.objects.get_or_create(
+        user=user,
+        defaults={
+            "email": user.email,
+            "verification_code": code,
+        }
+    )
+    if not created:
+        email_verification.verification_code = code
+        email_verification.save()
+
+    send_mail(
+        subject="Vérification de votre adresse e-mail",
+        message=f"Votre code de vérification est : {code}",
+        from_email="cybermouse@alwaysdata.net",
+        recipient_list=[user.email],
+        fail_silently=False,
+    )
+
+
+def send_verification_sms(phone_number, code):
+    """Envoi d'un SMS de vérification."""
+    client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+    try:
+        client.messages.create(
+            body=f"Votre code de vérification est: {code}",
+            from_=settings.TWILIO_PHONE_NUMBER,
+            to=phone_number,
+        )
+    except Exception as e:
+        print(f"Erreur lors de l'envoi du SMS: {e}")
+
+
+def verify_email(request):
+    if request.method == 'POST':
+        code = request.POST.get('code')
+        email_verification = EmailVerification.objects.filter(verification_code=code).first()
+        if email_verification:
+            email_verification.is_verified = True
+            email_verification.save()
+            return redirect('home')
+        else:
+            messages.error(request, "Code invalide.")
+    return render(request, 'verify_email.html')
+
+def register(request):
+    """Vue pour enregistrer un utilisateur et ajouter un numéro de téléphone et un email."""
+    if request.method == 'POST':
+        form = UserCreationFormWithPhone(request.POST)
+        if form.is_valid():
+            user = form.save()
+            phone_number = form.cleaned_data['phone_number']
+            email = form.cleaned_data['email']
+
+            phone_verification = PhoneVerification.objects.create(
+                user=user,
+                phone_number=phone_number
+            )
+            email_verification = EmailVerification.objects.create(
+                user=user,
+                email=email
+            )
+            phone_verification.generate_code()
+            email_verification.generate_code()
+
+            send_verification_sms(phone_number, phone_verification.verification_code)
+
+            send_verification_email(user)
+
+            messages.success(
+                request,
+                "Un code de vérification a été envoyé à votre téléphone et à votre adresse e-mail."
+            )
+            return redirect('verify', identifier=user.username)
+        else:
+            messages.error(request, "Erreur dans le formulaire. Veuillez vérifier vos informations.")
+    else:
+        form = UserCreationFormWithPhone()
+
+    return render(request, 'register.html', {'form': form})
+
+
+def verify(request, identifier):
+    """Vérification du compte via un code SMS."""
+    user = get_user_model().objects.filter(username=identifier).first()
+    if not user:
+        messages.error(request, "Utilisateur introuvable.")
+        return redirect('register')
+
+    if request.method == 'POST':
+        code = request.POST.get('code')
+        phone_verification = PhoneVerification.objects.filter(user=user).first()
+
+        if phone_verification and phone_verification.verification_code == code:
+            if phone_verification.code_expiration > now():
+                phone_verification.is_verified = True
+                phone_verification.save()
+                messages.success(request, "Votre numéro a été vérifié avec succès.")
+                return redirect('verify_email')  # Redirige vers la vérification de l'email
+            else:
+                messages.error(request, "Le code a expiré.")
+        else:
+            messages.error(request, "Code incorrect.")
+
+    return render(request, 'verify.html', {'identifier': identifier})
+
+@login_required
+def home(request):
+    """Page d'accueil."""
+    return render(request, 'home.html')
+
+@login_required
+def screen_warning(request):
+    """Affiche un écran noir avec un message de sensibilisation."""
+    return render(request, 'screen_warning.html')
+
+@login_required
+def level_one(request):
+    """Page pour le niveau 1."""
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
         if username == "utilisateur4" and password == "01234":
-            return redirect('level_one_bureau')
+            return redirect('screen_warning')
         else:
             messages.error(request, "Identifiant ou mot de passe incorrect.")
-
     return render(request, 'level_one.html')
 
 
-# Vue pour le bureau du niveau 1
+
 @login_required
 def level_one_bureau(request):
+    """Page pour le bureau du niveau 1."""
     return render(request, 'level_one_bureau.html')
 
 
-# Vue pour le niveau 2
 @login_required
 def level_two(request):
+    """Page pour le niveau 2."""
     return render(request, 'level_two.html')
 
 
-# Vue pour le niveau 3
 @login_required
 def level_three(request):
+    """Page pour le niveau 3."""
     return render(request, 'level_three.html')
 
 #vue pour la page du navigateur internet du premier niveau.
 def browser_level_one(request):
     return render(request, 'browser.html')
+
+
+class Command(BaseCommand):
+    help = 'Supprime les codes de vérification expirés'
+
+    def handle(self, *args, **kwargs):
+        EmailVerification.objects.filter(code_expiration__lt=now()).delete()
+        PhoneVerification.objects.filter(code_expiration__lt=now()).delete()
+        self.stdout.write("Codes expirés supprimés.")

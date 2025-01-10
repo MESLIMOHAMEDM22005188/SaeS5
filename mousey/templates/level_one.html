@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Niveau 1</title>
     {% load static %}
+        <link rel="icon" type="image/png" href="{% static 'image/logo_bureau.png' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/levelOne.css' %}">
 </head>
 <body>
@@ -15,7 +16,6 @@
             01234
         </label>
     </div>
-
     <form method="POST">
         {% csrf_token %}
         <div class="textZone">

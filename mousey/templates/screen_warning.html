@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="{% static 'image/logo_bureau.png' %}">
+    <title>Screen Warning</title>
+
+    <script>
+        setTimeout(function() {
+            window.location.href = "{% url 'level_one_bureau' %}";
+        }, 5000);
+    </script>
+</head>
+<body>
+    <div class="message">
+        <p>
+            Comme vous pouvez le voir, vous avez accédé à cet ordinateur grâce au
+            <span class="highlight">Post-it</span> contenant les identifiants laissé sur l'écran.
+        </p>
+        <p>
+            Cela montre pourquoi il est <span class="highlight">crucial</span> de ne jamais écrire ou laisser les informations sensibles visibles.
+            Ce type de comportement expose le système à des risques importants.
+        </p>
+        <p>
+            Pensez toujours à sécuriser vos identifiants et à sensibiliser votre entourage.
+        </p>
+        <p>
+            <strong>Vous serez redirigé dans quelques secondes...</strong>
+        </p>
+    </div>
+</body>
+</html>
+
