@@ -14,6 +14,7 @@ urlpatterns = [
     path('levelOne/bureau/', views.level_one_bureau, name='level_one_bureau'),
     path('levelTwo/', views.level_two, name='level_two'),
     path('levelThree/', views.level_three, name='level_three'),
+    path('levelOne/bureau/browser', views.browser_level_one, name='browser_level_one'),
     path('verify-email/', views.verify_email, name='verify_email'),
     path('screen-warning/', views.screen_warning, name='screen_warning'),
     path('levelOneQuizz/', views.test_level1_view, name='level_one_quizz')

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="0a17661e-8023-463e-b3c2-515f683c4967" name="cybermouse" url="http://localhost:80">
+        <fileTransfer mountedRoot="C:\Users\ogerl\PycharmProjects\SaeS5" accessType="MOUNT" port="0" />
+      </webServer>
+    </option>
+  </component>
+</project>
