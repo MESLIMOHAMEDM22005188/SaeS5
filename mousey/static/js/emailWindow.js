@@ -79,7 +79,52 @@ function displayEmailContent(emailId) {
             <button onclick="reportEmail(${email.id})">Signaler</button>
         </div>
     `;
+
+    // Gérer les clics sur les liens suspects
+    const links = emailContent.querySelectorAll('a');
+    links.forEach(link => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            console.log('Lien cliqué !');
+            if (email.isPhishing) {
+                triggerPhishingPopups(emailId);
+            } else {
+                alert("Lien légitime. Aucune action nécessaire.");
+            }
+        });
+    });
 }
+
+
+function triggerPhishingPopups(emailId) {
+    // Générer des pop-ups
+    for (let i = 0; i < 10; i++) {
+        setTimeout(() => {
+            window.open('', '_blank', 'width=300,height=200').document.write(`
+                <h1>Piratage en cours...(</h1>i<h1>%)</h1></br>
+                <p>Veuillez ne pas éteindre votre ordinateur</p>
+            `);
+        }, i * 300);
+    }
+
+    // Simuler un reboot de session
+    setTimeout(() => {
+        document.body.innerHTML = `
+            <div class="hacked-message">
+                <h1>Session Rebootée</h1>
+                <p>Vous vous êtes fait hacker ! Ne cliquez pas sur des liens suspects.</p>
+                <p>Indice : Vérifiez l'adresse email de l'expéditeur et l'URL.</p>
+                <button onclick="reloadSession()">Réessayer</button>
+            </div>
+        `;
+    }, 3500); // Attendre après les pop-ups
+}
+
+function reloadSession() {
+    location.reload(); // Recharge la session
+}
+
 
 
 // Fonctions liées à la gestion des emails
