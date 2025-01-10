@@ -226,6 +226,10 @@ def level_three(request):
     """Page pour le niveau 3."""
     return render(request, 'level_three.html')
 
+#vue pour la page du navigateur internet du premier niveau.
+def browser_level_one(request):
+    return render(request, 'browser.html')
+
 
 class Command(BaseCommand):
     help = 'Supprime les codes de vérification expirés'

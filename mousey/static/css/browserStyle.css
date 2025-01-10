@@ -1,0 +1,93 @@
+#browser-window {
+    display: none;
+    position: fixed;
+    top: 10%;
+    left: 15%;
+    width: 70%;
+    height: 75%;
+    background: #2d2d2d;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+#header {
+    background-color: black;
+    color: white;
+    font-size: 18px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#upper-header{
+    margin: auto;
+    display: flex;
+    padding-bottom: 5px;
+}
+
+#lower-header{
+    display: flex;
+    background-color: #2d2d2d;
+}
+
+#upper-header img {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    margin-left: auto;
+}
+
+.gogole-tab{
+    display : flex;
+    width: 20%;
+    height: 80%;
+    background-color: #222222;
+    border-radius: 10px;
+    flex-direction: row;
+    align-items: center;
+}
+
+.tab-gogole-ico{
+    height: 80%;
+    width: 10%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tab-text {
+
+    margin: 3%;
+    font-size: 18px;
+}
+
+.tab-close-ico{
+    top: 10%;
+    right: 10%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#search-bar{
+    padding: 10px;
+    height: 10px;
+    width: 50%;
+    background-color: black;
+    border-radius: 10px;
+}
+
+.browser-content{
+    background-color: white;
+    width: 100%;
+    height: 88%;
+    margin-top: auto;
+}
+
+.close-browser{
+    width: 5%;
+    height: 80%;
+    background-color: #222222;
+    margin-left: auto;
+
+}
