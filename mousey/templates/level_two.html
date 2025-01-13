@@ -2,12 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Niveau 2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page avec 4 Cards</title>
     {% load static %}
-        <link rel="icon" type="image/png" href="{% static 'image/logo_bureau.png' %}">
-    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/levelTwo.css' %}">
 </head>
 <body>
-
+    <div class="container">
+        <a href="{% url 'level_two_jeu1' %}" class="card red">Jeu de la Forteresse</a>
+<div class="card blue">Course à la Sécurité</div>
+<div class="card green">Décryptez le Code</div>
+<div class="card yellow">Les Enquêteurs du Phishing</div>
+<div class="card purple">Le Mur du Pare-feu</div>
+<div class="card orange">Cadenas Numérique</div>
+<div class="card teal">Survivre à l’Attaque DDoS</div>
+<div class="card brown">Réseau Invisible</div>
+    </div>
 </body>
 </html>

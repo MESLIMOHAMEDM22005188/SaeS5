@@ -216,10 +216,13 @@ def level_one_bureau(request):
 
 
 @login_required
-def level_two(request):
+def level_two_jeu1(request):
     """Page pour le niveau 2."""
-    return render(request, 'level_two.html')
+    return render(request, 'level_twoJeu1.html')
 
+@login_required
+def level_two(request):
+    return render(request, 'level_two.html')
 
 @login_required
 def level_three(request):

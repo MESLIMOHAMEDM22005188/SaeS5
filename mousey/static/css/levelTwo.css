@@ -1,0 +1,74 @@
+/* Style global pour le corps */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+}
+
+/* Conteneur pour organiser les cartes en grille */
+.container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Deux colonnes */
+    gap: 40px; /* Espace entre les cartes */
+    padding: 20px;
+    max-width: 1200px;
+}
+
+/* Style des cartes */
+.card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 15px; /* Coins arrondis */
+    padding: 40px; /* Plus d’espace intérieur */
+    color: #fff;
+    font-size: 1.5rem; /* Taille du texte */
+    font-weight: bold;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+/* Effet au survol */
+.card:hover {
+    transform: scale(1.1); /* Zoom léger */
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3); /* Ombre */
+}
+
+/* Couleurs uniques pour chaque jeu */
+.card.red {
+    background-color: #e74c3c; /* Rouge */
+}
+
+.card.blue {
+    background-color: #3498db; /* Bleu */
+}
+
+.card.green {
+    background-color: #2ecc71; /* Vert */
+}
+
+.card.yellow {
+    background-color: #f1c40f; /* Jaune */
+}
+
+.card.purple {
+    background-color: #9b59b6; /* Violet */
+}
+
+.card.orange {
+    background-color: #e67e22; /* Orange */
+}
+
+.card.teal {
+    background-color: #1abc9c; /* Turquoise */
+}
+
+.card.brown {
+    background-color: #8e7d6e; /* Marron */
+}
