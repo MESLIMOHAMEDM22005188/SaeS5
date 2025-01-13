@@ -22,15 +22,14 @@ AUTH_USER_MODEL = 'auth.User'
 LOGIN_REDIRECT_URL = '/home/'
 LOGIN_URL = '/login/'
 
-# --- Database ---
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST', default='127.0.0.1'),
-        'PORT': config('DB_PORT', default='3306'),
+        'ENGINE': 'django.db.backends.mysql',  # Utilisation de MySQL
+        'NAME': 'cybermouse_db',              # Nom de la base de données
+        'USER': '384089',                     # Nom d'utilisateur
+        'PASSWORD': 'A(h0U1ch0U!',            # Mot de passe
+        'HOST': 'mysql-cybermouse.alwaysdata.net',  # Hôte
+        'PORT': '3306',                       # Port MySQL
     }
 }
 
@@ -77,20 +76,14 @@ TEMPLATES = [
     },
 ]
 
-# --- Email configuration ---
-SMTP_CONFIG = {
-    "SERVER": config('SMTP_SERVER', default="smtp-cybermouse.alwaysdata.net"),
-    "PORT": config('SMTP_PORT', default=587, cast=int),
-    "USERNAME": config('SMTP_USERNAME'),
-    "PASSWORD": config('SMTP_PASSWORD'),
-}
-
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = SMTP_CONFIG["SERVER"]
-EMAIL_PORT = SMTP_CONFIG["PORT"]
+# --- Configuration du SMTP ---
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.alwaysdata.com'
+EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = SMTP_CONFIG["USERNAME"]
-EMAIL_HOST_PASSWORD = SMTP_CONFIG["PASSWORD"]
+EMAIL_HOST_USER = 'cybermouse@alwaysdata.net'  # Nom d'utilisateur SMTP
+EMAIL_HOST_PASSWORD = 'A(h0U1ch0U!'             # Mot de passe SMTP
+DEFAULT_FROM_EMAIL = 'cybermouse@alwaysdata.net'
 
 # --- Authentication and security ---
 AUTH_PASSWORD_VALIDATORS = [
