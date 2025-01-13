@@ -98,33 +98,82 @@ function displayEmailContent(emailId) {
 
 
 function triggerPhishingPopups(emailId) {
-    // Générer des pop-ups
-    for (let i = 0; i < 10; i++) {
-        setTimeout(() => {
-            window.open('', '_blank', 'width=300,height=200').document.write(`
-                <h1>Piratage en cours...(</h1>i<h1>%)</h1></br>
-                <p>Veuillez ne pas éteindre votre ordinateur</p>
-            `);
-        }, i * 300);
+    if (document.querySelector('.hacked-message')) return;
+    points -= 100;
+    savePoints();
+
+    document.body.style.pointerEvents = 'none';
+
+    const popupContainer = document.createElement('div');
+    popupContainer.classList.add('popup-container');
+    document.body.appendChild(popupContainer);
+
+    let delay = 500;
+    const minDelay = 30;
+    let count = 0;
+    const maxPopups = 100;
+
+    function getRandomPosition() {
+        const top = Math.random() * 90 - 5;
+        const left = Math.random() * 90 - 5;
+        return { top: `${top}%`, left: `${left}%` };
     }
 
-    // Simuler un reboot de session
-    setTimeout(() => {
-        document.body.innerHTML = `
-            <div class="hacked-message">
-                <h1>Session Rebootée</h1>
-                <p>Vous vous êtes fait hacker ! Ne cliquez pas sur des liens suspects.</p>
-                <p>Indice : Vérifiez l'adresse email de l'expéditeur et l'URL.</p>
-                <button onclick="reloadSession()">Réessayer</button>
-            </div>
+    function createPopup() {
+        const popup = document.createElement('div');
+        popup.classList.add('popup');
+        const { top, left } = getRandomPosition();
+        popup.style.top = top;
+        popup.style.left = left;
+        popup.innerHTML = `
+            <h1>Piratage en cours...</h1>
+            <p>Veuillez ne pas éteindre votre ordinateur.</p>
         `;
-    }, 3500); // Attendre après les pop-ups
+        popupContainer.appendChild(popup);
+
+        delay = Math.max(minDelay, delay * 0.9);
+        count++;
+
+        if (count < maxPopups) {
+            setTimeout(createPopup, delay);
+        }
+    }
+
+    createPopup();
+
+    setTimeout(() => {
+        const blueScreen = document.createElement('div');
+        blueScreen.style.position = 'fixed';
+        blueScreen.style.top = '0';
+        blueScreen.style.left = '0';
+        blueScreen.style.width = '100vw';
+        blueScreen.style.height = '100vh';
+        blueScreen.style.backgroundImage = 'url("/static/image/bluescreen.png")';
+        blueScreen.style.backgroundSize = 'cover';
+        blueScreen.style.zIndex = '9999';
+        blueScreen.classList.add('blue-screen');
+        document.body.appendChild(blueScreen);
+
+        setTimeout(() => {
+            blueScreen.remove();
+            popupContainer.remove();
+            document.body.innerHTML = `
+                <div class="hacked-message" style="text-align: center; padding: 50px;">
+                    <h1>Session Rebootée</h1>
+                    <p>Vous vous êtes fait hacker ! Ne cliquez pas sur des liens suspects.</p>
+                    <p><strong>Indice :</strong> Vérifiez l'adresse email de l'expéditeur et l'URL.</p>
+                    <button onclick="reloadSession()" style="padding: 10px 20px; font-size: 16px;">Réessayer</button>
+                </div>
+            `;
+            document.body.style.pointerEvents = 'auto';
+        }, 3000);
+    }, 6800);
 }
 
 function reloadSession() {
-    location.reload(); // Recharge la session
+    location.reload();
+    updatePointsDisplay();
 }
-
 
 
 // Fonctions liées à la gestion des emails
@@ -267,7 +316,13 @@ document.addEventListener('DOMContentLoaded', () => {
     loadPoints();
     loadEmailTitles();
     updatePointsDisplay();
+
+    setTimeout(() => {
+        const phishingMessage = document.getElementById('phishing-message');
+        phishingMessage.style.display = 'block';
+    }, 30000);
 });
+
 
 document.addEventListener('click', () => {
     document.querySelectorAll('.email-options.visible').forEach(menu => {
