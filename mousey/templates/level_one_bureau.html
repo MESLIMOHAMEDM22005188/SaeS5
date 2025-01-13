@@ -75,15 +75,29 @@
                     <div class="tab-text"> Nouvel onglet </div>
                     <img src="{% static 'image/croixBlanche.png' %}" class="tab-close-ico" id="close-browser-window">
                 </div>
+                <div id="new-tab">
+                    <img src="{% static 'image/plus.png' %}" id="new-tab-ico">
+                </div>
                 <img src="{% static 'image/close.png' %}" class="close-ico" id="close-browser">
             </div>
             <div id="lower-header">
-                <div id="search-bar"></div>
-                <div id="bookmark"></div>
-                <div id="browser-content"></div>
+                <div id="refresh">
+                    <img src="{% static 'image/rafraichir.png' %}" id="refresh-ico">
+                </div>
+                <div id="search-bar">
+                    <input id="URLField" value="google.com">
+                </div>
+                <div id="bookmark">
+                    <img src="{% static 'image/marquePage.png' %}" id="bookmark-ico">
+                </div>
+                <div id="download">
+                    <img src="{% static 'image/telechargement.png' %}" id="download-ico">
+                </div>
             </div>
         </header>
-
+        <div id="browser-content">
+            <img src="{% static 'image/gogoleEntier.png' %}" id="gogole-logo">
+        </div>
     </div>
 
     <script src="{% static 'js/emailWindow.js' %}"></script>

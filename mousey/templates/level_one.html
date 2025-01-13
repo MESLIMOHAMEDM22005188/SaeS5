@@ -8,13 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/levelOne.css' %}">
 </head>
 <body>
-    <div class="note">
-        <label class="noteLabel">
-            Identifiant: <br/>
-            utilisateur4<br />
-            Mot de passe: <br/>
-            01234
-        </label>
+    <img src="{% static 'image/postIt.png' %}">
     </div>
     <form method="POST">
         {% csrf_token %}
