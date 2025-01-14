@@ -10,13 +10,13 @@
 <body>
     <div class="container">
         <a href="{% url 'level_two_jeu1' %}" class="card red">Jeu de la Forteresse</a>
-<div class="card blue">Course à la Sécurité</div>
-<div class="card green">Décryptez le Code</div>
+<a href="{% url 'level_two_course' %}" class="card blue">Course </a>
+<a href="{% url 'level_two_jeu2' %}" class="card green">La Quête du Réseau Sécurisé </a>
 <div class="card yellow">Les Enquêteurs du Phishing</div>
 <div class="card purple">Le Mur du Pare-feu</div>
 <div class="card orange">Cadenas Numérique</div>
 <div class="card teal">Survivre à l’Attaque DDoS</div>
-<div class="card brown">Réseau Invisible</div>
+<a href="{% url 'level_two_pswd' %}" class="card brown">Combien de temps pour cracker ?</a>
     </div>
 </body>
 </html>

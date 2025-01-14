@@ -29,68 +29,58 @@ h1 {
 /* Styles pour la forteresse */
 .fortress {
     position: relative;
-    width: 250px; /* Taille globale réduite */
+    width: 250px;
     height: 400px;
     margin: 0 auto;
 }
 
-/* Image de la forteresse principale */
 #forteresse {
     width: 100%;
     height: auto;
 }
 
-/* Réduction de la taille de la porte */
-#porte img {
-    width: 70px; /* Taille réduite */
-    top: 297px;
-    height: auto;
+#porte img,
+#tourDroite img,
+#tourGauche img {
     position: absolute;
-    bottom: 0; /* Position en bas */
-    left: 50%;
+    bottom: 0;
     transform: translateX(-50%);
 }
 
-/* Réduction de la taille de la tour droite */
+#porte img {
+    width: 70px;
+    left: 50%;
+}
+
 #tourDroite img {
-    width: 105px; /* Taille réduite */
-    height: auto;
-    position: absolute;
-    bottom: 22px; /* Au-dessus de la porte */
-    right: -48px; /* Décalé légèrement vers l'intérieur */
+    width: 105px;
+    right: -48px;
+    bottom: 22px;
 }
 
-/* Réduction de la taille de la tour gauche */
 #tourGauche img {
-    width: 92px; /* Taille réduite */
-    height: auto;
-    position: absolute;
-    bottom: 25px; /* Au-dessus de la porte */
-    left: -42px; /* Décalé légèrement vers l'intérieur */
+    width: 92px;
+    left: -42px;
+    bottom: 25px;
 }
 
+/* Classes dynamiques */
 .hidden {
-    opacity: 0;
-    transform: scale(0.7);
+    display: none;
 }
+
 .close-ico {
     opacity: 0;
-    transform: scale(0.8); /* Réduction visuelle pour une transition fluide */
-    transition: all 0.5s ease; /* Animation fluide */
+    transform: scale(0.8);
+    transition: all 0.5s ease;
 }
 
 .visible {
     opacity: 1;
-    transform: scale(1); /* Rétablit la taille normale */
+    transform: scale(1);
 }
 
-
-.visible {
-    opacity: 1;
-    transform: scale(1); /* Rétablit la taille normale */
-}
-
-
+/* Input et boutons */
 .password-section {
     margin: 20px 0;
 }
@@ -103,7 +93,8 @@ h1 {
     border-radius: 5px;
 }
 
-#submitBtn {
+#submitBtn,
+#togglePassword {
     margin-top: 10px;
     padding: 8px 20px;
     background-color: #007bff;
@@ -115,10 +106,12 @@ h1 {
     transition: background-color 0.3s ease;
 }
 
-#submitBtn:hover {
+#submitBtn:hover,
+#togglePassword:hover {
     background-color: #0056b3;
 }
 
+/* Feedback */
 #feedback {
     margin-top: 15px;
     font-size: 1rem;
@@ -135,75 +128,4 @@ h1 {
 
 .strong {
     color: #5cb85c;
-}
-
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.modal.hidden {
-    display: none;
-}
-
-.modal-content {
-    position: relative;
-    background-color: #fff;
-    padding: 20px 30px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    width: 90%;
-    max-width: 400px;
-}
-
-.modal-content h2 {
-    margin: 0 0 15px;
-    font-size: 1.8rem;
-}
-
-.modal-content p {
-    margin: 0 0 20px;
-    font-size: 1.2rem;
-    color: #555;
-}
-
-.modal-content button,
-.modal-content .success-btn {
-    padding: 10px 20px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 5px;
-    background-color: #3498db;
-    color: white;
-    cursor: pointer;
-    text-decoration: none;
-}
-
-.modal-content button:hover,
-.modal-content .success-btn:hover {
-    background-color: #2980b9;
-}
-
-/* Style pour la croix de fermeture */
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #888;
-    cursor: pointer;
-}
-
-.close-btn:hover {
-    color: #555;
 }

@@ -1,0 +1,99 @@
+.hidden {
+    display: none !important;
+    visibility: hidden;
+}
+
+#modalWindow {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    width: 700px;
+    height: 450px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    overflow: auto;
+    padding: 20px;
+}
+
+.modal-content header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.modal-content header .close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #888;
+}
+
+.modal-content header .close-btn:hover {
+    color: #f00;
+}
+
+.modal-content p {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.options button {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 90%;
+    text-align: left;
+    gap: 15px;
+    position: relative;
+}
+
+.options button img {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+    border-radius: 5px;
+}
+
+.options button.correct {
+    background-color: #28a745 !important;
+}
+
+.options button.incorrect {
+    background-color: #dc3545 !important;
+}
+
+.options button:hover {
+    transform: scale(1.05);
+}
+
+#feedback {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+    text-align: center;
+}

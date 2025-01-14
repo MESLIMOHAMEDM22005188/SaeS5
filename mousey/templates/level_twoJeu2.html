@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bureau Niveau 1</title>
+    {% load static %}
+    <!-- Styles CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/Bureau.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/emailWindow.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/browserStyle.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/modalWindow.css' %}">
+</head>
+<body>
+
+<div class="content">
+    <!-- Applications sur le bureau -->
+    <div class="bureau">
+        <div class="app-ico">
+            <img src="{% static 'image/bouklook.png' %}" alt="outlook" class="outlook-app" onclick="openEmailWindow()">
+            <div class="app-name">Bouklook</div>
+        </div>
+        <div class="app-ico">
+            <img src="{% static 'image/gogole.png' %}" alt="gogole" class="gogole-app" onclick="openBrowserWindow()">
+            <div class="app-name">Gogole</div>
+        </div>
+    </div>
+</div>
+
+<!-- Points affichés -->
+<div class="points-display" id="points-display">Points: 0</div>
+
+<!-- Barre inférieure -->
+<div class="bottom-bar">
+    <div class="left-info">
+        <img src="{% static 'image/bouttonMA.png' %}" alt="boutton" class="bouttonMA">
+    </div>
+    <div class="center-app">
+        <img src="{% static 'image/window11.png' %}" alt="window" class="window">
+        <img src="{% static 'image/outlook.png' %}" alt="outlook" class="outlook" onclick="openEmailWindow()">
+    </div>
+    <div class="right-info">
+        <img src="{% static 'image/eternaite.png' %}" alt="internet" class="icon1" id="internetIcon" onClick="showModal()">
+        <img src="{% static 'image/batterie.png' %}" alt="batterie" class="batterie">
+        <img src="{% static 'image/son.png' %}" alt="Son" class="icon">
+        <img src="{% static 'image/heure.png' %}" alt="heure" class="heure">
+    </div>
+</div>
+
+<!-- Modale (contenu caché au départ) -->
+<div id="modalWindow" class="hidden"></div>
+
+<!-- Scripts JS -->
+<script src="{% static 'js/emailWindow.js' %}"></script>
+<script src="{% static 'js/browserWindow.js' %}"></script>
+<script src="{% static 'js/modalWindow.js' %}"></script>
+
+</body>
+</html>

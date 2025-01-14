@@ -221,8 +221,21 @@ def level_two_jeu1(request):
     return render(request, 'level_twoJeu1.html')
 
 @login_required
+def level_two_jeu2(request):
+    return render(request, 'level_twoJeu2.html')
+
+@login_required
 def level_two(request):
     return render(request, 'level_two.html')
+
+@login_required
+def level_two_pswd(request):
+    return render(request, 'level_two_pswd.html')
+@login_required
+def level_two_course(request):
+    return render(request, 'level_two_course.html')
+
+
 
 @login_required
 def level_three(request):
