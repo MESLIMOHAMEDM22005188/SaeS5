@@ -235,6 +235,9 @@ def level_two_pswd(request):
 def level_two_course(request):
     return render(request, 'level_two_course.html')
 
+@login_required
+def level_two_jeu3(request):
+    return render(request, 'level_twoJeu3.html')
 
 
 @login_required

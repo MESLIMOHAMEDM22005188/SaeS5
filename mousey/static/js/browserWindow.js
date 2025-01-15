@@ -1,5 +1,3 @@
-// Fonctions liées à l'affichage du navigateur (UI/DOM)
-
 function openBrowserWindow() {
     document.getElementById('browser-window').style.display = 'block';
 }

@@ -4,56 +4,43 @@
     <meta charset="UTF-8">
     <title>Niveau 2</title>
     {% load static %}
-        <link rel="icon" type="image/png" href="{% static 'image/logo_bureau.png' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/levelTwoJeu1.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'image/logo_bureau.png' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/levelTwoJeu1.css' %}">
 </head>
 <body>
-    <!-- Fenêtre explicative au début -->
-    <div class="modal" id="startModal">
-        <div class="modal-content">
-            <span class="close-btn" id="closeStart">&times;</span>
-            <h2>Bienvenue dans le Jeu de la Forteresse</h2>
-            <p>Votre mission : Créez un mot de passe suffisamment fort pour protéger la forteresse.</p>
-            <button id="startBtn">Commencer</button>
-        </div>
-    </div>
- <!-- Fenêtre de réussite -->
-    <div class="modal hidden" id="successModal">
-        <div class="modal-content">
-            <span class="close-btn" id="closeSuccess">&times;</span>
-            <h2>Félicitations !</h2>
-            <p>Vous avez créé un mot de passe suffisamment fort et renforcé la forteresse.</p>
-            <a href="{% url 'level_two' %}" class="success-btn">Continuer</a>
-        </div>
-    </div>
-         <div class="fortress">
-            <img src="{% static 'image/forteresse.png' %}" id="forteresse">
-
-            <!-- Chaque partie de la forteresse a son propre ID -->
-            <div id="fortressParts">
-                <div id="porte">
-            <img src="{% static 'image/porte.png' %}" alt="Porte de la forteresse" class="close-ico">
-                </div>
-                <div id="tourDroite">
-            <img src="{% static 'image/tourDroite.png' %}" alt="Tour droite de la forteresse" class="close-ico">
-                </div>
-                <div id="tourGauche">
-            <img src="{% static 'image/tourDroite.png' %}" alt="Tour droite de la forteresse" class="close-ico">
-                </div>
+<button id="restart-button" class="restart-button">Restart</button>
+ <a href="/levelTwo/" id="back-to-menu" class="back-to-menu">
+        <button class="menu-button">Retour au menu</button>
+    </a>
+    <div class="fortress">
+        <img src="{% static 'image/forteresse.png' %}" id="forteresse">
+        <div id="fortressParts">
+            <div id="porte">
+                <img src="{% static 'image/porte.png' %}" alt="Porte de la forteresse" class="close-ico">
+            </div>
+            <div id="tourDroite">
+                <img src="{% static 'image/tourDroite.png' %}" alt="Tour droite de la forteresse" class="close-ico">
+            </div>
+            <div id="tourGauche">
+                <img src="{% static 'image/tourDroite.png' %}" alt="Tour gauche de la forteresse" class="close-ico">
             </div>
         </div>
-
-        <div class="password-section">
-    <label for="password">Créez un mot de passe :</label>
-    <input type="password" id="password" placeholder="Entrez votre mot de passe">
-    <button id="submitBtn">Renforcer la Forteresse</button>
-    <div>
-                <button id="togglePassword">Afficher</button>
     </div>
-</div>
 
-        <div id="feedback"></div>
+    <!-- Section pour créer un mot de passe -->
+    <div class="password-section">
+        <label for="password">Créez un mot de passe :</label>
+        <input type="password" id="password" placeholder="Entrez votre mot de passe">
+            <!-- Feedback Section -->
+    <div id="feedback"></div>
+        <button id="submitBtn">Renforcer la Forteresse</button>
+        <div>
+            <button id="togglePassword">Afficher</button>
+        </div>
     </div>
+
+
+
 
     <script src="{% static 'js/forteresse.js' %}"></script>
 </body>

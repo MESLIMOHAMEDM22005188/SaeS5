@@ -15,6 +15,7 @@ urlpatterns = [
     path('levelTwo/', views.level_two, name='level_two'),  # Correction ici
     path('levelTwoJeu1/', views.level_two_jeu1, name='level_two_jeu1'),
     path('levelTwoJeu2/', views.level_two_jeu2, name='level_two_jeu2'),
+    path('levelTwoJeu3/', views.level_two_jeu3, name='level_two_jeu3'),
     path('levelTwoPswd/', views.level_two_pswd, name='level_two_pswd'),
     path('levelThree/', views.level_three, name='level_three'),
     path('levelOne/bureau/browser', views.browser_level_one, name='browser_level_one'),

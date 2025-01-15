@@ -10,6 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeStart = document.getElementById('closeStart');
     const closeSuccess = document.getElementById('closeSuccess');
 
+    const modal = document.getElementById('gameModal');
+    const closeModalBtn = document.getElementById('closeModal');
+    const startGameBtn = document.getElementById('startGameBtn');
+
     const porte = document.querySelector('#porte img');
     const tourDroite = document.querySelector('#tourDroite img');
     const tourGauche = document.querySelector('#tourGauche img');
@@ -76,4 +80,39 @@ document.addEventListener('DOMContentLoaded', () => {
     startBtn.addEventListener('click', () => startModal.classList.add('hidden'));
     closeStart.addEventListener('click', () => startModal.classList.add('hidden'));
     closeSuccess.addEventListener('click', () => successModal.classList.add('hidden'));
+
+    // Game Modal
+    modal.style.display = 'flex';
+
+    closeModalBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    startGameBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+        // Ajoutez ici le code pour démarrer le jeu
+    });
+
+    // Restart button logic
+    const restartButton = document.getElementById('restart-button');
+    restartButton.addEventListener('click', () => {
+        // Effacer la zone de texte du mot de passe
+        passwordInput.value = '';
+
+        // Effacer le feedback
+        feedback.textContent = '';
+        feedback.className = '';
+
+        // Réinitialiser la forteresse en supprimant les éléments (porte et tours)
+        porte.classList.add('close-ico');
+        tourDroite.classList.add('close-ico');
+        tourGauche.classList.add('close-ico');
+    });
+
+    // Retour au menu button logic
+    const backToMenuButton = document.getElementById('back-to-menu');
+    backToMenuButton.addEventListener('click', () => {
+        // Rediriger vers /levelTwo/
+        window.location.href = '/levelTwo/';
+    });
 });
