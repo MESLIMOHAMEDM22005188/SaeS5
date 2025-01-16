@@ -14,7 +14,7 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'saes5.onrender.com']
 
 # --- Static files ---
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'mousey' / 'static']  # ou BASE_DIR / 'static'
+STATICFILES_DIRS = [BASE_DIR / 'mousey' / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 AUTH_USER_MODEL = 'auth.User'

@@ -1,48 +1,652 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mots Croisées</title>
+    <title>Bureau Niveau 1</title>
     {% load static %}
+    <!-- Styles CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/levelTwoJeu3.css' %}">
 </head>
 <body>
-  <div class="crossword">
-    <table>
-      <!-- Row 1 -->
-      <tr>
-        <td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="white">P</td><td class="white">H</td><td class="white">I</td><td class="white">S</td><td class="white">H</td><td class="white">I</td><td class="white">N</td><td class="white">G</td>
-      </tr>
-      <!-- Row 2 -->
-      <tr>
-        <td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="white">F</td><td class="white">I</td><td class="white">R</td><td class="white">E</td><td class="white">W</td><td class="white">A</td><td class="white">L</td><td class="white">L</td><td class="black"></td>
-      </tr>
-      <!-- Row 3 -->
-      <tr>
-        <td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="white">L</td><td class="white">O</td><td class="white">G</td><td class="white">I</td><td class="white">N</td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td>
-      </tr>
-      <!-- Row 4 -->
-      <tr>
-        <td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="white">T</td><td class="white">R</td><td class="white">O</td><td class="white">J</td><td class="white">A</td><td class="white">N</td><td class="black"></td><td class="black"></td>
-      </tr>
-      <!-- Row 5 -->
-      <tr>
-        <td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="white">M</td><td class="white">A</td><td class="white">L</td><td class="white">W</td><td class="white">A</td><td class="white">R</td><td class="white">E</td><td class="black"></td>
-      </tr>
-      <!-- Row 6 -->
-      <tr>
-        <td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="white">S</td><td class="white">S</td><td class="white">L</td><td class="black"></td><td class="black"></td><td class="white">S</td><td class="white">E</td><td class="white">C</td><td class="white">U</td>
-      </tr>
-      <!-- Row 7 -->
-      <tr>
-        <td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="white">P</td><td class="white">E</td><td class="white">N</td><td class="white">T</td><td class="white">E</td><td class="white">S</td><td class="white">T</td><td class="black"></td><td class="black"></td>
-      </tr>
-      <!-- Row 8 -->
-      <tr>
-        <td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="white">V</td><td class="white">P</td><td class="white">N</td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td><td class="black"></td>
-      </tr>
-    </table>
-  </div>
+
+<div class="crossword-container">
+
+    <div class="indices">
+        <div class="buttons">
+        <button id="hint-button" class="styled-button hint">Indice</button>
+        <button id="validate-button" class="styled-button validate">Valider</button>
+        <button id="reset-button" class="styled-button reset">Réinitialiser</button>
+    </div>
+        <h3>Indices pour les lignes :</h3>
+        <ul>
+            <li><strong>1 :</strong> Protège votre ordinateur ou réseau des attaques extérieures sur Internet.</li>
+<li><strong>2 :</strong> Un logiciel malveillant qui se déguise en programme utile ou inoffensif.</li>
+<li><strong>3 :</strong> Pour accéder à un compte.</li>
+<li><strong>4 :</strong> Permet de naviguer sur Internet de façon sécurisée et privée en cachant votre adresse IP.</li>
+<li><strong>5 :</strong> Action de rendre un système ou des données plus sûrs contre les menaces.</li>
+<li><strong>6 :</strong> Une personne qui pénètre dans des systèmes informatiques, parfois à des fins malveillantes.</li>
+<li><strong>7 :</strong> Un mot général pour désigner les logiciels malveillants.</li>
+<li><strong>8 :</strong> Un programme malveillant qui se cache profondément dans un système pour éviter d’être détecté.</li>
+
+        </ul>
+        <h3>Indices pour les colonnes :</h3>
+        <ul>
+     <li><strong>1 :</strong> Technique pour voler des informations sensibles en trompant les utilisateurs.</li>
+<li><strong>2 :</strong> Logiciel qui protège les ordinateurs contre les virus et autres logiciels malveillants.</li>
+<li><strong>3 :</strong> Méthode d’identification utilisant des caractéristiques uniques comme les empreintes digitales.</li>
+<li><strong>4 :</strong> Une attaque informatique qui surcharge un site web pour le rendre inaccessible.</li>
+<li><strong>5 :</strong> Test simulant une attaque informatique pour trouver des failles dans un système.</li>
+<li><strong>6 :</strong> Processus de protection des informations en les rendant illisibles sans clé spéciale.</li>
+<li><strong>7 :</strong> Protocole qui sécurise les échanges sur Internet, comme dans les sites HTTPS.</li>
+<li><strong>8 :</strong> Méthode d'authentification demandant deux étapes, comme un mot de passe et un code envoyé par SMS.</li>
+<li><strong>9 :</strong> Logiciel malveillant qui bloque l'accès à vos fichiers en échange d'une rançon.</li>
+
+        </ul>
+
+    </div>
+
+
+    <div class="crossword">
+        <table>
+             <!--LIGNE 1-->
+            <tr>
+                <!--1--><td class="black"></td>
+                <!--2--><td class="black">
+                <!--3--><td class="black"></td>
+                <!--4--><td class="white"><input type="text" maxlength="1" data-row="0" data-col="3"></td>
+                <!--5--><td class="black"></td>
+                <!--6--><td class="black">
+                <!--7--><td class="black"></td>
+                <!--8--><td class="black"></td>
+                <!--9--><td class="black"></td>
+                <!--10--><td class="black"></td>
+                <!--11--><td class="black"></td>
+                <!--12--><td class="black"></td>
+                <!--13--><td class="black"></td>
+                <!--14--><td class="black"></td>
+                <!--15--><td class="black"></td>
+                <!--16--><td class="black"></td>
+                <!--17--><td class="black"></td>
+                <!--18--><td class="black"></td>
+                <!--19--><td class="black"></td>
+                <!--20--><td class="black"></td>
+                <!--21--><td class="black"></td>
+            </tr>
+                         <!--LIGNE 2-->
+
+            <tr>
+                <!--1--><td class="black"></td>
+                <!--2--><td class="black"></td>
+                <!--3--><td class="black"></td>
+                <!--4--><td class="white"><input type="text" maxlength="1" data-row="1" data-col="3"></td>
+                <!--5--><td class="black"></td>
+                <!--6--><td class="black"></td>
+                <!--7--><td class="black"></td>
+                <!--8--><td class="black"></td>
+                <!--9--><td class="black"></td>
+                <!--10--><td class="black"></td>
+                <!--11--><td class="black"></td>
+                <!--12--><td class="black"></td>
+                <!--13--><td class="black"></td>
+                <!--14--><td class="black"></td>
+                <!--15--><td class="black"></td>
+                <!--16--><td class="black"></td>
+                <!--17--><td class="black"></td>
+                <!--18--><td class="black"></td>
+                <!--19--><td class="black"></TD>
+                <!--20--><td class="black"></td>
+                <!--21--><td class="black"></td>
+            </tr>
+                         <!--LIGNE 3-->
+
+            <tr>
+                <!--1--><td class="black"></td>
+                <!--2--><td class="black"></td>
+                <!--3--><td class="white"><input type="text" maxlength="1" data-row="2" data-col="2"></td>
+                <!--4--><td class="white"><input type="text" maxlength="1" data-row="2" data-col="3"></td>
+                <!--5--><td class="white"><input type="text" maxlength="1" data-row="2" data-col="4"></td>
+                <!--6--><td class="white"><input type="text" maxlength="1" data-row="2" data-col="5"></td>
+                <!--7--><td class="white"><input type="text" maxlength="1" data-row="2" data-col="6"></td>
+                <!--8--><td class="white"><input type="text" maxlength="1" data-row="2" data-col="7"></td>
+                <!--9--><td class="white"><input type="text" maxlength="1" data-row="2" data-col="8"></td>
+                <!--10--><td class="white"><input type="text" maxlength="1" data-row="2" data-col="9"></td>
+                <!--12--><td class="black"></td>
+                <!--13--><td class="black"></td>
+                <!--14--><td class="black"></td>
+                <!--15--><td class="black"></td>
+                <!--16--><td class="black"></td>
+                <!--17--><td class="black"></td>
+                <!--18--><td class="black"></td>
+                <!--19--><td class="black"></td>
+                <!--20--><td class="black"></td>
+                <!--21--><td class="black"></td>
+                <!--21--><td class="black"></td>
+
+            </tr>
+             <!--LIGNE 4-->
+
+            <tr>
+                <!--1--><td class="black"></td>
+                <!--2--><td class="black"></td>
+                <!--3--><td class="black"></td>
+                <!--4--><td class="white"><input type="text" maxlength="1" data-row="3" data-col="3"></td>
+                <!--5--><td class="black"></td>
+                <!--6--><td class="black"></td>
+                <!--7--><td class="black"></td>
+                <!--8--><td class="white"><input type="text" maxlength="1" data-row="3" data-col="7"></td>
+                <!--9--><td class="black"></td>
+                <!--10--><td class="black"></td>
+                <!--11--><td class="black"></td>
+                <!--12--><td class="black"></td>
+                <!--13--><td class="black"></td>
+                <!--14--><td class="black"></td>
+                <!--15--><td class="white"><input type="text" maxlength="1" data-row="3" data-col="14"></td>
+                <!--16--><td class="black"></td>
+                <!--17--><td class="black"></td>
+                <!--18--><td class="black"></td>
+                <!--19--><td class="black"></td>
+                <!--20--><td class="black"></td>
+                <!--21--><td class="black"></td>
+            </tr>
+             <!--LIGNE 5-->
+
+            <tr>
+                <!--1--><td class="black"></td>
+                <!--2--><td class="black">
+                <!--3--><td class="black"></td>
+                <!--4--><td class="white"><input type="text" maxlength="1" data-row="4" data-col="3"></td></td>
+                <!--5--><td class="black"></td>
+                <!--6--><td class="black"></td>
+                <!--7--><td class="black"></td>
+                <!--8--><td class="white"></td>
+                <!--9--><td class="black"></td>
+                <!--10--><td class="white"><input type="text" maxlength="1" data-row="4" data-col="9"></td>
+                <!--11--><td class="black"></td>
+                <!--12--><td class="black"></td>
+                <!--13--><td class="white"><input type="text" maxlength="1" data-row="4" data-col="12"></td>
+                <!--14--><td class="white"><input type="text" maxlength="1" data-row="4" data-col="13"></td>
+                <!--15--><td class="white"><input type="text" maxlength="1" data-row="4" data-col="14"></td>
+                <!--16--><td class="white"><input type="text" maxlength="1" data-row="4" data-col="15"></td>
+                <!--17--><td class="white"><input type="text" maxlength="1" data-row="4" data-col="16"></td>
+                <!--18--><td class="white"><input type="text" maxlength="1" data-row="4" data-col="17"></td>
+                <!--19--><td class="black"></td>
+                <!--20--><td class="black"></td>
+                <!--21--><td class="black"></td>
+            </tr>
+                         <!--LIGNE 6-->
+            <tr>
+                 <!--1--><td class="white"><input type="text" maxlength="1" data-row="5" data-col="0"></td>
+                <!--2--><td class="white"><input type="text" maxlength="1" data-row="5" data-col="1"></td>
+                <!--3--><td class="white"><input type="text" maxlength="1" data-row="5" data-col="2"></td>
+                <!--4--><td class="white"><input type="text" maxlength="1" data-row="5" data-col="3"></td>
+                <!--5--><td class="white"><input type="text" maxlength="1" data-row="5" data-col="4"></td>
+                <!--6--><td class="black"></td>
+                <!--7--><td class="black"></td>
+                <!--8--><td class="white"><input type="text" maxlength="1" data-row="5" data-col="7"></td>
+                <!--9--><td class="black"></td>
+                <!--10--><td class="white"><input type="text" maxlength="1" data-row="5" data-col="10"></td>
+                <!--11--><td class="black"></td>
+                <!--12--><td class="black"></td>
+                <!--13--><td class="black"></td>
+                <!--14--><td class="black"></td>
+                <!--15--><td class="white"><input type="text" maxlength="1" data-row="5" data-col="14"></td>
+                <!--16--><td class="black"></td>
+                <!--17--><td class="black"></td>
+                <!--18--><td class="black"></td>
+                <!--19--><td class="black"></td>
+                <!--20--><td class="black"></td>
+                <!--21--><td class="black"></td>
+            </tr>
+                         <!--LIGNE 7-->
+
+            <tr>
+                <!--1--><td class="black"></td>
+                <!--2--><td class="black"></td>
+                <!--3--><td class="black"></td>
+                <!--4--><td class="white"><input type="text" maxlength="1" data-row="6" data-col="3"></td>
+                <!--5--><td class="black"></td>
+                <!--6--><td class="black"></td>
+                <!--7--><td class="black"></td>
+                <!--8--><td class="white"><input type="text" maxlength="1" data-row="6" data-col="7"></td>
+                <!--9--><td class="white"><input type="text" maxlength="1" data-row="6" data-col="8"></td>
+                <!--10--><td class="white"><input type="text" maxlength="1" data-row="6" data-col="9"></td>
+                <!--11--><td class="black"></td>
+                <!--12--><td class="black"></td>
+                <!--13--><td class="black"></td>
+                <!--14--><td class="black"></td>
+                <!--15--><td class="white"><input type="text" maxlength="1" data-row="6" data-col="14"></td>
+                <!--16--><td class="black"></td>
+                <!--17--><td class="black"></td>
+                <!--18--><td class="black"></td>
+                <!--19--><td class="black"></td>
+                <!--20--><td class="black"></td>
+                <!--21--><td class="black"></td>
+        </tr>
+                         <!--LIGNE 8-->
+            <tr>
+                <!--1--><td class="black"></td>
+                <!--2--><td class="black"></td>
+                <!--3--><td class="black"></td>
+                <!--4--><td class="white"><input type="text" maxlength="1" data-row="7" data-col="3"></td>
+                <!--5--><td class="black"></td>
+                <!--6--><td class="black"></td>
+                <!--7--><td class="black"></td>
+                <!--8--><td class="white"><input type="text" maxlength="1" data-row="7" data-col="7"></td>
+                <!--9--><td class="black"></td>
+                <!--10--><td class="white"><input type="text" maxlength="1" data-row="7" data-col="9"></td>
+                <!--11--><td class="black"></td>
+                <!--12--><td class="black"></td>
+                <!--13--><td class="black"></td>
+                <!--14--><td class="black"></td>
+                <!--15--><td class="white"><input type="text" maxlength="1" data-row="7" data-col="14"></td>
+                <!--16--><td class="black"></td>
+                <!--17--><td class="black"></td>
+                <!--18--><td class="black"></td>
+                <!--19--><td class="black"></td>
+                <!--20--><td class="white"><input type="text" maxlength="1" data-row="7" data-col="19"></td>
+                <!--21--><td class="black"></td>
+        </tr>
+                         <!--LIGNE 9-->
+             <tr>
+                 <!--1--><td class="black"></td>
+                 <!--2--><td class="black"></td>
+                 <!--3--><td class="black"></td>
+                 <!--4--><td class="black"></td>
+                 <!--5--><td class="black"></td>
+                 <!--6--><td class="black"></td>
+                 <!--7--><td class="black"></td>
+                 <!--8--><td class="white"><input type="text" maxlength="1" data-row="8" data-col="7"></td>
+                 <!--9--><td class="black"></td>
+                 <!--10--><td class="white"><input type="text" maxlength="1" data-row="8" data-col="9"></td>
+                 <!--11--><td class="black"></td>
+                 <!--12--><td class="black"></td>
+                 <!--13--><td class="black"></td>
+                 <!--14--><td class="black"></td>
+                 <!--15--><td class="white"><input type="text" maxlength="1" data-row="8" data-col="14"></td>
+                 <!--16--><td class="black"></td>
+                 <!--17--><td class="black"></td>
+                 <!--18--><td class="black"></td>
+                 <!--19--><td class="black"></td>
+                 <!--20--><td class="white"><input type="text" maxlength="1" data-row="8" data-col="19"></td>
+                 <!--21--><td class="black"></td>
+        </tr>
+                                     <!--LIGNE 9-->
+
+             <tr>
+                 <!--1--><td class="black"></td>
+                 <!--2--><td class="black"></td>
+                 <!--3--><td class="black"></td>
+                 <!--4--><td class="black"></td>
+                 <!--5--><td class="black"></td>
+                 <!--6--><td class="black"></td>
+                 <!--7--><td class="black"></td>
+                 <!--8--><td class="white"><input type="text" maxlength="1" data-row="9" data-col="7"></td>
+                 <!--9--><td class="black"></td>
+                 <!--10--><td class="white"><input type="text" maxlength="1" data-row="9" data-col="9"></td>
+                 <!--11--><td class="white"><input type="text" maxlength="1" data-row="10" data-col="10"></td>
+                 <!--12--><td class="white"><input type="text" maxlength="1" data-row="11" data-col="11"></td>
+                 <!--13--><td class="white"><input type="text" maxlength="1" data-row="9" data-col="12"></td>
+                 <!--14--><td class="white"><input type="text" maxlength="1" data-row="9" data-col="13"></td>
+                 <!--15--><td class="white"><input type="text" maxlength="1" data-row="9" data-col="14"></td>
+                 <!--16--><td class="white"><input type="text" maxlength="1" data-row="9" data-col="15"></td>
+                 <!--17--><td class="white"><input type="text" maxlength="1" data-row="9" data-col="16"></td>
+                 <!--18--><td class="white"><input type="text" maxlength="1" data-row="9" data-col="17"></td>
+                 <!--19--><td class="white"><input type="text" maxlength="1" data-row="9" data-col="18"></td>
+                 <!--20--><td class="white"><input type="text" maxlength="1" data-row="9" data-col="19"></td>
+                 <!--21--><td class="white"><input type="text" maxlength="1" data-row="9" data-col="20"></td>
+        </tr>
+                                     <!--LIGNE 10-->
+
+            <tr>
+                <!--1--><td class="black"></td>
+                <!--2--><td class="black"></td>
+                <!--3--><td class="black"></td>
+                <!--4--><td class="black"></td>
+                <!--5--><td class="black"></td>
+                <!--6--><td class="black"></td>
+                <!--7--><td class="black"></td>
+                <!--8--><td class="white"><input type="text" maxlength="1" data-row="10" data-col="7"></td>
+                <!--9--><td class="black"></td>
+                <!--10--><td class="white"><input type="text" maxlength="1" data-row="10" data-col="9"></td>
+                <!--11--><td class="black"></td>
+                <!--12--><td class="white"><input type="text" maxlength="1" data-row="10" data-col="11"></td>
+                <!--13--><td class="black"></td>
+                <!--14--><td class="black"></td>
+                <!--15--><td class="white"><input type="text" maxlength="1" data-row="10" data-col="14"></td>
+                <!--16--><td class="black"></td>
+                <!--17--><td class="white"><input type="text" maxlength="1" data-row="10" data-col="16"></td>
+                <!--18--><td class="black"></td>
+                <!--19--><td class="black"></td>
+                <!--20--><td class="white"><input type="text" maxlength="1" data-row="10" data-col="19"></td>
+                <!--21--><td class="black"></td>
+        </tr>
+            <!-- Row 12 -->
+        <tr>
+                <!--1--><td class="black"></td>
+                <!--2--><td class="black"></td>
+                <!--3--><td class="black"></td>
+                <!--4--><td class="black"></td>
+                <!--5--><td class="black"></td>
+                <!--6--><td class="black"></td>
+                <!--7--><td class="black"></td>
+                <!--8--><td class="black"></td>
+                <!--9--><td class="black"></td>
+                <!--10--><td class="black"></td>
+                <!--11--><td class="black"></td>
+                <!--12--><td class="white"><input type="text" maxlength="1" data-row="11" data-col="12"></td>
+                <!--13--><td class="black"></td>
+                <!--14--><td class="black"></td>
+                <!--15--><td class="black"></td>
+                <!--16--><td class="black"></td>
+                <!--17--><td class="white"><input type="text" maxlength="1" data-row="11" data-col="16"></td>
+                <!--18--><td class="black"></td>
+                <!--19--><td class="black"></td>
+                <!--20--><td class="black"></td>
+                <!--21--><td class="black"></td>
+        </tr>
+        <!-- Row 13 -->
+        <tr>
+                <!--1--><td class="black"></td>
+                <!--2--><td class="black"></td>
+                <!--3--><td class="black"></td>
+                <!--4--><td class="black"></td>
+                <!--5--><td class="black"></td>
+                <!--6--><td class="black"></td>
+                <!--7--><td class="black"></td>
+                <!--8--><td class="black"></td>
+                <!--9--><td class="black"></td>
+                <!--10--><td class="black"></td>
+                <!--11--><td class="black"></td>
+                <!--12--><td class="white"><input type="text" maxlength="1" data-row="12" data-col="11"></td>
+                <!--13--><td class="black"></td>
+                <!--14--><td class="black"></td>
+                <!--15--><td class="black"></td>
+                <!--16--><td class="black"></td>
+                <!--17--><td class="white"><input type="text" maxlength="1" data-row="12" data-col="16"></td>
+                <!--18--><td class="black"></td>
+                <!--19--><td class="black"></td>
+                <!--20--><td class="black"></td>
+                <!--21--><td class="black"></td>
+        </tr>
+        <!-- Row 14 -->
+        <tr>
+                <!--1--><td class="black"></td>
+                <!--2--><td class="black"></td>
+                <!--3--><td class="black"></td>
+                <!--4--><td class="black"></td>
+                <!--5--><td class="black"></td>
+                <!--6--><td class="black"></td>
+                <!--7--><td class="black"></td>
+                <!--8--><td class="black"></td>
+                <!--9--><td class="black"></td>
+                <!--10--><td class="black"></td>
+                <!--11--><td class="black"></td>
+                <!--12--><td class="white"><input type="text" maxlength="1" data-row="13" data-col="11"></td>
+                <!--13--><td class="black"></td>
+                <!--14--><td class="black"></td>
+                <!--15--><td class="black"></td>
+                <!--16--><td class="black"></td>
+                <!--17--><td class="white"><input type="text" maxlength="1" data-row="13" data-col="16"></td>
+                <!--18--><td class="black"></td>
+                <!--19--><td class="black"></td>
+                <!--20--><td class="black"></td>
+                <!--21--><td class="black"></td>
+        </tr>
+        <!-- Row 15 -->
+        <tr>
+                <!--1--><td class="black"></td>
+                <!--2--><td class="black"></td>
+                <!--3--><td class="black"></td>
+                <!--4--><td class="black"></td>
+                <!--5--><td class="black"></td>
+                <!--6--><td class="black"></td>
+                <!--7--><td class="black"></td>
+                <!--8--><td class="white"><input type="text" maxlength="1" data-row="14" data-col="7"></td>
+                <!--9--><td class="black"></td>
+                <!--10--><td class="black"></td>
+                <!--11--><td class="white"><input type="text" maxlength="1" data-row="14" data-col="10"></td>
+                <!--12--><td class="white"><input type="text" maxlength="1" data-row="14" data-col="11"></td>
+                <!--13--><td class="white"><input type="text" maxlength="1" data-row="14" data-col="12"></td>
+                <!--14--><td class="white"><input type="text" maxlength="1" data-row="14" data-col="13"></td>
+                <!--15--><td class="white"><input type="text" maxlength="1" data-row="14" data-col="14"></td>
+                <!--16--><td class="white"><input type="text" maxlength="1" data-row="14" data-col="15"></td>
+                <!--17--><td class="black"></td>
+                <!--18--><td class="black"></td>
+                <!--19--><td class="black"></td>
+                <!--20--><td class="black"></td>
+                <!--21--><td class="black"></td>
+        </tr>
+        <!-- Row 16 -->
+        <tr>
+                <!--1--><td class="black"></td>
+                <!--2--><td class="black"></td>
+                <!--3--><td class="black"></td>
+                <!--4--><td class="black"></td>
+                <!--5--><td class="black"></td>
+                <!--6--><td class="black"></td>
+                <!--7--><td class="black"></td>
+                <!--8--><td class="white"><input type="text" maxlength="1" data-row="15" data-col="9"></td>
+                <!--9--><td class="black"></td>
+                <!--10--><td class="black"></td>
+                <!--11--><td class="black"></td>
+                <!--12--><td class="white"><input type="text" maxlength="1" data-row="15" data-col="11"></td>
+                <!--13--><td class="black"></td>
+                <!--14--><td class="black"></td>
+                <!--15--><td class="black"></td>
+                <!--16--><td class="white"><input type="text" maxlength="1" data-row="15" data-col="15"></td>
+                <!--17--><td class="black"></td>
+                <!--18--><td class="black"></td>
+                <!--19--><td class="black"></td>
+                <!--20--><td class="black"></td>
+                <!--21--><td class="black"></td>
+        </tr>
+        <!-- Row 17 -->
+<tr>
+    <!--1--><td class="black"></td>
+    <!--2--><td class="black"></td>
+    <!--3--><td class="black"></td>
+    <!--4--><td class="black"></td>
+    <!--5--><td class="black"></td>
+    <!--6--><td class="white"><input type="text" maxlength="1" data-row="16" data-col="6"></td>
+    <!--7--><td class="white"><input type="text" maxlength="1" data-row="16" data-col="7"></td>
+    <!--8--><td class="white"><input type="text" maxlength="1" data-row="16" data-col="8"></td>
+    <!--9--><td class="white"><input type="text" maxlength="1" data-row="16" data-col="9"></td>
+    <!--10--><td class="white"><input type="text" maxlength="1" data-row="16" data-col="10"></td>
+    <!--11--><td class="white"><input type="text" maxlength="1" data-row="16" data-col="11"></td>
+    <!--12--><td class="white"><input type="text" maxlength="1" data-row="16" data-col="12"></td>
+    <!--13--><td class="black"></td>
+    <!--14--><td class="black"></td>
+    <!--15--><td class="black"></td>
+    <!--16--><td class="white"><input type="text" maxlength="1" data-row="17" data-col="15"></td>
+    <!--17--><td class="black"></td>
+    <!--18--><td class="black"></td>
+    <!--19--><td class="black"></td>
+    <!--20--><td class="black"></td>
+    <!--21--><td class="black"></td>
+</tr>
+
+        <!-- Row 18 -->
+<tr>
+    <!--1--><td class="black"></td>
+    <!--2--><td class="black"></td>
+    <!--3--><td class="black"></td>
+    <!--4--><td class="black"></td>
+    <!--5--><td class="black"></td>
+    <!--6--><td class="white"><input type="text" maxlength="1" data-row="17" data-col="5"></td>
+    <!--7--><td class="black"></td>
+    <!--8--><td class="black"></td>
+    <!--9--><td class="black"></td>
+    <!--10--><td class="black"></td>
+    <!--11--><td class="black"></td>
+    <!--12--><td class="black"></td>
+    <!--13--><td class="black"></td>
+    <!--14--><td class="black"></td>
+    <!--15--><td class="black"></td>
+    <!--16--><td class="white"><input type="text" maxlength="1" data-row="17" data-col="15"></td>
+    <!--17--><td class="black"></td>
+    <!--18--><td class="black"></td>
+    <!--19--><td class="black"></td>
+    <!--20--><td class="black"></td>
+    <!--21--><td class="black"></td>
+</tr>
+
+        <!-- Row 19 -->
+<tr>
+    <!--1--><td class="black"></td>
+    <!--2--><td class="black"></td>
+    <!--3--><td class="black"></td>
+    <!--4--><td class="black"></td>
+    <!--5--><td class="black"></td>
+    <!--6--><td class="white"><input type="text" maxlength="1" data-row="18" data-col="5"></td>
+    <!--7--><td class="black"></td>
+    <!--8--><td class="black"></td>
+    <!--9--><td class="black"></td>
+    <!--10--><td class="black"></td>
+    <!--11--><td class="black"></td>
+    <!--12--><td class="black"></td>
+    <!--13--><td class="black"></td>
+    <!--14--><td class="black"></td>
+    <!--15--><td class="white"><input type="text" maxlength="1" data-row="18" data-col="14"></td>
+    <!--16--><td class="white"><input type="text" maxlength="1" data-row="18" data-col="15"></td>
+    <!--17--><td class="white"><input type="text" maxlength="1" data-row="18" data-col="16"></td>
+    <!--17--><td class="white"><input type="text" maxlength="1" data-row="18" data-col="17"></td>
+    <!--17--><td class="white"><input type="text" maxlength="1" data-row="18" data-col="18"></td>
+    <!--17--><td class="white"><input type="text" maxlength="1" data-row="18" data-col="19"></td>
+    <!--17--><td class="white"><input type="text" maxlength="1" data-row="18" data-col="20"></td>
+</tr>
+
+        <!-- Row 20 -->
+<tr>
+    <!--1--><td class="black"></td>
+    <!--2--><td class="black"></td>
+    <!--3--><td class="black"></td>
+    <!--4--><td class="black"></td>
+    <!--5--><td class="black"></td>
+    <!--6--><td class="black"></td>
+    <!--7--><td class="black"></td>
+    <!--8--><td class="black"></td>
+    <!--9--><td class="black"></td>
+    <!--10--><td class="black"></td>
+    <!--11--><td class="black"></td>
+    <!--12--><td class="black"></td>
+    <!--13--><td class="black"></td>
+    <!--14--><td class="black"></td>
+    <!--15--><td class="black"></td>
+    <!--16--><td class="white"><input type="text" maxlength="1" data-row="19" data-col="15"></td>
+    <!--18--><td class="black"></td>
+    <!--19--><td class="black"></td>
+    <!--20--><td class="black"></td>
+    <!--21--><td class="black"></td>>
+    <!--21--><td class="black"></td>>
+
+</tr>
+
+        <!-- Row 21 -->
+<tr>
+  <!--1--><td class="black"></td>
+  <!--2--><td class="black"></td>
+  <!--3--><td class="black"></td>
+  <!--4--><td class="black"></td>
+  <!--5--><td class="black"></td>
+  <!--6--><td class="black"></td>
+  <!--7--><td class="black"></td>
+  <!--8--><td class="black"></td>
+  <!--9--><td class="black"></td>
+  <!--10--><td class="black"></td>
+  <!--11--><td class="black"></td>
+  <!--12--><td class="black"></td>
+  <!--13--><td class="black"></td>
+  <!--14--><td class="black"></td>
+  <!--15--><td class="black"></td>
+  <!--16--><td class="white"><input type="text" maxlength="1" data-row="20" data-col="15"></td>
+  <!--17--><td class="black"></td>
+  <!--18--><td class="black"></td>
+  <!--19--><td class="black"></td>
+  <!--20--><td class="black"></td>
+  <!--21--><td class="black"></td>
+</tr>
+
+        <!-- Row 22 -->
+<tr>
+  <!--1--><td class="black"></td>
+  <!--2--><td class="black"></td>
+  <!--3--><td class="black"></td>
+  <!--4--><td class="black"></td>
+  <!--5--><td class="black"></td>
+  <!--6--><td class="black"></td>
+  <!--7--><td class="black"></td>
+  <!--8--><td class="black"></td>
+  <!--9--><td class="black"></td>
+  <!--10--><td class="black"></td>
+  <!--11--><td class="black"></td>
+  <!--12--><td class="black"></td>
+  <!--13--><td class="black"></td>
+  <!--14--><td class="black"></td>
+  <!--15--><td class="black"></td>
+  <!--16--><td class="white"><input type="text" maxlength="1" data-row="21" data-col="16"></td>
+  <!--17--><td class="black"></td>
+  <!--18--><td class="black"></td>
+  <!--19--><td class="black"></td>
+  <!--20--><td class="black"></td>
+  <!--21--><td class="black"></td>
+</tr>
+
+        <!-- Row 23 -->
+<tr>
+  <!--1--><td class="black"></td>
+  <!--2--><td class="black"></td>
+  <!--3--><td class="black"></td>
+  <!--4--><td class="black"></td>
+  <!--5--><td class="black"></td>
+  <!--6--><td class="black"></td>
+  <!--7--><td class="black"></td>
+  <!--8--><td class="black"></td>
+  <!--9--><td class="black"></td>
+  <!--10--><td class="black"></td>
+  <!--11--><td class="black"></td>
+  <!--12--><td class="black"></td>
+  <!--13--><td class="black"></td>
+  <!--14--><td class="black"></td>
+  <!--15--><td class="black"></td>
+  <!--16--><td class="white"><input type="text" maxlength="1" data-row="22" data-col="16"></td>
+  <!--17--><td class="black"></td>
+  <!--18--><td class="black"></td>
+  <!--19--><td class="black"></td>
+  <!--20--><td class="black"></td>
+  <!--21--><td class="black"></td>
+</tr>
+
+        <!-- Row 24 -->
+        <!-- Row 24 -->
+<tr>
+  <!--1--><td class="black"></td>
+  <!--2--><td class="black"></td>
+  <!--3--><td class="black"></td>
+  <!--4--><td class="black"></td>
+  <!--5--><td class="black"></td>
+  <!--6--><td class="black"></td>
+  <!--7--><td class="black"></td>
+  <!--8--><td class="black"></td>
+  <!--9--><td class="black"></td>
+  <!--10--><td class="black"></td>
+  <!--11--><td class="black"></td>
+  <!--12--><td class="black"></td>
+  <!--13--><td class="black"></td>
+  <!--14--><td class="black"></td>
+  <!--15--><td class="black"></td>
+  <!--16--><td class="white"><input type="text" maxlength="1" data-row="23" data-col="16"></td>
+  <!--17--><td class="black"></td>
+  <!--18--><td class="black"></td>
+  <!--19--><td class="black"></td>
+  <!--20--><td class="black"></td>
+  <!--21--><td class="black"></td>
+</tr>
+
+        </table>
+    </div>
+
+    <script src="{% static 'js/levelTwoJeu3.js' %}"></script>
+
+</div>
 </body>
-</html>
