@@ -48,6 +48,8 @@
             }
         }
 
+
+        //Systeme de déplacement de la fenetre web
         var mousePosition;
         var offset = [0,0];
         var isDown = false;
@@ -83,12 +85,100 @@
                 browserWindow.style.top  = (mousePosition.y + offset[1]) + 'px';
             }
         }, true);
+        //Fin systeme de déplacement de fenetre web
 
 
 
-            // Gestion des événements
-            document.getElementById('browser-open').addEventListener('click', openBrowserWindow);
-            document.getElementById('browser-open').addEventListener('click', putBrowserInFront);
+        function search(searchBar) {
+            if(event.key === 'Enter') {
+                const centerImg = document.getElementById('centerImg');
+                const browserContent = document.getElementById('browser-content');
+                if(searchBar.value.toLowerCase().includes("flowtouch")) {
+                    centerImg.style.display = "none";
+                    browserContent.innerHTML = `
+                        <div id="search-results">
+                            <div style="display: flex; flex-direction: row">
+                                <leftSide style="padding-right: 700px">
+                                    <h2 style="padding-left: 50px">Résultats pour "Flowtouch"</h2>
+                                    <ul style="list-style-type: none; padding-left: 100px;">
+                                        <site1 style="margin-bottom: 20px;">
+                                            <upperPart style="display: flex; align-items: center; margin-bottom: 10px;">
+                                                <img src="/static/image/flowtouchLogo.png" width="30" height="30" alt="Flowtouch Logo" style="margin-right: 10px;">
+                                                <div class="text">
+                                                    <p style="margin: 0; font-weight: bold; font-size: 0.8em;">Flowt0uch</p>
+                                                    <div font-size: 0.5em;">http://flowt0uch.com > download</div>
+                                                </div>
+                                            </upperPart>
+                                            <lowerPart>
+                                                <siteTitle style="font-size: 1.0em; color: #1a73e8">
+                                                    Télécharger Flowtouch gratuitement <br>
+                                                </siteTitle>
+                                                <description style="font-size: 0.7em">
+                                                    Télécharger la dernière version du logiciel gratuit Flowtouch ... <br> <br> <br>
+                                                </description>
+                                            </lowerPart>
+                                        </site1>
+                                        <site2 style="margin-bottom: 15px;">
+                                            <upperPart style="display: flex; align-items: center; margin-bottom: 10px;">
+                                                <img src="/static/image/flowtouchLogo.png" width="30" height="30" alt="Flowtouch Logo" style="margin-right: 10px;">
+                                                <div class="text">
+                                                    <p style="margin: 0; font-weight: bold; font-size: 0.8em;">Flowtouch - Site officiel</p>
+                                                    <div font-size: 0.5em;">http://flowtouch.com > download</div>
+                                                </div>    
+                                            </upperPart>
+                                            <lowerPart>
+                                                <siteTitle style="font-size: 1.0em; color: #1a73e8;">
+                                                    Flowtouch <br>
+                                                </siteTitle>
+                                                <description style="font-size: 0.7em">
+                                                    Découvrez Flowtouch, un logiciel passif opensource de ... <br> <br> <br>
+                                                </description>
+                                            </lowerPart>
+                                        </site2>
+                                        <site3 style="margin-bottom: 15px; color:">
+                                            <upperPart style="display: flex; align-items: center; margin-bottom: 10px;">
+                                                <img src="/static/image/flowtouchLogo.png" width="30" height="30" alt="Flowtouch Logo" style="margin-right: 10px;">
+                                                <div class="text">
+                                                    <p style="margin: 0; font-weight: bold; font-size: 0.8em;">Télécharger Flowtouch</p>
+                                                    <div font-size: 0.5em;">http://telecharger-flowtouch.com</div>
+                                                </div>  
+                                            </upperPart>
+                                            <lowerPart>
+                                                <siteTitle style="font-size: 1.0em; color: #1a73e8;">
+                                                    Télécharger flowtouch 3.20.57 <br>
+                                                </siteTitle>
+                                                <description style="font-size: 0.7em">
+                                                    Télécharger les archives ou la derniere version de Flowtouch ... <br> <br> <br>
+                                                </description>
+                                            </lowerPart>
+                                        </site3>
+                                    </ul>
+                                </leftSide>
+                                <rightSide style="right: 0; border: #232323; border-radius: 10px; background: #7a7a7a">
+                                    <h3 style="font-size: 1.2em; font-weight: bold;">À propos de Flowtouch</h3>
+                                        <img src="/static/image/flowtouchLogo.png" width="100" height="100" alt="Flowtouch Logo" style="margin-bottom: 10px; display: block; padding-left: 75px">
+                                        <p style="font-size: 0.9em; line-height: 1.4em;">
+                                            Flowtouch est un logiciel innovant <br> conçu pour améliorer l'efficacité des <br> utilisateurs grâce à des fonctionnalités <br> intuitives et un design minimaliste.
+                                        </p>
+                                        <p style="font-size: 0.9em; font-weight: bold;">Site officiel :</p>
+                                        <p style="font-size: 0.9em; color: #1a73e8;">http://flowtouch.com</p>
+                                        <p style="font-size: 0.9em;">Téléchargez la dernière version de <br> Flowtouch gratuitement pour bénéficier <br> des dernières fonctionnalités.</p>
+                                </rightSide>
+                            </div>
+                        </div>
+                    `;
+
+                } else {
+                    centerImg.style.display = "block";
+                    centerImg.src = "/static/image/erreurConnexion.png";
+                    centerImg.style.paddingLeft = "40%"
+                }
+            }
+        }
+
+// Gestion des événements
+document.getElementById('browser-open').addEventListener('click', openBrowserWindow);
+document.getElementById('browser-open').addEventListener('click', putBrowserInFront);
             document.getElementById('close-browser-window').addEventListener('click', closeBrowserWindow);
             document.getElementById('close-browser').addEventListener('click', closeBrowserWindow);
 

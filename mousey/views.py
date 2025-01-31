@@ -228,7 +228,7 @@ def level_three(request):
 
 #vue pour la page du navigateur internet du premier niveau.
 def browser_level_one(request):
-    return render(request, 'browser.html')
+    return render(request, 'test.html')
 
 
 class Command(BaseCommand):

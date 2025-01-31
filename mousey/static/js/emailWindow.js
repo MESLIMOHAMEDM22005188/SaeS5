@@ -26,6 +26,14 @@ const emails = [
         body: "Bonjour,<br><br>Voici le lien pour accéder à une formation sur le phishing : <a href='http://formation-phishing-1.com'>http://formation-phishing-1.com</a>",
         isPhishing: true,
         reported: false
+    },
+    {
+        id: 4,
+        sender: "service-technique-cybermouse@gmiel.com",
+        subject: "Maintenance réseau",
+        body: "Bonjour,<br><br>Suite  à un incident sur le réseau, seul quelques recherches sur internet pourrons aboutir.<br>Nous tentons actuellement de résoudre le probleme le plus rapidement,<br>nous vous remercions de votre compréhension<br><br>Le service technique",
+        isPhishing: false,
+        reported: false
     }
 ];
 
@@ -283,18 +291,18 @@ function checkAllPhishingReported() {
     const allReported = emails.every(email => !email.isPhishing || email.reported);
     if (allReported) {
         sendCongratulationsMail();
+        sendChallenge2Mail();
     }
 }
 
 function sendCongratulationsMail() {
     const congratulationsEmail = {
-        id: 4,
+        id: 5,
         sender: "admin@cybersecure.com",
         subject: "Félicitations pour votre vigilance !",
         body: `
             Bravo, vous avez signalé tous les emails de phishing avec succès !<br>
-            Vous pouvez maintenant passer au quiz final pour tester vos connaissances.<br>
-            Cliquez ici pour commencer : <a href="browser/quiz" onclick="openFirefoxWindow()">Commencer le quiz</a>
+            Vous avez complété le 1er défi de ce niveau.
         `,
         read: false,
         isPhishing: false,
@@ -306,6 +314,24 @@ function sendCongratulationsMail() {
     loadEmailTitles();
 }
 
+function sendChallenge2Mail() {
+    const challenge2Email = {
+        id: 6,
+        sender: "collegue@cybersecure.com",
+        subject: "Mise à jour du projet",
+        body: `
+            Le projet à eu une mise à jour et nécéssite maintenant la version de \'Flowtouch\' 3.21.6 <br>
+            Veuillez installer la mise à jour avant de reprendre le projet.
+        `,
+        read: false,
+        isPhishing: false,
+        reported: false
+    };
+
+    emails.push(challenge2Email);
+    saveEmails();
+    loadEmailTitles();
+}
 
 // Initialisation et gestion des événements
 

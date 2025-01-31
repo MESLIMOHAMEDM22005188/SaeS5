@@ -82,7 +82,7 @@
                     <img src="{% static 'image/rafraichir.png' %}" id="refresh-ico">
                 </div>
                 <div id="search-bar">
-                    <input id="URLField" value="google.com">
+                    <input id="URLField" placeholder="gogole.com" onkeydown="search(this)">
                 </div>
                 <div id="bookmark">
                     <img src="{% static 'image/marquePage.png' %}" id="bookmark-ico">
@@ -93,7 +93,7 @@
             </div>
         </header>
         <div id="browser-content">
-            <img src="{% static 'image/gogoleEntier.png' %}" id="gogole-logo">
+            <img src="{% static 'image/gogoleEntier.png' %}" id="centerImg">
         </div>
     </div>
     <script src="{% static 'js/emailWindow.js' %}"></script>
