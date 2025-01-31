@@ -331,3 +331,70 @@ document.addEventListener('click', () => {
         menu.style.top = '';
     });
 });
+
+// Fonction pour mettre la fenêtre des emails au premier plan
+function putEmailInFront() {
+    const emailWindow = document.getElementById('email-window');
+    const browserWindow = document.getElementById('browser-window');
+    if (emailWindow) {
+        emailWindow.style.zIndex = '100';
+        const childrenEmail = emailWindow.querySelectorAll('*');
+        childrenEmail.forEach(child => {
+            child.style.zIndex = '100';
+        });
+
+        browserWindow.style.zIndex = '1';
+        const childrenBrowser = browserWindow.querySelectorAll('*');
+        childrenBrowser.forEach(child => {
+            child.style.zIndex = '1';
+        });
+    }
+    putBrowserInBack()
+}
+
+// Fonction pour mettre la fenêtre des emails à l'arrière-plan
+function putEmailInBack() {
+    const emailWindow = document.getElementById('email-window');
+    if (emailWindow) {
+        emailWindow.style.zIndex = '1'; // Met l'email à l'arrière-plan
+    }
+}
+
+var mousePositionEmail;
+var offsetEmail = [0,0];
+var isDownEmail = false;
+
+
+const emailWindow = document.getElementById('email-window');
+const headerEmail = document.getElementById('email-header');
+
+document.body.appendChild(emailWindow);
+
+headerEmail.addEventListener('mousedown', function(e) {
+isDownEmail = true;
+offsetEmail = [
+    emailWindow.offsetLeft - e.clientX,
+    emailWindow.offsetTop - e.clientY
+];
+}, true);
+
+document.addEventListener('mouseup', function() {
+    isDownEmail = false;
+    }, true);
+
+document.addEventListener('mousemove', function(event) {
+    event.preventDefault();
+    if (isDownEmail) {
+        mousePositionEmail = {
+            x : event.clientX,
+            y : event.clientY
+        };
+        emailWindow.style.left = (mousePositionEmail.x + offsetEmail[0]) + 'px';
+        emailWindow.style.top  = (mousePositionEmail.y + offsetEmail[1]) + 'px';
+        }
+    }, true);
+
+// Ajout des écouteurs d'événements pour l'ouverture et la gestion de l'email
+document.getElementById('email-open').addEventListener('click', openEmailWindow);
+document.getElementById('email-open').addEventListener('click', putEmailInFront);
+document.getElementById('email-window').addEventListener("click", putEmailInFront);

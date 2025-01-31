@@ -1,6 +1,6 @@
 #browser-window {
     display: none;
-    position: fixed;
+    position: absolute;
     top: 5%;
     left: 5%;
     width: 90%;
@@ -29,6 +29,10 @@
     background-color: #1a1a1a;
     height: 45px;
     border-bottom: 1px solid #333;
+}
+
+.header:active{
+    cursor: grabbing;
 }
 
 .gogole-tab {

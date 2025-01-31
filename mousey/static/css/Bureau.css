@@ -162,3 +162,7 @@ body, html {
     display: none; /* Initialement caché */
     z-index: 10000; /* S'assurer que le message est au-dessus de tout le contenu */
 }
+
+#bottom{
+    z-index: 200;
+}
