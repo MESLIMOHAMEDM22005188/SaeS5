@@ -5,16 +5,13 @@ import sys
 
 
 def main():
-    # Configure le module de réglages Django
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mickey.settings')
-
-    # Récupère le port depuis la variable d'environnement PORT (par défaut 10000)
+    # Récupère le port depuis la variable d'environnement PORT (par défaut "10000")
     port = os.environ.get('PORT', '10000')
 
     from django.core.management import execute_from_command_line
 
-    # Si aucun argument de commande n'est passé (autre que le nom du script),
-    # on ajoute par défaut 'runserver' avec l'adresse 0.0.0.0:<port>.
+    # Si aucun argument n'est passé, on lance runserver sur 0.0.0.0:<port>
     if len(sys.argv) == 1:
         sys.argv.extend(['runserver', f'0.0.0.0:{port}'])
 
