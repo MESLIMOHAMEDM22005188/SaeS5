@@ -53,29 +53,33 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Gestion du mot de passe
     submitBtn.addEventListener('click', () => {
-        const password = passwordInput.value.trim();
-        if (!password) {
-            feedback.textContent = 'Veuillez entrer un mot de passe.';
-            feedback.className = '';
-            return;
-        }
+    const password = passwordInput.value.trim();
+    if (!password) {
+        feedback.textContent = 'Veuillez entrer un mot de passe.';
+        feedback.className = '';
+        return;
+    }
 
-        const strength = evaluatePassword(password);
-        resetFortress();
-        reinforceFortress(strength);
+    const strength = evaluatePassword(password);
 
-        feedback.className = strength;
-        feedback.textContent = strength === 'weak'
-            ? 'Mot de passe faible.'
-            : strength === 'medium'
-            ? 'Mot de passe moyen.'
-            : 'Mot de passe fort. La forteresse est protégée !';
-
-        if (strength === 'strong') successModal.classList.remove('hidden');
+    fetch('/save-password/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+        },
+        body: `password=${encodeURIComponent(password)}&strength=${encodeURIComponent(strength)}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        feedback.textContent = data.message || 'Erreur lors de l’enregistrement.';
+    })
+    .catch(error => {
+        feedback.textContent = 'Erreur réseau.';
+        console.error('Erreur:', error);
     });
-
+});
     // Modals
     startBtn.addEventListener('click', () => startModal.classList.add('hidden'));
     closeStart.addEventListener('click', () => startModal.classList.add('hidden'));

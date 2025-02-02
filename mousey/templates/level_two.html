@@ -1,22 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page avec 6 Cards</title>
+    <title>Jeux - Niveau 2</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/levelTwo.css' %}">
 </head>
 <body>
     <div class="container">
-        <a href="{% url 'level_two_jeu1' %}" class="card red">Jeu de la Forteresse</a>
-        <a href="{% url 'level_two_course' %}" class="card blue">Course</a>
-        <a href="{% url 'level_two_jeu2' %}" class="card green">La Quête du Réseau Sécurisé</a>
-        <a href="{% url 'level_two_jeu3' %}" class="card yellow">Mot de passe croisée</a>
-        <a href="{% url 'level_two_jeu4' %}" class="card purple">Le Mur de parefeu</a>
-        <a href="{% url 'level_two_pswd' %}" class="card brown">Combien de temps pour cracker ?</a>
-        <a href="{% url 'home' %}" class="card orange">Menu</a>
-        <a href="{% url 'level_three' %}" class="card teal ">Niveau suivant</a>
+        <!-- Conteneur pour la grille de 6 cartes (2 colonnes x 3 lignes) -->
+        <div class="card-container">
+            <a href="{% url 'level_two_jeu1' %}" class="card red">Jeu de la Forteresse</a>
+            <a href="{% url 'level_two_course' %}" class="card blue">Course</a>
+            <a href="{% url 'level_two_jeu2' %}" class="card green">La Quête du Réseau Sécurisé</a>
+            <a href="{% url 'level_two_jeu3' %}" class="card yellow">Mot de passe croisée</a>
+            <a href="{% url 'level_two_jeu4' %}" class="card purple">Le Mur de parefeu</a>
+            <a href="{% url 'level_two_pswd' %}" class="card brown">Combien de temps pour cracker ?</a>
+        </div>
+
+        <!-- Par exemple, un conteneur séparé pour d'autres boutons comme Menu ou Niveau suivant -->
+        <div class="menu-container">
+            <a href="{% url 'home' %}" class="menu-card">Menu</a>
+            <a href="{% url 'level_three' %}" class="menu-card">Niveau suivant</a>
+        </div>
     </div>
 </body>
 </html>

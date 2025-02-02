@@ -24,6 +24,9 @@ urlpatterns = [
     path('verify-email/', views.verify_email, name='verify_email'),
     path('screen-warning/', views.screen_warning, name='screen_warning'),
     path('levelOneQuizz/', views.test_level1_view, name='level_one_quizz'),
+    path('levelTwoQuizz/', views.test_level2_view, name='level_two_quizz'),
+    path('levelThreeQuizz/', views.test_level3_view, name='level_three_quizz'),
+    path('levelThreeQuizz/', views.test_level3_view, name='level_Three_quizz'),
     path('levelOneCourse/', views.level_two_course, name='level_two_course')
 ]
 

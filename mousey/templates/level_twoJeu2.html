@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bureau Niveau 1</title>
+    <title>Bureau Niveau 2</title>
     {% load static %}
     <!-- Styles CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/Bureau.css' %}">
@@ -32,9 +32,11 @@
 
 <!-- Barre inférieure -->
 <div class="bottom-bar">
-    <div class="left-info">
-        <img src="{% static 'image/bouttonMA.png' %}" alt="boutton" class="bouttonMA">
-    </div>
+
+     <a href="/levelTwo/" id="back-to-menu" class="left-info">
+  <img src="{% static 'image/bouttonMA.png' %}" alt="boutton" class="bouttonMA">
+</a>
+
     <div class="center-app">
         <img src="{% static 'image/window11.png' %}" alt="window" class="window">
         <img src="{% static 'image/outlook.png' %}" alt="outlook" class="outlook" onclick="openEmailWindow()">

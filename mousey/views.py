@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.management import BaseCommand
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.utils.timezone import now
 from python_http_client import Client
@@ -12,8 +13,9 @@ from django.core.mail import send_mail
 from django_ratelimit.decorators import ratelimit
 from .forms import UserCreationFormWithPhone
 from .models import PhoneVerification, EmailVerification
-from .models import QuestionLevelOne, ResultatLevelOne, ReponseLevelOne
+from .models import QuestionLevelOne, ResultatLevelOne, Forteresse, QuestionLevelThree, QuestionLevelTwo,ResultatLevelThree, ResultatLevelTwo, ReponseLevelThree, ReponseLevelTwo
 
+from django.shortcuts import render
 
 @login_required
 def test_level1_view(request):
@@ -47,7 +49,6 @@ def test_level1_view(request):
     return render(request, 'test_level1.html', {'questions': questions})
 
 
-@ratelimit(key='ip', rate='5/m', block=True)
 def user_login(request):
     """Vue pour la connexion utilisateur."""
     if request.method == "POST":
@@ -208,6 +209,37 @@ def level_one(request):
     return render(request, 'level_one.html')
 
 
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import QuestionLevelTwo, ResultatLevelTwo
+
+@login_required
+def test_level2_view(request):
+    if request.method == "POST":
+        user_answers = request.POST
+        questions = QuestionLevelTwo.objects.all().order_by('numero')
+        score = 0
+        total_questions = questions.count()
+
+        for question in questions:
+            # Ici, on parcourt les réponses du niveau 2 via le related_name 'reponses'
+            correct_answer = question.reponses.filter(est_correcte=True).first()
+            user_answer_id = user_answers.get(f'q{question.id}')
+            if user_answer_id and str(correct_answer.id) == user_answer_id:
+                score += 1
+
+        # Sauvegarde du résultat pour le niveau 2
+        ResultatLevelTwo.objects.create(utilisateur=request.user.username, score=score)
+        messages.success(request, f"Vous avez obtenu {score}/{total_questions} bonne(s) réponse(s) !")
+        return redirect('test_level2')  # Assurez-vous que l'URL 'test_level2' est bien définie
+
+    else:
+        questions = QuestionLevelTwo.objects.all().order_by('numero')
+        return render(request, 'test_level2.html', {'questions': questions})
+
+
+
 @login_required
 def level_one_bureau(request):
     """Page pour le bureau du niveau 1."""
@@ -217,6 +249,45 @@ def level_one_bureau(request):
 def level_two_jeu1(request):
     """Page pour le niveau 2."""
     return render(request, 'level_twoJeu1.html')
+@login_required
+def test_level3_view(request):
+    if request.method == "POST":
+        user_answers = request.POST
+        # On récupère les questions du niveau 3
+        questions = QuestionLevelThree.objects.all().order_by('numero')
+        score = 0
+        total_questions = questions.count()
+
+        for question in questions:
+            # On parcourt les réponses liées au niveau 3 (grâce au related_name "reponses")
+            correct_answer = question.reponses.filter(est_correcte=True).first()
+            user_answer_id = user_answers.get(f'q{question.id}')
+            if user_answer_id and str(correct_answer.id) == user_answer_id:
+                score += 1
+
+        # Enregistrement du résultat dans ResultatLevelThree
+        ResultatLevelThree.objects.create(utilisateur=request.user.username, score=score)
+        messages.success(request, f"Vous avez obtenu {score}/{total_questions} bonne(s) réponse(s) !")
+        return redirect('test_level3')  # Assurez-vous que l'URL 'test_level3' est bien définie
+
+    else:
+        questions = QuestionLevelThree.objects.all().order_by('numero')
+        return render(request, 'test_level3.html', {'questions': questions})
+def save_password(request):
+    if request.method == "POST":
+       if not request.user.is_authenticated:
+           return JsonResponse({'error': 'Authentication required'}, status=401)
+    password = request.POST.get('password').strip
+    strength = request.POST.get('strength', 'weak')
+
+    Forteresse.objects.create(
+        user=request.user,
+        password=password,
+        strength=strength
+    )
+    return JsonResponse({'message': 'Mot de passe enregistré avec succès.'})
+
+    return JsonResponse({'error': 'Requête non valide.'}, status=400)
 
 @login_required
 def level_two_jeu2(request):
