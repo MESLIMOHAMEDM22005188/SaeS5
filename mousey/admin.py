@@ -19,6 +19,10 @@ class QuestionLevelOneAdmin(admin.ModelAdmin):
 class ResultatLevelOneAdmin(admin.ModelAdmin):
     list_display = ('utilisateur', 'score', 'date')
 
+@admin.register(ReponseLevelOne)
+class ReponseLevelOneAdmin(admin.ModelAdmin):
+    list_display = ('texte', 'est_correcte', 'question')
+
 
 # --- Pour le Niveau 2 ---
 # Étant donné que ReponseLevelTwo ne pointe pas vers QuestionLevelTwo,
