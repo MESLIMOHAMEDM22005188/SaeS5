@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{% static 'image/logo_bureau.png' %}">
     <title>Jeux - Niveau 2</title>
-    {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/levelTwo.css' %}">
 </head>
 <body>
@@ -19,7 +20,7 @@
             <a href="{% url 'level_two_pswd' %}" class="card brown">Combien de temps pour cracker ?</a>
         </div>
 
-        <!-- Par exemple, un conteneur séparé pour d'autres boutons comme Menu ou Niveau suivant -->
+        <!-- Conteneur pour les boutons de navigation -->
         <div class="menu-container">
             <a href="{% url 'home' %}" class="menu-card">Menu</a>
             <a href="{% url 'level_three' %}" class="menu-card">Niveau suivant</a>
