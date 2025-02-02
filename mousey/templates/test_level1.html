@@ -21,7 +21,7 @@
           {% if question.image %}
             <img src="{{ question.image.url }}" alt="Image de la question" style="max-width: 400px;">
           {% endif %}
-          {% for reponse in question.reponses.all %}
+          {% for reponse in question.reponses_level_one.all %}
             <label>
               <input type="radio" name="q{{ question.id }}" value="{{ reponse.id }}">
               {{ reponse.texte }}
