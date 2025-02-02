@@ -4,42 +4,39 @@
   {% load static %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz Cyber Sécu</title>
+  <title>Quiz Cyber Sécu - Question {{ question_index|add:"1" }}</title>
   <link rel="stylesheet" type="text/css" href="{% static 'css/quizz_1.css' %}">
 </head>
 <body>
   <div class="quiz-container">
     <h1>Quiz : Initiation à la Cyber Sécurité</h1>
-    <p>Répondez à chaque question, puis cliquez sur "Valider".</p>
+    <p>Question {{ question_index|add:"1" }} sur {{ total }}</p>
 
-    <!-- Formulaire du quiz -->
     <form method="post">
       {% csrf_token %}
-      {% for question in questions %}
-        <div class="question">
-          <h2>{{ question.numero }}. {{ question.texte }}</h2>
-          {% if question.image %}
-            <img src="{{ question.image.url }}" alt="Image de la question" style="max-width: 400px;">
-          {% endif %}
-          {% for reponse in question.reponses_level_one.all %}
-            <label>
-              <input type="radio" name="q{{ question.id }}" value="{{ reponse.id }}">
-              {{ reponse.texte }}
-            </label>
-          {% endfor %}
-        </div>
-      {% endfor %}
-      <button type="submit">Valider</button>
+      <div class="question">
+        <h2>{{ question.numero }}. {{ question.texte }}</h2>
+        {% if question.image %}
+          <img src="{{ question.image.url }}" alt="Image de la question" style="max-width: 400px;">
+        {% endif %}
+        {% for reponse in question.reponses_level_one.all %}
+          <label>
+            <input type="radio" name="answer" value="{{ reponse.id }}">
+            {{ reponse.texte }}
+          </label><br>
+        {% endfor %}
+      </div>
+      <div class="navigation-buttons">
+        {% if question_index > 0 %}
+          <button type="submit" name="prev">Précédent</button>
+        {% endif %}
+        {% if question_index < total|add:"-1" %}
+          <button type="submit" name="next">Suivant</button>
+        {% else %}
+          <button type="submit" name="finish">Terminer</button>
+        {% endif %}
+      </div>
     </form>
   </div>
-
-  <!-- Affichage des messages éventuels -->
-  {% if messages %}
-    <div class="messages">
-      {% for message in messages %}
-        <p>{{ message }}</p>
-      {% endfor %}
-    </div>
-  {% endif %}
 </body>
 </html>
