@@ -46,7 +46,17 @@ class QuestionLevelTwo(models.Model):
         return f"Question{self.numero}: {self.texte}"
 
 
+class ReponseLevelTwo(models.Model):
+    question = models.ForeignKey(
+        QuestionLevelTwo,
+        on_delete=models.CASCADE,
+        related_name='reponses_level_two'
+    )
+    texte = models.CharField(max_length=200)
+    est_correcte = models.BooleanField(default=False)
 
+    def __str__(self):
+        return f"Réponse: {self.texte} (Correcte: {self.est_correcte})"
 class QuestionLevelThree(models.Model):
 
     texte = models.TextField()
