@@ -65,9 +65,8 @@ class ReponseLevelOne(models.Model):
 
 
 class ReponseLevelTwo(models.Model):
-    # Option A : modification pour que ReponseLevelTwo référence QuestionLevelTwo
     question = models.ForeignKey(
-        QuestionLevelTwo,
+        QuestionLevelTwo,  # Assurez-vous qu'il référence QuestionLevelTwo
         on_delete=models.CASCADE,
         related_name='reponses_level_two'
     )
@@ -76,7 +75,6 @@ class ReponseLevelTwo(models.Model):
 
     def __str__(self):
         return f"Réponse: {self.texte} (Correcte: {self.est_correcte})"
-
 
 class ReponseLevelThree(models.Model):
     question = models.ForeignKey(
