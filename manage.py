@@ -19,4 +19,15 @@ def main():
 
 
 if __name__ == '__main__':
+    # Si la commande est "runserver" et que la variable d'environnement PORT est définie,
+    # on modifie les arguments pour écouter sur 0.0.0.0:$PORT
+    if len(sys.argv) > 1 and sys.argv[1] == "runserver":
+        port = os.environ.get("PORT")
+        if port:
+            # Si aucun port n'est précisé dans la commande, on l'ajoute.
+            if len(sys.argv) == 2:
+                sys.argv.append("0.0.0.0:" + port)
+            else:
+                # Sinon, on remplace le port spécifié par celui défini dans l'environnement.
+                sys.argv[2] = "0.0.0.0:" + port
     main()
