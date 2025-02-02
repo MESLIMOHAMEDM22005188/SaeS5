@@ -10,7 +10,7 @@ ROOT_URLCONF = 'mickey.urls'
 SECRET_KEY = config('SECRET_KEY', default='fallback_key')
 
 DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost', 'saes5.onrender.com']
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', 'saes5.onrender.com']  # 127.0.0.1 retiré
 
 # --- Static files ---
 STATIC_URL = '/static/'
