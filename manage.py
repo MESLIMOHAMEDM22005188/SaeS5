@@ -7,7 +7,7 @@ import sys
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mickey.settings')
     # Récupère le port depuis la variable d'environnement PORT (par défaut "10000")
-    port = os.environ.get('PORT', '10000')
+    port = os.environ.get('PORT', '8000')
 
     from django.core.management import execute_from_command_line
 
