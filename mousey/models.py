@@ -2,10 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import now, timedelta
 
-from django.db import models
-from django.contrib.auth.models import User
-
-
 class Forteresse(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)  # Relation avec l'utilisateur
     password = models.CharField(max_length=255)  # Mot de passe créé
@@ -34,7 +30,7 @@ class QuestionLevelOne(models.Model):
     image = models.ImageField(upload_to='quiz_images/', blank=True, null=True)
 
     def __str__(self):
-        return f"Question{self.numero}: {self.texte}"
+        return f"Question {self.numero}: {self.texte}"
 
 
 class QuestionLevelTwo(models.Model):
@@ -43,27 +39,16 @@ class QuestionLevelTwo(models.Model):
     image = models.ImageField(upload_to='quiz_images/', blank=True, null=True)
 
     def __str__(self):
-        return f"Question{self.numero}: {self.texte}"
+        return f"Question {self.numero}: {self.texte}"
 
 
-class ReponseLevelTwo(models.Model):
-    question = models.ForeignKey(
-        QuestionLevelTwo,
-        on_delete=models.CASCADE,
-        related_name='reponses_level_two'
-    )
-    texte = models.CharField(max_length=200)
-    est_correcte = models.BooleanField(default=False)
+class QuestionLevelThree(models.Model):
+    texte = models.TextField()
+    numero = models.IntegerField()
+    image = models.ImageField(upload_to='quiz_images/', blank=True, null=True)
 
     def __str__(self):
-        return f"Réponse: {self.texte} (Correcte: {self.est_correcte})"
-class QuestionLevelThree(models.Model):
-
-    texte = models.TextField()
-
-    numero = models.IntegerField()
-
-    image = models.ImageField(upload_to='quiz_images/', blank=True, null=True)
+        return f"Question {self.numero}: {self.texte}"
 
 
 class ReponseLevelOne(models.Model):
@@ -79,11 +64,10 @@ class ReponseLevelOne(models.Model):
         return f"Réponse: {self.texte} (Correcte: {self.est_correcte})"
 
 
-
-
 class ReponseLevelTwo(models.Model):
+    # Option A : modification pour que ReponseLevelTwo référence QuestionLevelTwo
     question = models.ForeignKey(
-        QuestionLevelOne,
+        QuestionLevelTwo,
         on_delete=models.CASCADE,
         related_name='reponses_level_two'
     )
@@ -91,20 +75,21 @@ class ReponseLevelTwo(models.Model):
     est_correcte = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Reponse: {self.texte} (Correcte: {self.est_correcte})"
+        return f"Réponse: {self.texte} (Correcte: {self.est_correcte})"
 
 
 class ReponseLevelThree(models.Model):
     question = models.ForeignKey(
         QuestionLevelThree,
         on_delete=models.CASCADE,
-        related_name='reponses'  # On utilise "reponses" ici pour faciliter le template
+        related_name='reponses'  # Pour simplifier le template
     )
     texte = models.CharField(max_length=200)
     est_correcte = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Réponse: {self.texte} (Correcte: {self.est_correcte})"
+
 
 class ResultatLevelOne(models.Model):
     utilisateur = models.CharField(max_length=100)
@@ -130,9 +115,9 @@ class ResultatLevelThree(models.Model):
     date = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.utilisateur} - {self.score} points "
+        return f"{self.utilisateur} - {self.score} points"
 
-       
+
 class PhoneVerification(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='phone_verification')
     phone_number = models.CharField(max_length=15, unique=True)
@@ -152,9 +137,6 @@ class PhoneVerification(models.Model):
         return f"{self.user.username} - {self.phone_number} - Verified: {self.is_verified}"
 
 
-
-
-
 class EmailVerification(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='email_verification')
     email = models.EmailField(unique=True)
@@ -165,18 +147,12 @@ class EmailVerification(models.Model):
     code_expiration = models.DateTimeField(null=True, blank=True)
 
     def generate_code(self):
-        """
-        Génère un code de vérification à 6 chiffres et définit la date d'expiration.
-        """
         import random
         self.verification_code = str(random.randint(100000, 999999))
         self.code_expiration = now() + timedelta(minutes=10)
         self.save()
 
     def is_code_valid(self):
-        """
-        Vérifie si le code est encore valide.
-        """
         return self.code_expiration and now() <= self.code_expiration
 
     def __str__(self):

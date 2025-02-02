@@ -5,7 +5,7 @@ from .models import (
     QuestionLevelThree, ReponseLevelThree, ResultatLevelThree
 )
 
-# --- Inlines pour le Niveau 1 (questions avec leurs réponses) ---
+# --- Niveau 1 ---
 class ReponseLevelOneInline(admin.TabularInline):
     model = ReponseLevelOne
     extra = 1
@@ -24,8 +24,7 @@ class ReponseLevelOneAdmin(admin.ModelAdmin):
     list_display = ('texte', 'est_correcte', 'question')
 
 
-# --- Inlines pour le Niveau 2 ---
-# Vérifiez que dans le modèle, ReponseLevelTwo référence bien QuestionLevelTwo via la clé étrangère.
+# --- Niveau 2 ---
 class ReponseLevelTwoInline(admin.TabularInline):
     model = ReponseLevelTwo
     extra = 1
@@ -44,7 +43,7 @@ class ReponseLevelTwoAdmin(admin.ModelAdmin):
     list_display = ('texte', 'est_correcte', 'question')
 
 
-# --- Inlines pour le Niveau 3 ---
+# --- Niveau 3 ---
 class ReponseLevelThreeInline(admin.TabularInline):
     model = ReponseLevelThree
     extra = 1
