@@ -40,7 +40,7 @@ def test_level1_view(request):
         # Sauvegarder le résultat en base, afficher un message, etc.
         ResultatLevelOne.objects.create(utilisateur=request.user.username, score=score)
         messages.success(request, f"Vous avez obtenu {score}/{total_questions} bonne(s) réponse(s) !")
-        return redirect('test_level1')
+        return redirect('level_one_quizz')
 
     # Requête GET : afficher les questions
     questions = QuestionLevelOne.objects.all().order_by('numero')
