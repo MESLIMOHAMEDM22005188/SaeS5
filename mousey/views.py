@@ -29,22 +29,20 @@ def test_level1_view(request):
         total_questions = questions.count()
 
         for question in questions:
-            # Obtenir la réponse correcte pour la question
-            correct_answer = question.reponses.filter(est_correcte=True).first()
+            # Utilisez le related_name correct : 'reponses_level_one'
+            correct_answer = question.reponses_level_one.filter(est_correcte=True).first()
 
             # Comparer avec la réponse de l'utilisateur
             user_answer_id = user_answers.get(f'q{question.id}')
-            if user_answer_id and str(correct_answer.id) == user_answer_id:
+            if user_answer_id and correct_answer and str(correct_answer.id) == user_answer_id:
                 score += 1
 
-        # Sauvegarder le résultat en base
+        # Sauvegarder le résultat en base, afficher un message, etc.
         ResultatLevelOne.objects.create(utilisateur=request.user.username, score=score)
-
-        # Afficher un message de résultat et rediriger
         messages.success(request, f"Vous avez obtenu {score}/{total_questions} bonne(s) réponse(s) !")
         return redirect('test_level1')
 
-    # Si ce n'est pas une requête POST, afficher les questions
+    # Requête GET : afficher les questions
     questions = QuestionLevelOne.objects.all().order_by('numero')
     return render(request, 'test_level1.html', {'questions': questions})
 
