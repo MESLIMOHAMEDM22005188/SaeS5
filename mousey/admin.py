@@ -10,6 +10,9 @@ class ReponseLevelOneInline(admin.TabularInline):
     model = ReponseLevelOne
     extra = 1
 
+class ReponseLevelTwoInline(admin.TabularInline):
+    model = ReponseLevelTwo
+    extra = 1
 @admin.register(QuestionLevelOne)
 class QuestionLevelOneAdmin(admin.ModelAdmin):
     list_display = ('numero', 'texte')
@@ -30,8 +33,7 @@ class ReponseLevelOneAdmin(admin.ModelAdmin):
 @admin.register(QuestionLevelTwo)
 class QuestionLevelTwoAdmin(admin.ModelAdmin):
     list_display = ('numero', 'texte')
-    # Pas d'inlines ici, car ReponseLevelTwo n'est pas relié à QuestionLevelTwo
-
+    inlines = [ReponseLevelTwoInline]
 @admin.register(ResultatLevelTwo)
 class ResultatLevelTwoAdmin(admin.ModelAdmin):
     list_display = ('utilisateur', 'score', 'date')
