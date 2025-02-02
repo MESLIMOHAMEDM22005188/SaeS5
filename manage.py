@@ -5,21 +5,21 @@ import sys
 
 
 def main():
-    """Run administrative tasks."""
+    # Configure le module de réglages Django
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mickey.settings')
-    try:
-        from django.core.management import execute_from_command_line
-    except ImportError as exc:
-        raise ImportError(
-            "Couldn't import Django. Are you sure it's installed and "
-            "available on your PYTHONPATH environment variable? Did you "
-            "forget to activate a virtual environment?"
-        ) from exc
+
+    # Récupère le port depuis la variable d'environnement PORT (par défaut 10000)
+    port = os.environ.get('PORT', '10000')
+
+    from django.core.management import execute_from_command_line
+
+    # Si aucun argument de commande n'est passé (autre que le nom du script),
+    # on ajoute par défaut 'runserver' avec l'adresse 0.0.0.0:<port>.
+    if len(sys.argv) == 1:
+        sys.argv.extend(['runserver', f'0.0.0.0:{port}'])
+
     execute_from_command_line(sys.argv)
 
 
 if __name__ == '__main__':
-    port = os.environ.get('PORT', '10000')
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mickey.settings')
-    from django.core.management import execute_from_command_line
-    execute_from_command_line(['manage.py','runserver', f'0.0.0.0:{port}'])
+    main()
