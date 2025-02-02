@@ -1,7 +1,5 @@
-// Variables
 
 let points = 0;
-
 const emails = [
     {
         id: 1,

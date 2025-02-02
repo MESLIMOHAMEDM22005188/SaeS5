@@ -8,6 +8,12 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/levelOne.css' %}">
 </head>
 <body>
+  <form method="POST" action="{% url 'home' %}" class="logout-btn">
+        {% csrf_token %}
+        <button type="submit" style="border: none; background: none; padding: 0; cursor: pointer;">
+            <img src="{% static 'image/logout.png' %}" alt="Logout">
+        </button>
+    </form>
     <div class="note">
         <label class="noteLabel">
             Identifiant: <br/>

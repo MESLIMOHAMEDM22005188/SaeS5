@@ -32,10 +32,13 @@
 
 <!-- Barre inférieure -->
 <div class="bottom-bar">
-    <div class="left-info">
-        <img src="{% static 'image/bouttonMA.png' %}" alt="boutton" class="bouttonMA">
-
-    </div>
+    <!-- Bouton MA qui redirige -->
+    <form method="POST" action="{% url 'home' %}">
+        {% csrf_token %}
+        <button type="submit" style="border: none; background: none; padding: 0; cursor: pointer;">
+            <img src="{% static 'image/bouttonMA.png' %}" alt="Bouton MA" class="left-info">
+        </button>
+    </form>
     <div class="center-app">
         <img src="{% static 'image/window11.png' %}" alt="window" class="window">
         <img src="{% static 'image/outlook.png' %}" alt="outlook" class="outlook" onclick="openEmailWindow()">
