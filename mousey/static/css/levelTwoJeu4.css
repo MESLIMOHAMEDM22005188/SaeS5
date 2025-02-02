@@ -1,0 +1,107 @@
+/* Style général pour le jeu */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.game-container {
+    text-align: center;
+    width: 80%;
+    max-width: 800px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Mur de pare-feu (les briques) */
+#wall-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 briques par ligne */
+    grid-template-rows: repeat(2, 1fr); /* 2 lignes */
+    gap: 10px; /* Espacement entre les briques */
+    justify-items: stretch;
+    align-items: end;
+    margin-top: 20px;
+    background-color: #d35400;
+    border: 2px solid #c0392b;
+}
+
+/* Styles des briques (plus grandes et avec des bordures noires) */
+.brique {
+    width: 100%;
+    height: 80px; /* Augmenter la hauteur des briques */
+    background-color: #e67e22;
+    border-radius: 5px;
+    border: 3px solid #000000; /* Bordure noire plus foncée */
+    box-sizing: border-box;
+    transition: background-color 0.3s, transform 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre pour un effet de profondeur */
+}
+
+/* Brique correcte (ajout d'un effet pour la rendre plus visible) */
+.brique.correct {
+    background-color: #2ecc71; /* Vert vif pour la bonne réponse */
+    transform: scale(1.1); /* Légère animation de grossissement */
+    box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3); /* Ombre plus forte */
+}
+
+/* Brique incorrecte (elle devient blanche avec une bordure rouge) */
+.brique.incorrect {
+    background-color: #ffffff; /* Brique blanche en cas d'erreur */
+    border-color: #e74c3c;  /* Bordure rouge */
+    box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3); /* Ombre rouge */
+}
+
+/* Boutons de réponse */
+.answer-button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #ff7846;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button, .menu-button {
+    padding: 12px 25px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    border: none;
+}
+
+.answer-button:hover {
+    background-color: #ffb800;
+}
+
+/* Feedback text */
+#feedback {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#score-container {
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+#replay-button {
+    background-color: #ff7846; /* Couleur orange */
+    color: white;
+    margin-top: 20px;
+    display: none;
+}
+
+#replay-button:hover, #menu-button:hover {
+    background-color: #2980b9;
+}

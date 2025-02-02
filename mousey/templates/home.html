@@ -7,7 +7,6 @@
     <title>Niveaux</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/level.css' %}">
     <link rel="icon" type="image/png" href="{% static 'image/logo_bureau.png' %}">
-
 </head>
 <body>
 <div class="container">
@@ -26,6 +25,7 @@
             <div>Niveau 2</div>
             <div>0/5</div>
         </a>
+        <a href="{% url 'level_two_quizz' %}" class="test-card">FAIRE LE TEST</a>
     </div>
 
     <!-- Niveau 3 -->
@@ -34,8 +34,8 @@
             <div>Niveau 3</div>
             <div>0/6</div>
         </a>
+        <a href="{% url 'level_Three_quizz' %}" class="test-card">FAIRE LE TEST</a>
     </div>
 </div>
 </body>
 </html>
-

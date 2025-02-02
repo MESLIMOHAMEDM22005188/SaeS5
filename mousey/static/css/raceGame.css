@@ -1,0 +1,171 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    margin-top: 20px;
+    font-size: 28px;
+    color: #333;
+}
+/* Overlay pour le modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Fond semi-transparent */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Contenu du popup */
+.modal-popup {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 400px;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    animation: fadeIn 0.5s ease;
+}
+
+/* Animation pour le popup */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Bouton pour fermer */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close-btn:hover {
+    color: #000;
+}
+
+/* Bouton pour démarrer */
+#startGameBtn {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#startGameBtn:hover {
+    background: linear-gradient(135deg, #0056b3, #003f7f);
+}
+
+
+.track-container {
+    position: relative;
+    margin: 20px auto;
+    width: 800px;
+    height: 200px;
+    overflow: hidden;
+    background-color: #f9f9f9;
+}
+
+.track {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.animal {
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    transform: translateX(0px);
+    transition: transform 0.05s linear;
+}
+
+.cybermouse { top: 5px; }
+.snail { top: 45px; }
+.turtle { top: 85px; }
+.hare { top: 125px; }
+.cheetah { top: 165px; }
+
+.question-box {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    background: #fff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.question {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.options button {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.options button:hover {
+    background-color: #0056b3;
+}
+
+.finish-message {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: #333;
+}
+
+/* Bouton Restart */
+.restart-button {
+    margin: 20px auto;
+    display: block; /* Le bouton est centré au-dessus */
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: orange;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+.restart-button:hover {
+    background-color: darkorange;
+}

@@ -11,7 +11,17 @@ input{
 .noteLabel{
     font-size: 1.5em;
 }
+.logout-btn {
+    position: absolute;
+    top: 20px; /* Position verticale depuis le haut */
+    right: 20px; /* Position horizontale depuis la droite */
+    cursor: pointer; /* Curseur en main sur hover */
+}
 
+.logout-btn img {
+    width: 30px; /* Réduction de la taille de l'image */
+    height: auto; /* Maintient le ratio de l'image */
+}
 
 
 .textZone {

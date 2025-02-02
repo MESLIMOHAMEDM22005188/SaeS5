@@ -127,3 +127,33 @@
 .email-options button:hover {
     background-color: #f0f0f0;
 }
+
+.hacked-message {
+    text-align: center;
+    margin-top: 50px;
+    font-family: Arial, sans-serif;
+    color: red;
+}
+
+.hacked-message h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.hacked-message p {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.hacked-message button {
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.hacked-message button:hover {
+    background-color: red;
+}

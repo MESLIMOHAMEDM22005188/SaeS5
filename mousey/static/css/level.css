@@ -3,7 +3,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #000;
+    background-color: #000; /* Noir */
     margin: 0;
     font-family: Arial, sans-serif;
 }
@@ -17,7 +17,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px; /* Espacement entre le niveau et le test */
+    gap: 10px;
 }
 
 .card {
@@ -40,15 +40,15 @@ body {
     transform: scale(1.05); /* Zoom au survol */
 }
 
-.card:nth-child(1) {
+.level:nth-child(1) .card {
     background: linear-gradient(135deg, #32CD32, #98FB98);
 }
 
-.card:nth-child(2) {
+.level:nth-child(2) .card {
     background: linear-gradient(135deg, #FFD700, #ADFF2F);
 }
 
-.card:nth-child(3) {
+.level:nth-child(3) .card {
     background: linear-gradient(135deg, #8A2BE2, #FF6347);
 }
 
