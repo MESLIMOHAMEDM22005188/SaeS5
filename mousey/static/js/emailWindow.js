@@ -124,13 +124,13 @@ function triggerPhishingPopups(emailId) {
     function getRandomPosition() {
         const top = Math.random() * 90 - 5;
         const left = Math.random() * 90 - 5;
-        return { top: `${top}%`, left: `${left}%` };
+        return {top: `${top}%`, left: `${left}%`};
     }
 
     function createPopup() {
         const popup = document.createElement('div');
         popup.classList.add('popup');
-        const { top, left } = getRandomPosition();
+        const {top, left} = getRandomPosition();
         popup.style.top = top;
         popup.style.left = left;
         popup.innerHTML = `
@@ -387,7 +387,7 @@ function putEmailInBack() {
 }
 
 var mousePositionEmail;
-var offsetEmail = [0,0];
+var offsetEmail = [0, 0];
 var isDownEmail = false;
 
 
@@ -396,29 +396,29 @@ const headerEmail = document.getElementById('email-header');
 
 document.body.appendChild(emailWindow);
 
-headerEmail.addEventListener('mousedown', function(e) {
-isDownEmail = true;
-offsetEmail = [
-    emailWindow.offsetLeft - e.clientX,
-    emailWindow.offsetTop - e.clientY
-];
+headerEmail.addEventListener('mousedown', function (e) {
+    isDownEmail = true;
+    offsetEmail = [
+        emailWindow.offsetLeft - e.clientX,
+        emailWindow.offsetTop - e.clientY
+    ];
 }, true);
 
-document.addEventListener('mouseup', function() {
+document.addEventListener('mouseup', function () {
     isDownEmail = false;
-    }, true);
+}, true);
 
-document.addEventListener('mousemove', function(event) {
+document.addEventListener('mousemove', function (event) {
     event.preventDefault();
     if (isDownEmail) {
         mousePositionEmail = {
-            x : event.clientX,
-            y : event.clientY
+            x: event.clientX,
+            y: event.clientY
         };
         emailWindow.style.left = (mousePositionEmail.x + offsetEmail[0]) + 'px';
-        emailWindow.style.top  = (mousePositionEmail.y + offsetEmail[1]) + 'px';
-        }
-    }, true);
+        emailWindow.style.top = (mousePositionEmail.y + offsetEmail[1]) + 'px';
+    }
+}, true);
 
 // Ajout des écouteurs d'événements pour l'ouverture et la gestion de l'email
 document.getElementById('email-open').addEventListener('click', openEmailWindow);

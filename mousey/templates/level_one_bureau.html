@@ -10,93 +10,93 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/browserStyle.css' %}">
 </head>
 <body>
-    <div id="phishing-message" class="phishing-message">
-        Vous devez signaler les mails de phishing.
-    </div>
-    <div class="content">
-        <div class="bureau">
-            <div class="app-ico">
-                <img src="{% static 'image/bouklook.png' %}" alt="outlook" class="outlook-app" id="email-open">
-                <div class="app-name">Bouklook</div>
-            </div>
-            <div class="app-ico">
-                <img src="{% static 'image/gogole.png' %}" alt="gogole" class="gogole-app" id="browser-open">
-                <div class="app-name">Gogole</div>
-            </div>
+<div id="phishing-message" class="phishing-message">
+    Vous devez signaler les mails de phishing.
+</div>
+<div class="content">
+    <div class="bureau">
+        <div class="app-ico">
+            <img src="{% static 'image/bouklook.png' %}" alt="outlook" class="outlook-app" id="email-open">
+            <div class="app-name">Bouklook</div>
+        </div>
+        <div class="app-ico">
+            <img src="{% static 'image/gogole.png' %}" alt="gogole" class="gogole-app" id="browser-open">
+            <div class="app-name">Gogole</div>
         </div>
     </div>
-    <div class="points-display" id="points-display">
-        Points: 0
-    </div>
+</div>
+<div class="points-display" id="points-display">
+    Points: 0
+</div>
 
-    <!-- Barre inférieure -->
-    <div class="bottom-bar" id="bottom">
-        <div class="left-info">
-            <img src="{% static 'image/bouttonMA.png' %}" alt="boutton" class="bouttonMA">
-        </div>
-        <div class="center-app">
-            <img src="{% static 'image/window11.png' %}" alt="window" id="window">
-            <img src="{% static 'image/outlook.png' %}" alt="outlook" class="outlook" onclick="openEmailWindow()">
-        </div>
-        <div class="right-info">
-            <img src="{% static 'image/eternaite.png' %}" alt="internet" class="icon1">
-            <img src="{% static 'image/batterie.png' %}" alt="batterie" class="batterie">
-            <img src="{% static 'image/son.png' %}" alt="Son" class="icon">
-            <img src="{% static 'image/heure.png' %}" alt="heure" class="heure">
-        </div>
+<!-- Barre inférieure -->
+<div class="bottom-bar" id="bottom">
+    <div class="left-info">
+        <img src="{% static 'image/bouttonMA.png' %}" alt="boutton" class="bouttonMA">
     </div>
+    <div class="center-app">
+        <img src="{% static 'image/window11.png' %}" alt="window" id="window">
+        <img src="{% static 'image/outlook.png' %}" alt="outlook" class="outlook" onclick="openEmailWindow()">
+    </div>
+    <div class="right-info">
+        <img src="{% static 'image/eternaite.png' %}" alt="internet" class="icon1">
+        <img src="{% static 'image/batterie.png' %}" alt="batterie" class="batterie">
+        <img src="{% static 'image/son.png' %}" alt="Son" class="icon">
+        <img src="{% static 'image/heure.png' %}" alt="heure" class="heure">
+    </div>
+</div>
 
-    <!-- Fenêtre des emails -->
-    <div id="email-window" class="window">
-        <header id="email-header">
-            <span>Boîte de réception</span>
-            <img src="{% static 'image/close.png' %}" alt="Fermer" id="close-email-window" class="a">
-        </header>
-        <div class="email-interface">
-            <div class="email-list">
-                <ul id="email-titles">
-                    <!-- Titres des emails -->
-                </ul>
-            </div>
-            <div class="email-content" id="email-content">
-            </div>
+<!-- Fenêtre des emails -->
+<div id="email-window" class="window">
+    <header id="email-header">
+        <span>Boîte de réception</span>
+        <img src="{% static 'image/close.png' %}" alt="Fermer" id="close-email-window" class="a">
+    </header>
+    <div class="email-interface">
+        <div class="email-list">
+            <ul id="email-titles">
+                <!-- Titres des emails -->
+            </ul>
+        </div>
+        <div class="email-content" id="email-content">
         </div>
     </div>
+</div>
 
-    <!-- Fenêtre du navigateur -->
-    <div id="browser-window" class="window">
-        <header id="browser-header">
-            <div id="upper-header">
-                <div class="gogole-tab">
-                    <img src="{% static 'image/gogole.png' %}" class="tab-gogole-ico">
-                    <div class="tab-text">Nouvel onglet</div>
-                    <img src="{% static 'image/croixBlanche.png' %}" class="tab-close-ico" id="close-browser-window">
-                </div>
-                <div id="new-tab">
-                    <img src="{% static 'image/plus.png' %}" id="new-tab-ico">
-                </div>
-                <img src="{% static 'image/close.png' %}" class="close-ico" id="close-browser">
+<!-- Fenêtre du navigateur -->
+<div id="browser-window" class="window">
+    <header id="browser-header">
+        <div id="upper-header">
+            <div class="gogole-tab">
+                <img src="{% static 'image/gogole.png' %}" class="tab-gogole-ico">
+                <div class="tab-text">Nouvel onglet</div>
+                <img src="{% static 'image/croixBlanche.png' %}" class="tab-close-ico" id="close-browser-window">
             </div>
-            <div id="lower-header">
-                <div id="refresh">
-                    <img src="{% static 'image/rafraichir.png' %}" id="refresh-ico">
-                </div>
-                <div id="search-bar">
-                    <input id="URLField" placeholder="gogole.com" onkeydown="search(this)">
-                </div>
-                <div id="bookmark">
-                    <img src="{% static 'image/marquePage.png' %}" id="bookmark-ico">
-                </div>
-                <div id="download">
-                    <img src="{% static 'image/telechargement.png' %}" id="download-ico">
-                </div>
+            <div id="new-tab">
+                <img src="{% static 'image/plus.png' %}" id="new-tab-ico">
             </div>
-        </header>
-        <div id="browser-content">
-            <img src="{% static 'image/gogoleEntier.png' %}" id="centerImg">
+            <img src="{% static 'image/close.png' %}" class="close-ico" id="close-browser">
         </div>
+        <div id="lower-header">
+            <div id="refresh">
+                <img src="{% static 'image/rafraichir.png' %}" id="refresh-ico">
+            </div>
+            <div id="search-bar">
+                <input id="URLField" placeholder="gogole.com" onkeydown="search(this)">
+            </div>
+            <div id="bookmark">
+                <img src="{% static 'image/marquePage.png' %}" id="bookmark-ico">
+            </div>
+            <div id="download">
+                <img src="{% static 'image/telechargement.png' %}" id="download-ico">
+            </div>
+        </div>
+    </header>
+    <div id="browser-content">
+        <img src="{% static 'image/gogoleEntier.png' %}" id="centerImg">
     </div>
-    <script src="{% static 'js/emailWindow.js' %}"></script>
-    <script src="{% static 'js/browserWindow.js' %}"></script>
+</div>
+<script src="{% static 'js/emailWindow.js' %}"></script>
+<script src="{% static 'js/browserWindow.js' %}"></script>
 </body>
 </html>
