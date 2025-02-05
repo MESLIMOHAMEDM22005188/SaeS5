@@ -1,6 +1,6 @@
 #email-window {
     display: none;
-    position: fixed;
+    position: absolute;
     top: 10%;
     left: 15%;
     width: 70%;
@@ -21,6 +21,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.header:active{
+    cursor: grabbing;
 }
 
 #email-window header img {

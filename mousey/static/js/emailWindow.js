@@ -26,6 +26,14 @@ const emails = [
         body: "Bonjour,<br><br>Voici le lien pour accéder à une formation sur le phishing : <a href='http://formation-phishing-1.com'>http://formation-phishing-1.com</a>",
         isPhishing: true,
         reported: false
+    },
+    {
+        id: 4,
+        sender: "service-technique-cybermouse@gmiel.com",
+        subject: "Maintenance réseau",
+        body: "Bonjour,<br><br>Suite  à un incident sur le réseau, seul quelques recherches sur internet pourrons aboutir.<br>Nous tentons actuellement de résoudre le probleme le plus rapidement,<br>nous vous remercions de votre compréhension<br><br>Le service technique",
+        isPhishing: false,
+        reported: false
     }
 ];
 
@@ -116,13 +124,13 @@ function triggerPhishingPopups(emailId) {
     function getRandomPosition() {
         const top = Math.random() * 90 - 5;
         const left = Math.random() * 90 - 5;
-        return { top: `${top}%`, left: `${left}%` };
+        return {top: `${top}%`, left: `${left}%`};
     }
 
     function createPopup() {
         const popup = document.createElement('div');
         popup.classList.add('popup');
-        const { top, left } = getRandomPosition();
+        const {top, left} = getRandomPosition();
         popup.style.top = top;
         popup.style.left = left;
         popup.innerHTML = `
@@ -283,18 +291,18 @@ function checkAllPhishingReported() {
     const allReported = emails.every(email => !email.isPhishing || email.reported);
     if (allReported) {
         sendCongratulationsMail();
+        sendChallenge2Mail();
     }
 }
 
 function sendCongratulationsMail() {
     const congratulationsEmail = {
-        id: 4,
+        id: 5,
         sender: "admin@cybersecure.com",
         subject: "Félicitations pour votre vigilance !",
         body: `
             Bravo, vous avez signalé tous les emails de phishing avec succès !<br>
-            Vous pouvez maintenant passer au quiz final pour tester vos connaissances.<br>
-            Cliquez ici pour commencer : <a href="browser/quiz" onclick="openFirefoxWindow()">Commencer le quiz</a>
+            Vous avez complété le 1er défi de ce niveau.
         `,
         read: false,
         isPhishing: false,
@@ -306,6 +314,24 @@ function sendCongratulationsMail() {
     loadEmailTitles();
 }
 
+function sendChallenge2Mail() {
+    const challenge2Email = {
+        id: 6,
+        sender: "collegue@cybersecure.com",
+        subject: "Mise à jour du projet",
+        body: `
+            Le projet à eu une mise à jour et nécéssite maintenant la version de \'Flowtouch\' 3.21.6 <br>
+            Veuillez installer la mise à jour avant de reprendre le projet.
+        `,
+        read: false,
+        isPhishing: false,
+        reported: false
+    };
+
+    emails.push(challenge2Email);
+    saveEmails();
+    loadEmailTitles();
+}
 
 // Initialisation et gestion des événements
 
@@ -331,3 +357,70 @@ document.addEventListener('click', () => {
         menu.style.top = '';
     });
 });
+
+// Fonction pour mettre la fenêtre des emails au premier plan
+function putEmailInFront() {
+    const emailWindow = document.getElementById('email-window');
+    const browserWindow = document.getElementById('browser-window');
+    if (emailWindow) {
+        emailWindow.style.zIndex = '100';
+        const childrenEmail = emailWindow.querySelectorAll('*');
+        childrenEmail.forEach(child => {
+            child.style.zIndex = '100';
+        });
+
+        browserWindow.style.zIndex = '1';
+        const childrenBrowser = browserWindow.querySelectorAll('*');
+        childrenBrowser.forEach(child => {
+            child.style.zIndex = '1';
+        });
+    }
+    putBrowserInBack()
+}
+
+// Fonction pour mettre la fenêtre des emails à l'arrière-plan
+function putEmailInBack() {
+    const emailWindow = document.getElementById('email-window');
+    if (emailWindow) {
+        emailWindow.style.zIndex = '1'; // Met l'email à l'arrière-plan
+    }
+}
+
+var mousePositionEmail;
+var offsetEmail = [0, 0];
+var isDownEmail = false;
+
+
+const emailWindow = document.getElementById('email-window');
+const headerEmail = document.getElementById('email-header');
+
+document.body.appendChild(emailWindow);
+
+headerEmail.addEventListener('mousedown', function (e) {
+    isDownEmail = true;
+    offsetEmail = [
+        emailWindow.offsetLeft - e.clientX,
+        emailWindow.offsetTop - e.clientY
+    ];
+}, true);
+
+document.addEventListener('mouseup', function () {
+    isDownEmail = false;
+}, true);
+
+document.addEventListener('mousemove', function (event) {
+    event.preventDefault();
+    if (isDownEmail) {
+        mousePositionEmail = {
+            x: event.clientX,
+            y: event.clientY
+        };
+        emailWindow.style.left = (mousePositionEmail.x + offsetEmail[0]) + 'px';
+        emailWindow.style.top = (mousePositionEmail.y + offsetEmail[1]) + 'px';
+    }
+}, true);
+
+// Ajout des écouteurs d'événements pour l'ouverture et la gestion de l'email
+document.getElementById('email-open').addEventListener('click', openEmailWindow);
+document.getElementById('email-open').addEventListener('click', putEmailInFront);
+document.getElementById('email-window').addEventListener("click", putEmailInFront);
