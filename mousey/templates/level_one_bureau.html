@@ -30,9 +30,7 @@
 </div>
 
 
-<!-- Barre inférieure -->
 <div class="bottom-bar">
-    <!-- Bouton MA qui redirige -->
     <form method="POST" action="{% url 'home' %}">
         {% csrf_token %}
         <button type="submit" style="border: none; background: none; padding: 0; cursor: pointer;">
@@ -52,7 +50,6 @@
     </div>
 </div>
 
-<!-- Fenêtre des emails -->
     <div id="email-window">
         <header>
             <span>Boîte de réception</span>
@@ -61,7 +58,6 @@
         <div class="email-interface">
             <div class="email-list">
                 <ul id="email-titles">
-                    <!-- Titres des emails -->
                 </ul>
             </div>
             <div class="email-content" id="email-content">
@@ -69,7 +65,6 @@
         </div>
     </div>
 
-<!-- Fenêtre du navigateur -->
     <div id="browser-window">
         <header id="header">
             <div id="upper-header">

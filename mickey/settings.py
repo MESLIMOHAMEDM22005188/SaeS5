@@ -2,7 +2,6 @@ import os
 from pathlib import Path
 from decouple import config
 
-# Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 ROOT_URLCONF = 'mickey.urls'
@@ -10,7 +9,7 @@ ROOT_URLCONF = 'mickey.urls'
 SECRET_KEY = config('SECRET_KEY', default='fallback_key')
 
 DEBUG = True
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost', 'saes5.onrender.com']  # 127.0.0.1 retiré
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', 'saes5.onrender.com']
 
 # --- Static files ---
 STATIC_URL = '/static/'
@@ -119,7 +118,6 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
-# --- Other settings ---
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True

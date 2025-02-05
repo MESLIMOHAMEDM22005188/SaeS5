@@ -12,7 +12,6 @@
     <h1>Quiz : Initiation à la Cyber Sécurité</h1>
     <p>Répondez à chaque question, puis cliquez sur "Valider".</p>
 
-    <!-- Formulaire du quiz -->
     <form method="post">
       {% csrf_token %}
       {% for question in questions %}
@@ -33,7 +32,6 @@
     </form>
   </div>
 
-  <!-- Message de succès -->
   {% if messages %}
     <div class="messages">
       {% for message in messages %}

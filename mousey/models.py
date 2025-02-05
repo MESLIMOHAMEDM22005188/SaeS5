@@ -66,7 +66,7 @@ class ReponseLevelOne(models.Model):
 
 class ReponseLevelTwo(models.Model):
     question = models.ForeignKey(
-        QuestionLevelTwo,  # Assurez-vous qu'il référence QuestionLevelTwo
+        QuestionLevelTwo,
         on_delete=models.CASCADE,
         related_name='reponses_level_two'
     )
@@ -80,7 +80,7 @@ class ReponseLevelThree(models.Model):
     question = models.ForeignKey(
         QuestionLevelThree,
         on_delete=models.CASCADE,
-        related_name='reponses'  # Pour simplifier le template
+        related_name='reponses'
     )
     texte = models.CharField(max_length=200)
     est_correcte = models.BooleanField(default=False)
