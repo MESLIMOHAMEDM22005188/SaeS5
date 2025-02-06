@@ -4,7 +4,6 @@ body, html {
     height: 100%;
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #3b82f6, #9333ea);
-    color: #ffffff;
 
 }
 
@@ -54,6 +53,7 @@ body, html {
 
 .app-name {
     margin-top: 10px;
+    color: white;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 50);
 }
 
@@ -82,7 +82,17 @@ body, html {
 
 .right-info {
     position: fixed;
-    right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 30px;
+}
+
+#clock{
+    color: #000000;
+    letter-spacing: 1rem;
+    font-weight: bold;
+    font-size: 20px;
 }
 
 .left-info {
@@ -99,8 +109,10 @@ body, html {
     height: 35px;
 }
 
-.batterie {
-    height: 25px;
+.icon2 {
+    display: block;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .heure {
@@ -165,4 +177,68 @@ body, html {
 
 #bottom {
     z-index: 200;
+}
+
+.volume {
+  input[type=range] {
+    display: none;
+  }
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .icon-size {
+    font-size: 2rem;
+  }
+
+  .bar-hoverbox {
+    padding: 10px 15px;
+    opacity: 0.7;
+    transition: opacity .2s;
+
+    &:hover {
+      opacity: 1;
+      cursor: pointer;
+    }
+  }
+
+  .bar {
+    background: #999;
+    height: 7px;
+    width: 120px;
+    border-radius: 15px;
+    overflow: hidden;
+    pointer-events: none;
+
+    .bar-fill {
+      background: #63fff5;
+      width: 0%;
+      height: 100%;
+      background-clip: border-box;
+      pointer-events: none;
+    }
+  }
+}
+
+#volume-popup {
+    position: absolute;
+    bottom: 50px;
+    right: 10px;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+#volume-popup input[type=range] {
+    -webkit-appearance: slider-vertical;
+    height: 100px;
+    width: 10px;
+}
+
+
+#dateInfo{
+    display: inline-flex;
 }

@@ -39,10 +39,26 @@
         <img src="{% static 'image/outlook.png' %}" alt="outlook" class="outlook" onclick="openEmailWindow()">
     </div>
     <div class="right-info">
-        <img src="{% static 'image/eternaite.png' %}" alt="internet" class="icon1">
-        <img src="{% static 'image/batterie.png' %}" alt="batterie" class="batterie">
-        <img src="{% static 'image/son.png' %}" alt="Son" class="icon">
-        <img src="{% static 'image/heure.png' %}" alt="heure" class="heure">
+        <img src="{% static 'image/ethernet.png' %}" alt="internet" class="icon1">
+        <img src="{% static 'image/batterie.png' %}" alt="batterie" class="icon2">
+        <div class="volume">
+            <img src="{% static 'image/son.png' %}" onclick="toggleVolumeSlider()">
+            <div id="volume-popup">
+                <input type="range" min="0" max="100" value="50" class="volume-range">
+            <div class="icon">
+                <i class="fa fa-volume-up icon-size" aria-hidden="true"></i>
+            </div>
+            <div class="bar-hoverbox">
+                <div class="bar">
+                    <div class="bar-fill"></div>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="dateInfo">
+            <div class="clock">08:32</div>
+            <div class="date">05/02/2025</div>
+        </div>
     </div>
 </div>
 
@@ -98,5 +114,7 @@
 </div>
 <script src="{% static 'js/emailWindow.js' %}"></script>
 <script src="{% static 'js/browserWindow.js' %}"></script>
+<script src="{% static 'js/desktop.js' %}"></script>
+
 </body>
 </html>

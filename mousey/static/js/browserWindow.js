@@ -134,7 +134,7 @@ function loadSearchFlowtouch() {
                                                 </description>
                                             </lowerPart>
                                         </site1 >
-                                        <site2 style="margin-bottom: 15px; cursor: pointer">
+                                        <site2 style="margin-bottom: 15px; cursor: pointer" onclick="loadSecondFlowtouchLink()">
                                             <upperPart style="display: flex; align-items: center; margin-bottom: 10px;">
                                                 <img src="/static/image/flowtouchLogo.png" width="30" height="30" alt="Flowtouch Logo" style="margin-right: 10px;">
                                                 <div class="text">
@@ -151,7 +151,7 @@ function loadSearchFlowtouch() {
                                                 </description>
                                             </lowerPart>
                                         </site2>
-                                        <site3 style="margin-bottom: 15px; cursor: pointer" onclick="triggerPhishingPopups()">
+                                        <site3 style="margin-bottom: 15px; cursor: pointer" onclick="loadThirdFlowtouchLink()">
                                             <upperPart style="display: flex; align-items: center; margin-bottom: 10px;">
                                                 <img src="/static/image/flowtouchLogo.png" width="30" height="30" alt="Flowtouch Logo" style="margin-right: 10px;">
                                                 <div class="text">
@@ -206,16 +206,13 @@ function loadSecondFlowtouchLink() {
     const browserContent = document.getElementById('browser-content');
 
     browserContent.innerHTML = `
-                        <div style="background: white; width: 100%; height: 100%" > 
-                            <div style="margin-left: 34%;padding-top: 13%; color: #1a1a1a; font-size: 30px">
-                                <strong>Télécharger Flowtouch 3.21.6</strong>
-                                <br>
-                                <br>
-                                <div style="margin-left: 17%">
-                                    <button onclick="triggerPhishingPopups()" id="download-link-1"> Télécharger</button>
-                                </div>
-                            </div>
+                        <div class="container">
+                            <img src="/static/image/flowtouchLogo.png" alt="FlowTouch Logo" class="logo">
+                            <h1>Bienvenue sur FlowTouch</h1>
+                            <p>L'outil ultime pour les développeurs, optimisé pour un workflow fluide et efficace.</p>
+                            <button onclick="()" class="download-button">Télécharger FlowTouch</button>
                         </div>
+                         
                     `;
 }
 
@@ -223,15 +220,10 @@ function loadThirdFlowtouchLink() {
     const browserContent = document.getElementById('browser-content');
 
     browserContent.innerHTML = `
-                        <div style="background: white; width: 100%; height: 100%" > 
-                            <div style="margin-left: 34%;padding-top: 13%; color: #1a1a1a; font-size: 30px">
-                                <strong>Télécharger Flowtouch 3.21.6</strong>
-                                <br>
-                                <br>
-                                <div style="margin-left: 17%">
-                                    <button onclick="triggerPhishingPopups()" id="download-link-1"> Télécharger</button>
-                                </div>
-                            </div>
+                        <div class="container">
+                            <h1>Bienvenue sur FlowTouch</h1>
+                            <p>L'outil ultime pour les développeurs, optimisé pour un workflow fluide et efficace.</p>
+                            <button onclick="triggerPhishingPopups()" class="download-button">Télécharger FlowTouch</button>
                         </div>
                     `;
 }
