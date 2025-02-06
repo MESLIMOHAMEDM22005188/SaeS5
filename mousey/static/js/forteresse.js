@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (/[a-z]/.test(password)) score++;
         if (/[0-9]/.test(password)) score++;
         if (/[\W]/.test(password)) score++;
-        return score <= 2 ? 'weak' : score === 3 || score === 4 ? 'medium' : 'strong';
+        return score <= 2 ? 'faible' : score === 3 || score === 4 ? 'moyen' : 'fort';
     }
 
     // Réinitialisation de la forteresse
@@ -39,8 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Renforcement de la forteresse en fonction du niveau de sécurité
     function reinforceFortress(level) {
         resetFortress();
-        if (level === 'medium' && porte) porte.classList.remove('close-ico');
-        if (level === 'strong') {
+        if (level === 'moyen' && porte) porte.classList.remove('close-ico');
+        if (level === 'fort') {
             if (porte) porte.classList.remove('close-ico');
             if (tourDroite) tourDroite.classList.remove('close-ico');
             if (tourGauche) tourGauche.classList.remove('close-ico');
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const strength = evaluatePassword(password);
             feedback.textContent = `Mot de passe évalué comme : ${strength}`;
-            feedback.className = strength === 'strong' ? 'success' : 'error';
+            feedback.className = strength === 'fort' ? 'success' : 'error';
 
             // Renforcement de la forteresse selon le mot de passe
             reinforceFortress(strength);
