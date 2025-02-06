@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Sélection des éléments HTML avec vérifications
+    // Sélection des éléments HTML
     const submitBtn = document.getElementById('submitBtn');
     const passwordInput = document.getElementById('password');
     const feedback = document.getElementById('feedback');
@@ -8,17 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const porte = document.querySelector('#porte img');
     const tourDroite = document.querySelector('#tourDroite img');
     const tourGauche = document.querySelector('#tourGauche img');
-
-    // Vérification du chargement des images
-    document.querySelectorAll('img').forEach(img => {
-        img.addEventListener('error', () => {
-            console.error(`Erreur de chargement : ${img.src}`);
-            if (feedback) {
-                feedback.textContent = 'Erreur de chargement d\'une image !';
-                feedback.className = 'error';
-            }
-        });
-    });
 
     // Toggle pour afficher/masquer le mot de passe
     if (togglePassword && passwordInput) {
@@ -70,38 +59,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const strength = evaluatePassword(password);
+            feedback.textContent = `Mot de passe évalué comme : ${strength}`;
+            feedback.className = strength === 'strong' ? 'success' : 'error';
 
-            // Envoi de la requête POST avec les données du mot de passe
-            fetch('/save-password/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
-                },
-                body: `password=${encodeURIComponent(password)}&strength=${encodeURIComponent(strength)}`
-            })
-            .then(response => {
-                console.log('Réponse brute:', response);
-                if (!response.ok) {
-                    throw new Error(`Erreur HTTP : ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.error) {
-                    feedback.textContent = 'Erreur : ' + data.error;
-                    feedback.className = 'error';
-                } else {
-                    feedback.textContent = data.message || 'Forteresse renforcée avec succès !';
-                    feedback.className = 'success';
-                    reinforceFortress(strength);
-                }
-            })
-            .catch(error => {
-                feedback.textContent = 'Erreur réseau ou serveur. Veuillez réessayer.';
-                feedback.className = 'error';
-                console.error('Erreur:', error);
-            });
+            // Renforcement de la forteresse selon le mot de passe
+            reinforceFortress(strength);
         });
     }
 
