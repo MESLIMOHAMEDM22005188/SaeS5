@@ -17,26 +17,160 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     const questions = [
-        { question: "Quel protocole Wi-Fi est le plus sécurisé ?", options: [ { text: "WEP", correct: false }, { text: "WPA2", correct: true }, { text: "Aucun", correct: false } ] },
-        { question: "Quel est le risque principal d'un Wi-Fi public ?", options: [ { text: "Temps de latence", correct: false }, { text: "Man-in-the-middle", correct: true }, { text: "Pas d'accès", correct: false } ] },
-        { question: "Pourquoi utiliser un VPN sur un Wi-Fi public ?", options: [ { text: "Pour contourner les pare-feu", correct: false }, { text: "Pour sécuriser les données", correct: true }, { text: "Pour accélérer la vitesse", correct: false } ] },
-        { question: "Que signifie WPA dans WPA2 ?", options: [ { text: "Wireless Protected Access", correct: true }, { text: "Wide Public Access", correct: false }, { text: "Wireless Public Access", correct: false } ] },
-        { question: "Quel protocole est obsolète pour le Wi-Fi ?", options: [ { text: "WEP", correct: true }, { text: "WPA3", correct: false }, { text: "WPA2", correct: false } ] },
-        { question: "Un mot de passe Wi-Fi doit contenir ?", options: [ { text: "Seulement des chiffres", correct: false }, { text: "Une combinaison de lettres, chiffres et symboles", correct: true }, { text: "Juste des lettres", correct: false } ] },
-        { question: "Qu'est-ce qu'un SSID ?", options: [ { text: "Le nom du réseau Wi-Fi", correct: true }, { text: "Un protocole de sécurité", correct: false }, { text: "Une adresse IP", correct: false } ] },
-        { question: "Que faire pour sécuriser votre réseau Wi-Fi ?", options: [ { text: "Désactiver le chiffrement", correct: false }, { text: "Changer le mot de passe par défaut", correct: true }, { text: "Utiliser un réseau ouvert", correct: false } ] },
-        { question: "Pourquoi désactiver la diffusion du SSID ?", options: [ { text: "Pour rendre le réseau invisible", correct: true }, { text: "Pour accélérer le Wi-Fi", correct: false }, { text: "Pour permettre plus d'appareils", correct: false } ] },
-        { question: "Qu'est-ce qu'un Wi-Fi ouvert ?", options: [ { text: "Un réseau sans mot de passe", correct: true }, { text: "Un réseau sécurisé", correct: false }, { text: "Un réseau rapide", correct: false } ] },
-        { question: "Quelle fréquence Wi-Fi est plus rapide ?", options: [ { text: "2.4 GHz", correct: false }, { text: "5 GHz", correct: true }, { text: "1 GHz", correct: false } ] },
-        { question: "Pourquoi utiliser WPA3 au lieu de WPA2 ?", options: [ { text: "Pour une meilleure sécurité", correct: true }, { text: "Pour économiser de l'énergie", correct: false }, { text: "Pour plus de vitesse", correct: false } ] },
-        { question: "Comment éviter les attaques sur votre Wi-Fi ?", options: [ { text: "Utiliser des mots de passe faibles", correct: false }, { text: "Activer un chiffrement fort comme WPA2", correct: true }, { text: "Désactiver le chiffrement", correct: false } ] },
-        { question: "Quelle méthode est utilisée par WPA2 pour sécuriser les données ?", options: [ { text: "Chiffrement AES", correct: true }, { text: "Chiffrement DES", correct: false }, { text: "Aucune", correct: false } ] },
-        { question: "Quelle est une bonne pratique pour votre routeur ?", options: [ { text: "Changer régulièrement le mot de passe", correct: true }, { text: "Désactiver le pare-feu", correct: false }, { text: "Garder les paramètres par défaut", correct: false } ] },
-        { question: "Que fait un pare-feu sur un réseau Wi-Fi ?", options: [ { text: "Bloque les accès non autorisés", correct: true }, { text: "Augmente la vitesse du réseau", correct: false }, { text: "Désactive les périphériques", correct: false } ] },
-        { question: "Comment détecter un réseau non sécurisé ?", options: [ { text: "Il nécessite un mot de passe", correct: false }, { text: "Il ne nécessite pas de mot de passe", correct: true }, { text: "Il est plus rapide", correct: false } ] },
-        { question: "Quel est le danger d'utiliser des hotspots publics ?", options: [ { text: "Ils sont coûteux", correct: false }, { text: "Vos données peuvent être interceptées", correct: true }, { text: "Ils sont lents", correct: false } ] },
-        { question: "Quel outil peut améliorer la sécurité d'un réseau Wi-Fi ?", options: [ { text: "Un VPN", correct: true }, { text: "Un réseau ouvert", correct: false }, { text: "Aucun mot de passe", correct: false } ] },
+    {
+        question: "Quel est le rôle d'un pare-feu dans un réseau ?",
+        options: [
+            { text: "Accélérer la connexion Internet", correct: false },
+            { text: "Bloquer le trafic non autorisé", correct: true },
+            { text: "Attribuer des adresses IP", correct: false }
+        ]
+    },
+    {
+        question: "Quel protocole est utilisé pour sécuriser les communications sur Internet ?",
+        options: [
+            { text: "HTTP", correct: false },
+            { text: "HTTPS", correct: true },
+            { text: "FTP", correct: false }
+        ]
+    },
+    {
+        question: "Quelle adresse IP appartient à un réseau privé ?",
+        options: [
+            { text: "192.168.1.1", correct: true },
+            { text: "8.8.8.8", correct: false },
+            { text: "172.32.0.1", correct: false }
+        ]
+    },
+    {
+        question: "Quel appareil permet de segmenter un réseau local ?",
+        options: [
+            { text: "Un commutateur (switch)", correct: true },
+            { text: "Un routeur", correct: false },
+            { text: "Un modem", correct: false }
+        ]
+    },
+    {
+        question: "Quel est le rôle d'un serveur DNS ?",
+        options: [
+            { text: "Attribuer des adresses IP", correct: false },
+            { text: "Convertir les noms de domaine en adresses IP", correct: true },
+            { text: "Filtrer le trafic réseau", correct: false }
+        ]
+    },
+    {
+        question: "Quelle commande permet de tester la connectivité entre deux appareils ?",
+        options: [
+            { text: "ping", correct: true },
+            { text: "tracert", correct: false },
+            { text: "netstat", correct: false }
+        ]
+    },
+    {
+        question: "Quel type d'attaque consiste à intercepter les communications entre deux parties ?",
+        options: [
+            { text: "Man-in-the-Middle", correct: true },
+            { text: "Phishing", correct: false },
+            { text: "DDoS", correct: false }
+        ]
+    },
+    {
+        question: "Quelle est la longueur d'une adresse IPv6 ?",
+        options: [
+            { text: "32 bits", correct: false },
+            { text: "64 bits", correct: false },
+            { text: "128 bits", correct: true }
+        ]
+    },
+    {
+        question: "Quelle est la fonction principale d'un routeur ?",
+        options: [
+            { text: "Relier plusieurs réseaux entre eux", correct: true },
+            { text: "Fournir du Wi-Fi", correct: false },
+            { text: "Attribuer des ports réseau", correct: false }
+        ]
+    },
+    {
+        question: "Quel protocole permet d'attribuer dynamiquement des adresses IP ?",
+        options: [
+            { text: "DNS", correct: false },
+            { text: "DHCP", correct: true },
+            { text: "ARP", correct: false }
+        ]
+    },
+    {
+        question: "Quel est l'avantage du chiffrement des données ?",
+        options: [
+            { text: "Accélérer la transmission des paquets", correct: false },
+            { text: "Protéger les données contre l'interception", correct: true },
+            { text: "Augmenter la bande passante", correct: false }
+        ]
+    },
+    {
+        question: "Quel protocole est utilisé pour envoyer des emails ?",
+        options: [
+            { text: "POP3", correct: false },
+            { text: "SMTP", correct: true },
+            { text: "IMAP", correct: false }
+        ]
+    },
+    {
+        question: "Que signifie NAT en réseau ?",
+        options: [
+            { text: "Network Access Transfer", correct: false },
+            { text: "Network Address Translation", correct: true },
+            { text: "New Address Type", correct: false }
+        ]
+    },
+    {
+        question: "Quel est l'avantage d'utiliser IPv6 par rapport à IPv4 ?",
+        options: [
+            { text: "Une meilleure vitesse", correct: false },
+            { text: "Un plus grand espace d'adressage", correct: true },
+            { text: "Une compatibilité avec tous les équipements", correct: false }
+        ]
+    },
+    {
+        question: "Comment un réseau Wi-Fi peut-il être sécurisé ?",
+        options: [
+            { text: "En utilisant WPA3", correct: true },
+            { text: "En désactivant le chiffrement", correct: false },
+            { text: "En laissant un accès ouvert", correct: false }
+        ]
+    },
+    {
+        question: "Quel outil permet d'analyser le trafic réseau ?",
+        options: [
+            { text: "Wireshark", correct: true },
+            { text: "Excel", correct: false },
+            { text: "Putty", correct: false }
+        ]
+    },
+    {
+        question: "Quel est l'objectif du protocole ICMP ?",
+        options: [
+            { text: "Envoyer des emails", correct: false },
+            { text: "Diagnostiquer et signaler des erreurs réseau", correct: true },
+            { text: "Assigner des adresses IP", correct: false }
+        ]
+    },
+    {
+        question: "Pourquoi utiliser un VLAN ?",
+        options: [
+            { text: "Pour réduire la congestion réseau", correct: true },
+            { text: "Pour augmenter la vitesse Internet", correct: false },
+            { text: "Pour connecter deux réseaux Wi-Fi", correct: false }
+        ]
+    },
+    {
+        question: "Quel protocole permet d'établir une connexion sécurisée à distance ?",
+        options: [
+            { text: "FTP", correct: false },
+            { text: "SSH", correct: true },
+            { text: "Telnet", correct: false }
+        ]
+    }
     ];
+
 
    let currentQuestion = 0;
 function restartGame() {
