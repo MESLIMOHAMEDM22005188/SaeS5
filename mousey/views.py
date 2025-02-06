@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.management import BaseCommand
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.utils.timezone import now
 from python_http_client import Client
@@ -12,8 +13,9 @@ from django.core.mail import send_mail
 from django_ratelimit.decorators import ratelimit
 from .forms import UserCreationFormWithPhone
 from .models import PhoneVerification, EmailVerification
-from .models import QuestionLevelOne, ResultatLevelOne, ReponseLevelOne
+from .models import QuestionLevelOne, ResultatLevelOne, Forteresse, QuestionLevelThree, QuestionLevelTwo,ResultatLevelThree, ResultatLevelTwo, ReponseLevelThree, ReponseLevelTwo
 
+from django.shortcuts import render
 
 @login_required
 def test_level1_view(request):
@@ -27,27 +29,84 @@ def test_level1_view(request):
         total_questions = questions.count()
 
         for question in questions:
-            # Obtenir la réponse correcte pour la question
-            correct_answer = question.reponses.filter(est_correcte=True).first()
+            # Utilisez le related_name correct : 'reponses_level_one'
+            correct_answer = question.reponses_level_one.filter(est_correcte=True).first()
 
             # Comparer avec la réponse de l'utilisateur
             user_answer_id = user_answers.get(f'q{question.id}')
-            if user_answer_id and str(correct_answer.id) == user_answer_id:
+            if user_answer_id and correct_answer and str(correct_answer.id) == user_answer_id:
                 score += 1
 
-        # Sauvegarder le résultat en base
+        # Sauvegarder le résultat en base, afficher un message, etc.
         ResultatLevelOne.objects.create(utilisateur=request.user.username, score=score)
-
-        # Afficher un message de résultat et rediriger
         messages.success(request, f"Vous avez obtenu {score}/{total_questions} bonne(s) réponse(s) !")
-        return redirect('test_level1')
+        return redirect('level_one_quizz')
 
-    # Si ce n'est pas une requête POST, afficher les questions
+    # Requête GET : afficher les questions
     questions = QuestionLevelOne.objects.all().order_by('numero')
     return render(request, 'test_level1.html', {'questions': questions})
 
 
-@ratelimit(key='ip', rate='5/m', block=True)
+@login_required
+def quiz_result(request):
+    # Récupération de toutes les questions triées par numéro
+    questions = list(QuestionLevelOne.objects.all().order_by('numero'))
+    total_questions = len(questions)
+
+    # Récupérer l'index courant de la question depuis la requête GET (par défaut 0)
+    try:
+        current_index = int(request.GET.get('q', 0))
+    except (ValueError, TypeError):
+        current_index = 0
+
+    # Initialiser ou récupérer les réponses stockées dans la session
+    if 'quiz_answers' not in request.session:
+        request.session['quiz_answers'] = {}
+    answers = request.session['quiz_answers']
+
+    if request.method == "POST":
+        # Enregistrer la réponse de la question actuelle
+        current_question = questions[current_index]
+        selected_answer = request.POST.get('answer')
+        if selected_answer:
+            answers[str(current_question.id)] = selected_answer
+            request.session['quiz_answers'] = answers  # Mémoriser dans la session
+
+        # Gestion de la navigation
+        if 'next' in request.POST:
+            if current_index < total_questions - 1:
+                current_index += 1
+        elif 'prev' in request.POST:
+            if current_index > 0:
+                current_index -= 1
+        elif 'finish' in request.POST:
+            # Calcul du score
+            score = 0
+            for q in questions:
+                # Récupérer la bonne réponse (en supposant qu'il n'y a qu'une bonne réponse par question)
+                correct = q.reponses_level_one.filter(est_correcte=True).first()
+                # Comparer la réponse enregistrée dans la session (sous forme de chaîne) avec l'ID de la bonne réponse
+                if correct and answers.get(str(q.id)) == str(correct.id):
+                    score += 1
+            # Enregistrer le résultat dans la base de données
+            ResultatLevelOne.objects.create(utilisateur=request.user.username, score=score)
+            # Stocker le score et le total dans la session pour affichage dans la page résultat
+            request.session['quiz_score'] = score
+            request.session['quiz_total'] = total_questions
+            return redirect('quiz_result')  # Assurez-vous que l'URL 'quiz_result' est bien définie dans urls.py
+
+        # Rediriger vers la même vue en passant le nouvel index dans l'URL
+        return redirect(f"{request.path}?q={current_index}")
+
+    # Pour une requête GET, afficher la question à l'index courant
+    current_question = questions[current_index]
+    context = {
+        'question': current_question,
+        'current_index': current_index,
+        'total_questions': total_questions,
+    }
+    return render(request, 'quiz_question.html', context)
+
 def user_login(request):
     """Vue pour la connexion utilisateur."""
     if request.method == "POST":
@@ -208,18 +267,111 @@ def level_one(request):
     return render(request, 'level_one.html')
 
 
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import QuestionLevelTwo, ResultatLevelTwo
+
+@login_required
+def test_level2_view(request):
+    if request.method == "POST":
+        user_answers = request.POST
+        questions = QuestionLevelTwo.objects.all().order_by('numero')
+        score = 0
+        total_questions = questions.count()
+
+        for question in questions:
+            # Ici, on parcourt les réponses du niveau 2 via le related_name 'reponses'
+            correct_answer = question.reponses.filter(est_correcte=True).first()
+            user_answer_id = user_answers.get(f'q{question.id}')
+            if user_answer_id and str(correct_answer.id) == user_answer_id:
+                score += 1
+
+        # Sauvegarde du résultat pour le niveau 2
+        ResultatLevelTwo.objects.create(utilisateur=request.user.username, score=score)
+        messages.success(request, f"Vous avez obtenu {score}/{total_questions} bonne(s) réponse(s) !")
+        return redirect('test_level2')  # Assurez-vous que l'URL 'test_level2' est bien définie
+
+    else:
+        questions = QuestionLevelTwo.objects.all().order_by('numero')
+        return render(request, 'test_level2.html', {'questions': questions})
+
+
 
 @login_required
 def level_one_bureau(request):
     """Page pour le bureau du niveau 1."""
     return render(request, 'level_one_bureau.html')
 
+@login_required
+def level_two_jeu1(request):
+    """Page pour le niveau 2."""
+    return render(request, 'level_twoJeu1.html')
+@login_required
+def test_level3_view(request):
+    if request.method == "POST":
+        user_answers = request.POST
+        # On récupère les questions du niveau 3
+        questions = QuestionLevelThree.objects.all().order_by('numero')
+        score = 0
+        total_questions = questions.count()
+
+        for question in questions:
+            # On parcourt les réponses liées au niveau 3 (grâce au related_name "reponses")
+            correct_answer = question.reponses.filter(est_correcte=True).first()
+            user_answer_id = user_answers.get(f'q{question.id}')
+            if user_answer_id and str(correct_answer.id) == user_answer_id:
+                score += 1
+
+        # Enregistrement du résultat dans ResultatLevelThree
+        ResultatLevelThree.objects.create(utilisateur=request.user.username, score=score)
+        messages.success(request, f"Vous avez obtenu {score}/{total_questions} bonne(s) réponse(s) !")
+        return redirect('test_level3')  # Assurez-vous que l'URL 'test_level3' est bien définie
+
+    else:
+        questions = QuestionLevelThree.objects.all().order_by('numero')
+        return render(request, 'test_level3.html', {'questions': questions})
+def save_password(request):
+    if request.method == "POST":
+       if not request.user.is_authenticated:
+           return JsonResponse({'error': 'Authentication required'}, status=401)
+    password = request.POST.get('password').strip
+    strength = request.POST.get('strength', 'weak')
+
+    Forteresse.objects.create(
+        user=request.user,
+        password=password,
+        strength=strength
+    )
+    return JsonResponse({'message': 'Mot de passe enregistré avec succès.'})
+
+    return JsonResponse({'error': 'Requête non valide.'}, status=400)
+
+@login_required
+def level_two_jeu2(request):
+    return render(request, 'level_twoJeu2.html')
 
 @login_required
 def level_two(request):
-    """Page pour le niveau 2."""
     return render(request, 'level_two.html')
 
+@login_required
+def level_three(request):
+    return render(request, 'level_three.html')
+@login_required
+def level_two_pswd(request):
+    return render(request, 'level_two_pswd.html')
+@login_required
+def level_two_course(request):
+    return render(request, 'level_two_course.html')
+
+@login_required
+def level_two_jeu3(request):
+    return render(request, ''
+                           'level_twoJeu3.html')
+@login_required
+def level_two_jeu4(request):
+    return render(request, 'level_twoJeu4.html')
 
 @login_required
 def level_three(request):

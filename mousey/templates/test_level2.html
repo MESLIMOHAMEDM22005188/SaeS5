@@ -4,12 +4,12 @@
   {% load static %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz Cyber Sécu</title>
+  <title>Quiz Cyber Sécu - Level Two</title>
   <link rel="stylesheet" type="text/css" href="{% static 'css/quizz_1.css' %}">
 </head>
 <body>
   <div class="quiz-container">
-    <h1>Quiz : Initiation à la Cyber Sécurité</h1>
+    <h1>Quiz : Initiation à la Cyber Sécurité - Niveau 2</h1>
     <p>Répondez à chaque question, puis cliquez sur "Valider".</p>
 
     <form method="post">
@@ -20,7 +20,7 @@
           {% if question.image %}
             <img src="{{ question.image.url }}" alt="Image de la question" style="max-width: 400px;">
           {% endif %}
-          {% for reponse in question.reponses_level_one.all %}
+          {% for reponse in question.reponses.all %}
             <label>
               <input type="radio" name="q{{ question.id }}" value="{{ reponse.id }}">
               {{ reponse.texte }}

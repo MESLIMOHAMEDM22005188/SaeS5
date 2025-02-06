@@ -8,16 +8,32 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/levelOne.css' %}">
 </head>
 <body>
-<img src="{% static 'image/postIt.png' %}">
-</div>
-<form method="POST">
-    {% csrf_token %}
-    <div class="textZone">
-        <div class="MEP1">
-            <input type="text" id="username" name="username" required placeholder="Nom d'utilisateur">
-        </div>
-        <div class="MEP2">
-            <input type="password" id="password" name="password" required placeholder="Mot de passe">
+  <form method="POST" action="{% url 'home' %}" class="logout-btn">
+        {% csrf_token %}
+        <button type="submit" style="border: none; background: none; padding: 0; cursor: pointer;">
+            <img src="{% static 'image/logout.png' %}" alt="Logout">
+        </button>
+    </form>
+    <div class="note">
+        <label class="noteLabel">
+            Identifiant: <br/>
+            utilisateur4<br />
+            Mot de passe: <br/>
+            01234
+        </label>
+    </div>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="textZone">
+            <div class="MEP1">
+                <input type="text" id="username" name="username" required placeholder="Nom d'utilisateur">
+            </div>
+            <div class="MEP2">
+                <input type="password" id="password" name="password" required placeholder="Mot de passe">
+            </div>
+            <div class="MEP3">
+                <button type="submit" class="submitBtn">Se connecter</button>
+            </div>
         </div>
         <div class="MEP3">
             <button type="submit" class="submitBtn">Se connecter</button>

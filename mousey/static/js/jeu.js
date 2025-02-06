@@ -55,7 +55,6 @@ showQuestion(currentQuestionIndex);
 
 // --- FONCTION QUI CORRIGE LES RÉPONSES ---
 function checkAnswers() {
-  // On définit les bonnes réponses (A, B, C, D, etc.)
   const correctAnswers = {
     q1: "B",
     q2: "C",
@@ -67,9 +66,7 @@ function checkAnswers() {
   let score = 0;
   let totalQuestions = Object.keys(correctAnswers).length;
 
-  // Pour chaque question, on récupère la réponse sélectionnée et on compare
   for (let question in correctAnswers) {
-    // Récupère tous les inputs radio de la question
     const radios = document.getElementsByName(question);
 
     // Parcours des radios pour trouver celle qui est cochée
