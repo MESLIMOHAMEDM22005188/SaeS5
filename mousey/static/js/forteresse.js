@@ -4,19 +4,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const feedback = document.getElementById('feedback');
     const togglePassword = document.getElementById('togglePassword');
 
-    const startModal = document.getElementById('startModal');
-    const successModal = document.getElementById('successModal');
-    const startBtn = document.getElementById('startBtn');
-    const closeStart = document.getElementById('closeStart');
-    const closeSuccess = document.getElementById('closeSuccess');
-
-    const modal = document.getElementById('gameModal');
-    const closeModalBtn = document.getElementById('closeModal');
-    const startGameBtn = document.getElementById('startGameBtn');
-
     const porte = document.querySelector('#porte img');
     const tourDroite = document.querySelector('#tourDroite img');
     const tourGauche = document.querySelector('#tourGauche img');
+
+    // Vérification du chargement des images
+    document.querySelectorAll('img').forEach(img => {
+        img.addEventListener('error', () => {
+            console.error(`Erreur de chargement : ${img.src}`);
+            feedback.textContent = 'Erreur de chargement d\'une image !';
+            feedback.className = 'error';
+        });
+    });
 
     // Toggle mot de passe
     togglePassword.addEventListener('click', () => {
@@ -45,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Renforcement de la forteresse
     function reinforceFortress(level) {
+        resetFortress();
         if (level === 'medium') porte.classList.remove('close-ico');
         if (level === 'strong') {
             porte.classList.remove('close-ico');
@@ -53,77 +53,56 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Gestion de l'envoi du formulaire
     submitBtn.addEventListener('click', () => {
-    const password = passwordInput.value.trim();
-    if (!password) {
-        feedback.textContent = 'Veuillez entrer un mot de passe.';
-        feedback.className = '';
-        return;
-    }
+        const password = passwordInput.value.trim();
 
-    const strength = evaluatePassword(password);
+        if (!password) {
+            feedback.textContent = 'Veuillez entrer un mot de passe.';
+            feedback.className = 'error';
+            return;
+        }
 
-    fetch('/save-password/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
-        },
-        body: `password=${encodeURIComponent(password)}&strength=${encodeURIComponent(strength)}`
-    })
-    .then(response => response.json())
-    .then(data => {
-        feedback.textContent = data.message || 'Erreur lors de l’enregistrement.';
-    })
-    .catch(error => {
-        feedback.textContent = 'Erreur réseau.';
-        console.error('Erreur:', error);
-    });
-});
-    // Modals
-    startBtn.addEventListener('click', () => startModal.classList.add('hidden'));
-    closeStart.addEventListener('click', () => startModal.classList.add('hidden'));
-    closeSuccess.addEventListener('click', () => successModal.classList.add('hidden'));
+        const strength = evaluatePassword(password);
 
-    // Game Modal
-    modal.style.display = 'flex';
-
-    closeModalBtn.addEventListener('click', () => {
-        modal.style.display = 'none';
+        fetch('/save-password/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            },
+            body: `password=${encodeURIComponent(password)}&strength=${encodeURIComponent(strength)}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                feedback.textContent = 'Erreur : ' + data.error;
+                feedback.className = 'error';
+            } else {
+                feedback.textContent = data.message || 'Forteresse renforcée avec succès !';
+                feedback.className = 'success';
+                reinforceFortress(strength);
+            }
+        })
+        .catch(error => {
+            feedback.textContent = 'Erreur réseau. Veuillez réessayer.';
+            feedback.className = 'error';
+            console.error('Erreur:', error);
+        });
     });
 
-    startGameBtn.addEventListener('click', () => {
-        modal.style.display = 'none';
-        // Ajoutez ici le code pour démarrer le jeu
-    });
-
-    // Restart button logic
+    // Réinitialisation de la forteresse et des messages au redémarrage
     const restartButton = document.getElementById('restart-button');
     restartButton.addEventListener('click', () => {
-        // Effacer la zone de texte du mot de passe
         passwordInput.value = '';
-
-        // Effacer le feedback
         feedback.textContent = '';
         feedback.className = '';
-
-        // Réinitialiser la forteresse en supprimant les éléments (porte et tours)
-        porte.classList.add('close-ico');
-        tourDroite.classList.add('close-ico');
-        tourGauche.classList.add('close-ico');
+        resetFortress();
     });
 
-    // Retour au menu button logic
+    // Redirection vers le menu
     const backToMenuButton = document.getElementById('back-to-menu');
     backToMenuButton.addEventListener('click', () => {
-        // Rediriger vers /levelTwo/
         window.location.href = '/levelTwo/';
     });
-
-    document.querySelectorAll('img').forEach(img => {
-    img.addEventListener('error', () => {
-        console.error(`Erreur de chargement : ${img.src}`);
-    });
-});
-
 });

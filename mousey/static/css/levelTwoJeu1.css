@@ -24,6 +24,15 @@ body {
     text-align: center;
     display: none; /* Par défaut, elle est masquée */
 }
+.error {
+    color: red;
+    font-weight: bold;
+}
+
+.success {
+    color: green;
+    font-weight: bold;
+}
 
 .modal.active {
     display: block; /* Active la fenêtre lorsqu'elle est affichée */
