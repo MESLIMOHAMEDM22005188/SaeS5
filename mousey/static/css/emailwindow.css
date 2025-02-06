@@ -156,6 +156,7 @@
 
 .hacked-message button:hover {
     background-color: red;
+}
 
 .popup-container {
     position: fixed;
