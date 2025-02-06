@@ -27,16 +27,11 @@
         </div>
     </div>
 
-    <div class="password-section">
-        <label for="password">Créez un mot de passe :</label>
-        <input type="password" id="password" placeholder="Entrez votre mot de passe">
-    <div id="feedback"></div>
-        <button id="submitBtn">Renforcer la Forteresse</button>
-        <div>
-            <button id="togglePassword">Afficher</button>
-        </div>
-    </div>
-
+    <form id="password-form">
+    {% csrf_token %}
+    <input type="password" id="password" placeholder="Entrez votre mot de passe">
+    <button id="submitBtn">Renforcer la Forteresse</button>
+</form>
 
 
 

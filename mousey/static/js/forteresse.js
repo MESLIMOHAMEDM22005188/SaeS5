@@ -119,4 +119,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // Rediriger vers /levelTwo/
         window.location.href = '/levelTwo/';
     });
+
+    document.querySelectorAll('img').forEach(img => {
+    img.addEventListener('error', () => {
+        console.error(`Erreur de chargement : ${img.src}`);
+    });
+});
+
 });
