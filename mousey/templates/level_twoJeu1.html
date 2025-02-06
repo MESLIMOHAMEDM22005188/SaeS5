@@ -8,12 +8,13 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/levelTwoJeu1.css' %}">
 </head>
 <body>
-<button id="restart-button" class="restart-button">Restart</button>
- <a href="/levelTwo/" id="back-to-menu" class="back-to-menu">
+    <button id="restart-button" class="restart-button">Restart</button>
+    <a href="/levelTwo/" id="back-to-menu" class="back-to-menu">
         <button class="menu-button">Retour au menu</button>
     </a>
+
     <div class="fortress">
-        <img src="{% static 'image/forteresse.png' %}" id="forteresse">
+        <img src="{% static 'image/forteresse.png' %}" id="forteresse" alt="Forteresse">
         <div id="fortressParts">
             <div id="porte">
                 <img src="{% static 'image/porte.png' %}" alt="Porte de la forteresse" class="close-ico">
@@ -22,18 +23,18 @@
                 <img src="{% static 'image/tourDroite.png' %}" alt="Tour droite de la forteresse" class="close-ico">
             </div>
             <div id="tourGauche">
-                <img src="{% static 'image/tourDroite.png' %}" alt="Tour gauche de la forteresse" class="close-ico">
+                <img src="{% static 'image/tourGauche.png' %}" alt="Tour gauche de la forteresse" class="close-ico">
             </div>
         </div>
     </div>
 
     <form id="password-form">
-    {% csrf_token %}
-    <input type="password" id="password" placeholder="Entrez votre mot de passe">
-    <button id="submitBtn">Renforcer la Forteresse</button>
-</form>
-
-
+        {% csrf_token %}
+        <input type="password" id="password" placeholder="Entrez votre mot de passe">
+        <button type="button" id="submitBtn">Renforcer la Forteresse</button>
+        <button type="button" id="togglePassword">Afficher</button>
+        <div id="feedback" class="feedback"></div>
+    </form>
 
     <script src="{% static 'js/forteresse.js' %}"></script>
 </body>
