@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Sélection des éléments HTML avec vérifications
     const submitBtn = document.getElementById('submitBtn');
     const passwordInput = document.getElementById('password');
     const feedback = document.getElementById('feedback');
@@ -8,17 +9,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const tourDroite = document.querySelector('#tourDroite img');
     const tourGauche = document.querySelector('#tourGauche img');
 
-    // Vérification des images chargées
+    // Vérification du chargement des images
     document.querySelectorAll('img').forEach(img => {
         img.addEventListener('error', () => {
             console.error(`Erreur de chargement : ${img.src}`);
-            feedback.textContent = 'Erreur de chargement d\'une image !';
-            feedback.className = 'error';
+            if (feedback) {
+                feedback.textContent = 'Erreur de chargement d\'une image !';
+                feedback.className = 'error';
+            }
         });
     });
 
-    // Affichage/Masquage du mot de passe
-    if (togglePassword) {
+    // Toggle pour afficher/masquer le mot de passe
+    if (togglePassword && passwordInput) {
         togglePassword.addEventListener('click', () => {
             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordInput.setAttribute('type', type);
@@ -26,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Évaluation du mot de passe
+    // Fonction pour évaluer la complexité du mot de passe
     function evaluatePassword(password) {
         let score = 0;
         if (password.length >= 8) score++;
@@ -44,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (tourGauche) tourGauche.classList.add('close-ico');
     }
 
-    // Renforcement de la forteresse
+    // Renforcement de la forteresse en fonction du niveau de sécurité
     function reinforceFortress(level) {
         resetFortress();
         if (level === 'medium' && porte) porte.classList.remove('close-ico');
@@ -55,8 +58,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Envoi du formulaire et renforcement de la forteresse
-    if (submitBtn) {
+    // Gestion du clic sur le bouton de soumission
+    if (submitBtn && passwordInput) {
         submitBtn.addEventListener('click', () => {
             const password = passwordInput.value.trim();
 
@@ -68,6 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const strength = evaluatePassword(password);
 
+            // Envoi de la requête POST avec les données du mot de passe
             fetch('/save-password/', {
                 method: 'POST',
                 headers: {
@@ -76,7 +80,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 body: `password=${encodeURIComponent(password)}&strength=${encodeURIComponent(strength)}`
             })
-            .then(response => response.json())
+            .then(response => {
+                console.log('Réponse brute:', response);
+                if (!response.ok) {
+                    throw new Error(`Erreur HTTP : ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.error) {
                     feedback.textContent = 'Erreur : ' + data.error;
@@ -88,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             })
             .catch(error => {
-                feedback.textContent = 'Erreur réseau. Veuillez réessayer.';
+                feedback.textContent = 'Erreur réseau ou serveur. Veuillez réessayer.';
                 feedback.className = 'error';
                 console.error('Erreur:', error);
             });
@@ -99,9 +109,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const restartButton = document.getElementById('restart-button');
     if (restartButton) {
         restartButton.addEventListener('click', () => {
-            passwordInput.value = '';
-            feedback.textContent = '';
-            feedback.className = '';
+            if (passwordInput) passwordInput.value = '';
+            if (feedback) {
+                feedback.textContent = '';
+                feedback.className = '';
+            }
             resetFortress();
         });
     }
