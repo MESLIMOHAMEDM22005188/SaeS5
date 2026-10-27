@@ -10,7 +10,7 @@
 <body>
   <div class="quiz-container">
     <h1>Cybersecurity Fundamentals Quiz - Level 2</h1>
-    <p>Répondez à chaque question, puis cliquez sur "Submit".</p>
+    <p>Answer à each question, then select "Submit".</p>
 
     <form method="post">
       {% csrf_token %}
@@ -18,7 +18,7 @@
         <div class="question">
           <h2>{{ question.numero }}. {{ question.texte }}</h2>
           {% if question.image %}
-            <img src="{{ question.image.url }}" alt="Image de la question" style="max-width: 400px;">
+            <img src="{{ question.image.url }}" alt="Question illustration" style="max-width: 400px;">
           {% endif %}
           {% for reponse in question.reponses_level_two.all %}
             <label>
