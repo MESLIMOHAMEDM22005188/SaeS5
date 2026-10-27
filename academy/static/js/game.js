@@ -7,12 +7,12 @@ const checkBtn = document.getElementById("checkBtn");
 
 // Display the question at currentQuestionIndex
 function showQuestion(index) {
-  // Masquer toutes les questions
+  // Hide all questions
   questions.forEach((q) => {
     q.style.display = "none";
   });
 
-  // Afficher la question voulue
+  // Show the selected question
   questions[index].style.display = "block";
 
   // Update button visibility
