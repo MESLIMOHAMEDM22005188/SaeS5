@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.utils.timezone import now, timedelta
+from django.utils import timezone
+from datetime import timedelta
 
 class Forteresse(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)  # Relation avec l'utilisateur
@@ -126,9 +127,9 @@ class PhoneVerification(models.Model):
     code_expiration = models.DateTimeField(null=True, blank=True)
 
     def generate_code(self):
-        import random
-        self.verification_code = str(random.randint(100000, 999999))
-        self.code_expiration = now() + timedelta(minutes=10)
+        import secrets
+        self.verification_code = f"{secrets.randbelow(900000) + 100000}"
+        self.code_expiration = timezone.now() + timedelta(minutes=10)
         self.save()
 
     def __str__(self):
@@ -151,7 +152,7 @@ class EmailVerification(models.Model):
         self.save()
 
     def is_code_valid(self):
-        return self.code_expiration and now() <= self.code_expiration
+        return bool(self.code_expiration and timezone.now() <= self.code_expiration)
 
     def __str__(self):
         return f"{self.user.username} - {self.email} - Verified: {self.is_verified}"
