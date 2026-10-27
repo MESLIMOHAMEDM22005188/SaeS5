@@ -3,7 +3,6 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
-
 from academy.models import FortressGame
 
 
@@ -70,6 +69,6 @@ def save_password_game_result(request):
         return JsonResponse({"error": "A password is required."}, status=400)
     if strength not in {"weak", "medium", "strong"}:
         return JsonResponse({"error": "Invalid password strength."}, status=400)
-    # Persist the result category, never the entered secret itself.
+    # Persist only the non-sensitive strength category, never the submitted secret.
     FortressGame.objects.create(user=request.user, password="", strength=strength)
     return JsonResponse({"message": "Game progress saved."}, status=201)
