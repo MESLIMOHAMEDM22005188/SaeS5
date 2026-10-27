@@ -131,3 +131,5 @@ TWILIO_PHONE_NUMBER = config("TWILIO_PHONE_NUMBER", default="")
 # Django admin / security headers
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_REFERRER_POLICY = "same-origin"
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
