@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let score = 0;
     const totalQuestions = 6;
 
-    // Fonction pour afficher la prochaine question
+    // Display the next question
     const showNextQuestion = () => {
         if (currentQuestionIndex < questions.length) {
             questions[currentQuestionIndex].style.display = "none";
