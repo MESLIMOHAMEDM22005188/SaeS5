@@ -15,10 +15,10 @@
         <main>
             <form method="post" action="{% url 'login' %}">
                 {% csrf_token %}
-                <label for="username" class="label-username">Nom d'utilisateur :</label>
+                <label for="username" class="label-username">Username :</label>
                 <input type="text" id="username" name="username" placeholder="Votre nom d'utilisateur" required>
 
-                <label for="password" class="label-password">Mot de passe :</label>
+                <label for="password" class="label-password">Password :</label>
                 <input type="password" id="password" name="password" placeholder="Votre mot de passe" required>
 
                 <label class="toggle-password">
@@ -26,7 +26,7 @@
                 </label>
 
                 <input type="hidden" name="next" value="{{ next }}">
-                <button type="submit">Se connecter</button>
+                <button type="submit">Sign in</button>
             </form>
 
             <p class="texte-acceuil">Vous n'avez pas de compte ? <a href="{% url 'register' %}">Inscrivez-vous ici</a>.</p>
