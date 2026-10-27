@@ -1,5 +1,5 @@
-from django.conf import settings
 from django.contrib import admin
+from django.contrib.auth.views import LogoutView
 from django.urls import path, include
 from mousey import views
 
@@ -9,7 +9,7 @@ urlpatterns = [
     path('home/', views.home, name='home'),
     path('verify/<str:identifier>/', views.verify, name='verify'),
     path('login/', views.user_login, name='login'),
-    path('logout/', include('django.contrib.auth.urls')),
+    path('logout/', LogoutView.as_view(), name='logout'),
     path('levelOne/', views.level_one, name='level_one'),
     path('levelOne/bureau/', views.level_one_bureau, name='level_one_bureau'),
     path('levelTwo/', views.level_two, name='level_two'),
@@ -30,7 +30,3 @@ urlpatterns = [
     path('levelThreeQuizz/', views.test_level3_view, name='level_Three_quizz'),
     path('levelOneCourse/', views.level_two_course, name='level_two_course')
 ]
-
-if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns += [path('__debug__/', include(debug_toolbar.urls))]
