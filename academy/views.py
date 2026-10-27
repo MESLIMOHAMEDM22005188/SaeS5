@@ -39,6 +39,8 @@ def submit_level_one_quiz(request):
             score += 1
 
     LevelOneResult.objects.create(utilisateur=request.user.username, score=score)
+    request.session["quiz_score"] = score
+    request.session["quiz_total"] = total_questions
     messages.success(request, f"Your score: {score}/{total_questions}.")
     return redirect("quiz_result")
 
