@@ -9,15 +9,15 @@
 </head>
 <body>
   <div class="quiz-container">
-    <h1>Quiz : Cyber Sécurité - Level 3</h1>
-    <p>Répondez aux questions puis cliquez sur "Submit".</p>
+    <h1>Cybersecurity Quiz - Level 3</h1>
+    <p>Answer aux questions puis cliquez sur "Submit".</p>
     <form method="post">
       {% csrf_token %}
       {% for question in questions %}
         <div class="question">
           <h2>{{ question.numero }}. {{ question.texte }}</h2>
           {% if question.image %}
-            <img src="{{ question.image.url }}" alt="Image de la question" style="max-width: 400px;">
+            <img src="{{ question.image.url }}" alt="Question illustration" style="max-width: 400px;">
           {% endif %}
           {% for reponse in question.reponses.all %}
             <label>
