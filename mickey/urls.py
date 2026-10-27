@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.views import LogoutView
-from django.urls import path, include
+from django.urls import path
 from mousey import views
 
 urlpatterns = [
@@ -24,9 +24,9 @@ urlpatterns = [
     path('verify-email/', views.verify_email, name='verify_email'),
     path('screen-warning/', views.screen_warning, name='screen_warning'),
     path('levelOneQuizz/', views.test_level1_view, name='level_one_quizz'),
+    path('save-password/', views.save_password, name='save_password'),
     path('quiz_result/', views.quiz_result, name='quiz_result'),
     path('levelTwoQuizz/', views.test_level2_view, name='level_two_quizz'),
     path('levelThreeQuizz/', views.test_level3_view, name='level_three_quizz'),
-    path('levelThreeQuizz/', views.test_level3_view, name='level_Three_quizz'),
     path('levelOneCourse/', views.level_two_course, name='level_two_course')
 ]
