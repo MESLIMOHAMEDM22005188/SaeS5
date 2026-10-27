@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#080d18">
-    <title>Quiz cybersécurité — Level 1</title>
+    <title>Cybersecurity Quiz — Level 1</title>
     <link rel="stylesheet" href="{% static 'css/quiz_level_one.css' %}">
     <style>
         .quiz-top { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:24px; color:#9eabc0; font-size:.9rem; }
@@ -26,22 +26,22 @@
 <body>
 <main class="quiz-container">
     <div class="quiz-top">
-        <a class="text-link" href="{% url 'home' %}">← Tableau de bord</a>
+        <a class="text-link" href="{% url 'home' %}">← Dashboard</a>
         <span>QUESTION {{ current_index|add:"1" }} / {{ total_questions }}</span>
     </div>
-    <div class="progress-track" role="progressbar" aria-label="Progression du quiz" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ progress_percent }}">
+    <div class="progress-track" role="progressbar" aria-label="Quiz progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ progress_percent }}">
         <div class="progress-value" style="width: {{ progress_percent }}%"></div>
     </div>
-    <p style="color:#c6f36b;font-size:.75rem;letter-spacing:.16em;font-weight:800;">CYBERMOUSE / NIVEAU 01</p>
-    <h1>Les fondamentaux</h1>
-    <p class="quiz-intro">Choisis la réponse la plus adaptée. Tu peux revenir sur les questions précédentes avant de terminer.</p>
+    <p style="color:#c6f36b;font-size:.75rem;letter-spacing:.16em;font-weight:800;">CYBERMOUSE / LEVEL 01</p>
+    <h1>The fundamentals</h1>
+    <p class="quiz-intro">Choose the best answer. You can return to previous questions before finishing.</p>
 
     <form method="post">
         {% csrf_token %}
         <section class="question" aria-labelledby="question-title">
             <h2 id="question-title">{{ question.numero }}. {{ question.texte }}</h2>
             {% if question.image %}
-                <img src="{{ question.image.url }}" alt="Illustration de la question" style="max-width:100%;height:auto;border-radius:12px;">
+                <img src="{{ question.image.url }}" alt="Question illustration" style="max-width:100%;height:auto;border-radius:12px;">
             {% endif %}
             {% for reponse in question.reponses_level_one.all %}
                 <label>
@@ -49,21 +49,21 @@
                     <span>{{ reponse.texte }}</span>
                 </label>
             {% empty %}
-                <p class="quiz-intro">Aucune réponse n'a encore été ajoutée à cette question.</p>
+                <p class="quiz-intro">No answers have been added to this question yet.</p>
             {% endfor %}
         </section>
 
         <div class="quiz-actions">
             {% if not is_first_question %}
-                <button type="submit" name="prev" value="1">← Précédent</button>
+                <button type="submit" name="prev" value="1">← Previous</button>
             {% else %}
                 <span></span>
             {% endif %}
 
             {% if is_last_question %}
-                <button class="primary" type="submit" name="finish" value="1">Terminer le quiz ✓</button>
+                <button class="primary" type="submit" name="finish" value="1">Finish quiz ✓</button>
             {% else %}
-                <button class="primary" type="submit" name="next" value="1">Question suivante →</button>
+                <button class="primary" type="submit" name="next" value="1">Next question →</button>
             {% endif %}
         </div>
     </form>
