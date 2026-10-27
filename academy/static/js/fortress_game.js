@@ -9,12 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const tourDroite = document.querySelector('#tourDroite img');
     const tourGauche = document.querySelector('#tourGauche img');
 
-    // Toggle pour afficher/masquer le mot de passe
+    // Toggle password visibility
     if (togglePassword && passwordInput) {
         togglePassword.addEventListener('click', () => {
             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordInput.setAttribute('type', type);
-            togglePassword.textContent = type === 'password' ? 'Afficher' : 'Masquer';
+            togglePassword.textContent = type === 'password' ? 'Show' : 'Hide';
         });
     }
 
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (/[a-z]/.test(password)) score++;
         if (/[0-9]/.test(password)) score++;
         if (/[\W]/.test(password)) score++;
-        return score <= 2 ? 'faible' : score === 3 || score === 4 ? 'moyen' : 'fort';
+        return score <= 2 ? 'weak' : score === 3 || score === 4 ? 'medium' : 'strong';
     }
 
     // Reset the fortress
@@ -39,8 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Strengthen the fortress based on password strength
     function reinforceFortress(level) {
         resetFortress();
-        if (level === 'moyen' && porte) porte.classList.remove('close-ico');
-        if (level === 'fort') {
+        if (level === 'medium' && porte) porte.classList.remove('close-ico');
+        if (level === 'strong') {
             if (porte) porte.classList.remove('close-ico');
             if (tourDroite) tourDroite.classList.remove('close-ico');
             if (tourGauche) tourGauche.classList.remove('close-ico');
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const strength = evaluatePassword(password);
             feedback.textContent = `Password strength: ${strength}`;
-            feedback.className = strength === 'fort' ? 'success' : 'error';
+            feedback.className = strength === 'strong' ? 'success' : 'error';
 
             // Renforcement de la forteresse selon le mot de passe
             reinforceFortress(strength);
