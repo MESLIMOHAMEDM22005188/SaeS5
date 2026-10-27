@@ -18,11 +18,11 @@ function updateTime() {
     month = month <10? "0" + month : month;
 
 
-    //modification du div pour mettre l'heure du systeme
+    // Update the element with the system time
     clock.innerHTML = `${hours}:${minutes}`;
     date.innerHTML = `${day}/${month}/${year}`;
 
-    //appel de la fonction toutes les 60 secondes
+    // Call the function every 60 seconds
     // The timer starts when the page loads, so there may be an offset
     // compared with real time. This is intentional
     // to avoid calling the function 59 times per minute without a visible change
