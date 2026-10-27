@@ -1,4 +1,3 @@
-import uuid
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, get_user_model
@@ -227,8 +226,6 @@ def register(request):
             phone_verification.generate_code()
             email_verification.email = email
             email_verification.generate_code()
-            request.session["pending_verification_user_id"] = user.pk
-
             sms_sent = send_verification_sms(phone_number, phone_verification.verification_code)
             try:
                 send_verification_email(user)
@@ -392,11 +389,6 @@ def level_two_jeu3(request):
 @login_required
 def level_two_jeu4(request):
     return render(request, 'level_twoJeu4.html')
-
-@login_required
-def level_three(request):
-    """Page pour le niveau 3."""
-    return render(request, 'level_three.html')
 
 #vue pour la page du navigateur internet du premier niveau.
 def browser_level_one(request):
