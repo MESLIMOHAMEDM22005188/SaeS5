@@ -401,7 +401,6 @@ def submit_level_three_quiz(request):
 
 
 @login_required
-@login_required
 def save_password_game_result(request):
     if request.method != "POST":
         return JsonResponse({"error": "Method not allowed."}, status=405)
@@ -454,7 +453,6 @@ def level_two_game_four(request):
     return render(request, "level_two_game_four.html")
 
 
-@login_required
 @login_required
 def browser_simulation(request):
     return render(request, "browser_simulation.html")
