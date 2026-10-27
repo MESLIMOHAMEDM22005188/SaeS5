@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Sélection des éléments HTML
+    // Select the required HTML elements
     const submitBtn = document.getElementById('submitBtn');
     const passwordInput = document.getElementById('password');
     const feedback = document.getElementById('feedback');
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Fonction pour évaluer la complexité du mot de passe
+    // Evaluate password complexity
     function evaluatePassword(password) {
         let score = 0;
         if (password.length >= 8) score++;
@@ -29,14 +29,14 @@ document.addEventListener('DOMContentLoaded', () => {
         return score <= 2 ? 'faible' : score === 3 || score === 4 ? 'moyen' : 'fort';
     }
 
-    // Réinitialisation de la forteresse
+    // Reset the fortress
     function resetFortress() {
         if (porte) porte.classList.add('close-ico');
         if (tourDroite) tourDroite.classList.add('close-ico');
         if (tourGauche) tourGauche.classList.add('close-ico');
     }
 
-    // Renforcement de la forteresse en fonction du niveau de sécurité
+    // Strengthen the fortress based on password strength
     function reinforceFortress(level) {
         resetFortress();
         if (level === 'moyen' && porte) porte.classList.remove('close-ico');
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const strength = evaluatePassword(password);
-            feedback.textContent = `Mot de passe évalué comme : ${strength}`;
+            feedback.textContent = `Password strength: ${strength}`;
             feedback.className = strength === 'fort' ? 'success' : 'error';
 
             // Renforcement de la forteresse selon le mot de passe
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Réinitialisation au redémarrage
+    // Reset the game on restart
     const restartButton = document.getElementById('restart-button');
     if (restartButton) {
         restartButton.addEventListener('click', () => {
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const backToMenuButton = document.getElementById('back-to-menu');
     if (backToMenuButton) {
         backToMenuButton.addEventListener('click', () => {
-            window.location.href = '/levelTwo/';
+            window.location.href = '/level-two/';
         });
     }
 });
