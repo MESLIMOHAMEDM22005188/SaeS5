@@ -4,35 +4,33 @@
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign in</title>
+    <title>Sign in | CyberMouse Academy</title>
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
 </head>
 <body>
-    <div class="rectangle">
-        <header>
-            <h1 class="titre">Sign in</h1>
-        </header>
-        <main>
+    <main class="rectangle">
+        <header><h1 class="titre">Sign in</h1></header>
+        <section>
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}<p class="message {{ message.tags }}">{{ message }}</p>{% endfor %}
+                </div>
+            {% endif %}
             <form method="post" action="{% url 'login' %}">
                 {% csrf_token %}
-                <label for="username" class="label-username">Username :</label>
-                <input type="text" id="username" name="username" placeholder="Votre nom d'utilisateur" required>
-
-                <label for="password" class="label-password">Password :</label>
-                <input type="password" id="password" name="password" placeholder="Votre mot de passe" required>
-
+                <label for="username" class="label-username">Username</label>
+                <input type="text" id="username" name="username" autocomplete="username" placeholder="Enter your username" required>
+                <label for="password" class="label-password">Password</label>
+                <input type="password" id="password" name="password" autocomplete="current-password" placeholder="Enter your password" required>
                 <label class="toggle-password">
-                    <input type="checkbox" onclick="togglePassword()"> Afficher le mot de passe
+                    <input type="checkbox" onclick="togglePassword()"> Show password
                 </label>
-
                 <input type="hidden" name="next" value="{{ next }}">
                 <button type="submit">Sign in</button>
             </form>
-
-            <p class="texte-acceuil">Vous n'avez pas de compte ? <a href="{% url 'register' %}">Inscrivez-vous ici</a>.</p>
-        </main>
-    </div>
-
+            <p class="texte-acceuil">Don't have an account? <a href="{% url 'register' %}">Create one</a>.</p>
+        </section>
+    </main>
     <script>
         function togglePassword() {
             const passwordField = document.getElementById("password");
