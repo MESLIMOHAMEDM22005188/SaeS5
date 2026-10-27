@@ -80,9 +80,9 @@ function displayEmailContent(emailId) {
         <p class="email-Object"><strong>Objet :</strong> ${email.subject}</p>
         <p>${email.body}</p>
         <div id="email-options-${email.id}" class="email-options">
-            <button onclick="markAsUnread(${email.id})">Marquer comme non-lu</button>
-            <button onclick="deleteEmail(${email.id})">Supprimer</button>
-            <button onclick="reportEmail(${email.id})">Signaler</button>
+            <button onclick="markAsUnread(${email.id})">Mark as unread</button>
+            <button onclick="deleteEmail(${email.id})">Delete</button>
+            <button onclick="reportEmail(${email.id})">Report</button>
         </div>
     `;
 
