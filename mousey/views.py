@@ -331,21 +331,29 @@ def test_level3_view(request):
     else:
         questions = QuestionLevelThree.objects.all().order_by('numero')
         return render(request, 'test_level3.html', {'questions': questions})
+@login_required
 def save_password(request):
-    if request.method == "POST":
-       if not request.user.is_authenticated:
-           return JsonResponse({'error': 'Authentication required'}, status=401)
-    password = request.POST.get('password').strip
-    strength = request.POST.get('strength', 'weak')
+    """Store game progress without persisting the user's plaintext password."""
+    if request.method != "POST":
+        return JsonResponse({"error": "Méthode non autorisée."}, status=405)
 
+    password = (request.POST.get("password") or "").strip()
+    strength = (request.POST.get("strength") or "weak").strip().lower()
+
+    if not password:
+        return JsonResponse({"error": "Le mot de passe est obligatoire."}, status=400)
+
+    allowed_strengths = {"weak", "medium", "strong"}
+    if strength not in allowed_strengths:
+        return JsonResponse({"error": "Niveau de robustesse invalide."}, status=400)
+
+    # Do not store plaintext passwords: keep only a non-sensitive game state.
     Forteresse.objects.create(
         user=request.user,
-        password=password,
-        strength=strength
+        password="",
+        strength=strength,
     )
-    return JsonResponse({'message': 'Mot de passe enregistré avec succès.'})
-
-    return JsonResponse({'error': 'Requête non valide.'}, status=400)
+    return JsonResponse({"message": "Progression enregistrée."}, status=201)
 
 @login_required
 def level_two_jeu2(request):
