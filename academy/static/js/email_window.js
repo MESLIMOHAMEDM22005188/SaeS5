@@ -74,7 +74,7 @@ function displayEmailContent(emailId) {
     const emailContent = document.getElementById('email-content');
     emailContent.innerHTML = `
         <p class="email-Plus">
-            <img src="/static/image/plusOption.png" class="plus-Option" onclick="openMoreOption(event, ${email.id})">
+            <img src="/static/image/more_options.png" class="plus-Option" onclick="openMoreOption(event, ${email.id})">
         </p>
         <p class="email-Sender"><strong>De :</strong> ${email.sender}</p>
         <p class="email-Object"><strong>Objet :</strong> ${email.subject}</p>
@@ -154,7 +154,7 @@ function triggerPhishingPopups(emailId) {
         blueScreen.style.left = '0';
         blueScreen.style.width = '100vw';
         blueScreen.style.height = '100vh';
-        blueScreen.style.backgroundImage = 'url("/static/image/bluescreen.png")';
+        blueScreen.style.backgroundImage = 'url("/static/image/blue_screen.png")';
         blueScreen.style.backgroundSize = 'cover';
         blueScreen.style.zIndex = '9999';
         blueScreen.classList.add('blue-screen');
