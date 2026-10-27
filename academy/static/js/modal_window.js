@@ -4,33 +4,33 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentStage = 0;
 
     if (!modalWindow || !internetIcon) {
-        console.error('Élément(s) introuvable(s) dans le DOM.');
+        console.error('Required element(s) not found in the DOM.');
         return;
     }
 
 
     const stages = [
         {
-            title: "Étape 1 : Sécurité Wi-Fi",
-            question: "Quel protocole Wi-Fi offre le meilleur niveau de sécurité ?",
+            title: "Step 1: Wi-Fi security",
+            question: "Which Wi-Fi protocol offers the strongest security?",
             options: [
-                { text: "WEP", correct: false, explanation: "WEP est obsolète et présente de nombreuses failles de sécurité." },
-                { text: "WPA", correct: false, explanation: "WPA est une amélioration, mais WPA2 ou WPA3 sont plus sûrs." },
-                { text: "WPA3", correct: true, explanation: "WPA3 est le protocole le plus sécurisé actuellement disponible." }
+                { text: "WEP", correct: false, explanation: "WEP is obsolete and has many security vulnerabilities." },
+                { text: "WPA", correct: false, explanation: "WPA is an improvement, but WPA2 or WPA3 are safer." },
+                { text: "WPA3", correct: true, explanation: "WPA3 is currently the most secure option." }
             ]
         },
         {
-            title: "Étape 2 : Connexion publique",
+            title: "Step 2: Public Wi-Fi",
             question: "Quel est le principal risque d'utiliser une connexion Wi-Fi publique ?",
             options: [
-                { text: "Accès limité à Internet", correct: false, explanation: "Le risque principal n'est pas la limitation de l'accès, mais l'insécurité." },
-                { text: "Attaques de type 'man-in-the-middle'", correct: true, explanation: "Les connexions Wi-Fi publiques peuvent être interceptées par des attaquants." },
-                { text: "Temps de latence élevé", correct: false, explanation: "Un temps de latence élevé n'est pas un problème de sécurité." }
+                { text: "Accès limité à Internet", correct: false, explanation: "The main risk is security, not limited access." },
+                { text: "Attaques de type 'man-in-the-middle'", correct: true, explanation: "Public Wi-Fi traffic can be intercepted by attackers." },
+                { text: "Temps de latence élevé", correct: false, explanation: "High latency is not a security issue." }
             ]
         },
         {
-            title: "Étape 3 : Réseau domestique",
-            question: "Quelle configuration rend un réseau domestique plus sûr ?",
+            title: "Step 3: Home network",
+            question: "Which configuration makes a home network safer?",
             options: [
                 { text: "Désactiver le mot de passe Wi-Fi", correct: false, explanation: "Cela rendrait votre réseau vulnérable aux intrusions." },
                 { text: "Activer le filtrage d'adresses MAC", correct: false, explanation: "Le filtrage MAC n'est pas suffisant pour protéger un réseau." },
