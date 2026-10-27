@@ -4,29 +4,76 @@
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Niveaux</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/level.css' %}">
+    <meta name="theme-color" content="#080d18">
+    <meta name="description" content="CyberMouse Academy — apprenez les réflexes de cybersécurité en jouant.">
+    <title>CyberMouse Academy — Tableau de bord</title>
+    <link rel="stylesheet" href="{% static 'css/level.css' %}">
     <link rel="icon" type="image/png" href="{% static 'image/logo_bureau.png' %}">
 </head>
 <body>
-<div class="container">
-    <div class="level">
-        <a href="{% url 'level_one' %}" class="card">
-            <div>Niveau 1</div>
-            <div>0/2</div>
-        </a>
-        <a href="{% url 'level_one_quizz' %}" class="test-card">FAIRE LE TEST</a>
-    </div>
+<main class="dashboard">
+    <header class="dashboard-header">
+        <div class="brand-lockup">
+            <span class="brand-mark" aria-hidden="true">CM</span>
+            <div>
+                <p class="eyebrow">CYBERMOUSE <span>/ ACADEMY</span></p>
+                <h1>Apprendre à se défendre.</h1>
+                <p class="hero-copy">Des scénarios interactifs pour développer de vrais réflexes numériques.</p>
+            </div>
+        </div>
+        <form method="post" action="{% url 'logout' %}" class="logout-form">
+            {% csrf_token %}
+            <button type="submit" class="logout-button">Déconnexion <span aria-hidden="true">↗</span></button>
+        </form>
+    </header>
 
-    <div class="level">
-        <a href="{% url 'level_two' %}" class="card">
-            <div>Niveau 2</div>
-            <div>0/5</div>
-        </a>
-        <a href="{% url 'level_two_quizz' %}" class="test-card">FAIRE LE TEST</a>
-    </div>
+    <section class="section-heading" aria-labelledby="path-heading">
+        <div>
+            <p class="eyebrow">TON PARCOURS</p>
+            <h2 id="path-heading">Choisis ton prochain défi</h2>
+        </div>
+        <p class="section-note">3 niveaux · apprentissage progressif</p>
+    </section>
 
+    <section class="level-grid" aria-label="Parcours de formation">
+        <article class="level level--one">
+            <a href="{% url 'level_one' %}" class="level-card">
+                <span class="level-number">01 <span>— STARTER</span></span>
+                <span class="level-icon" aria-hidden="true">⌁</span>
+                <h3>Les fondamentaux</h3>
+                <p>Repérer les pièges, comprendre les menaces et adopter les bons réflexes.</p>
+                <span class="level-card-footer">Explorer le niveau <span aria-hidden="true">↗</span></span>
+            </a>
+            <a href="{% url 'level_one_quizz' %}" class="test-card">Lancer le quiz <span aria-hidden="true">→</span></a>
+        </article>
 
-</div>
+        <article class="level level--two">
+            <a href="{% url 'level_two' %}" class="level-card">
+                <span class="level-number">02 <span>— PRACTICE</span></span>
+                <span class="level-icon" aria-hidden="true">⌘</span>
+                <h3>Passer à l’action</h3>
+                <p>Expérimenter à travers des jeux autour des mots de passe, du réseau et des défenses.</p>
+                <span class="level-card-footer">Explorer le niveau <span aria-hidden="true">↗</span></span>
+            </a>
+            <a href="{% url 'level_two_quizz' %}" class="test-card">Lancer le quiz <span aria-hidden="true">→</span></a>
+        </article>
+
+        <article class="level level--three">
+            <a href="{% url 'level_three' %}" class="level-card">
+                <span class="level-number">03 <span>— ADVANCED</span></span>
+                <span class="level-icon" aria-hidden="true">⌬</span>
+                <h3>Penser comme un défenseur</h3>
+                <p>Mettre en pratique l’analyse, la vigilance et la prise de décision face au risque.</p>
+                <span class="level-card-footer">Explorer le niveau <span aria-hidden="true">↗</span></span>
+            </a>
+            <a href="{% url 'level_three_quizz' %}" class="test-card">Lancer le quiz <span aria-hidden="true">→</span></a>
+        </article>
+    </section>
+
+    <footer class="dashboard-footer">
+        <span>CYBERMOUSE ACADEMY</span>
+        <span>La sécurité commence par les bons réflexes.</span>
+    </footer>
+</main>
 </body>
 </html>
