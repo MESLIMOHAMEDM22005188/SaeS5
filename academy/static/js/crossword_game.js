@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Réponses correctes pour les mots croisés
+    // Correct answers for the crossword puzzle
     const correctAnswers = {
         "1-1": "P",
         "1-2": "H",
@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const checkButton = document.getElementById("check-button");
     const message = document.getElementById("message");
 
-    // Vérification des réponses
+    // Validate the submitted answers
     checkButton.addEventListener("click", function() {
         let correctCount = 0;
 
@@ -38,12 +38,12 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }
 
-        // Vérifier si toutes les réponses sont correctes
+        // Check whether every answer is correct
         if (correctCount === Object.keys(correctAnswers).length) {
-            message.textContent = "Félicitations ! Vous avez complété le mot croisé correctement.";
+            message.textContent = "Congratulations! You completed the crossword correctly.";
             message.style.color = "green";
         } else {
-            message.textContent = "Il y a encore des erreurs, réessayez.";
+            message.textContent = "Some answers are still incorrect. Try again.";
             message.style.color = "red";
         }
     });
