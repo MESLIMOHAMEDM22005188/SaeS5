@@ -1,17 +1,17 @@
-//récupération de l'horloge
+// Get the clock element
 let clock = document.querySelector('.clock')
 let date = document.querySelector('.date')
 
-//fonction de mise à jour de l'horloge
+// Update the clock
 function updateTime() {
-    //récupération de l'heure et les minutes du systeme
+    // Read the system hours and minutes
     let hours = new Date().getHours();
     let minutes = new Date().getMinutes();
     let day = new Date().getDay();
     let month = new Date().getMonth();
     let year = new Date().getFullYear();
 
-    //ajout d'un 0 avant le chiffre dans le cas ou l'heure ou les valeurs sont inferieur à 10
+    // Add a leading zero when a value is below 10
     hours = hours < 10 ? "0" + hours : hours;
     minutes = minutes < 10 ? "0" + minutes : minutes;
     day = day < 10 ? "0" + day : day;
@@ -23,9 +23,9 @@ function updateTime() {
     date.innerHTML = `${day}/${month}/${year}`;
 
     //appel de la fonction toutes les 60 secondes
-    //comme le timer commence au moment du lancement de la  page, un décallage
-    //sera présent par rapport au temps réel. C'est un choix personnel
-    //pour éviter d'appeler 59 fois /minutes la fonction sans effectuer de changement
+    // The timer starts when the page loads, so there may be an offset
+    // compared with real time. This is intentional
+    // to avoid calling the function 59 times per minute without a visible change
     setTimeout(updateTime, 60000);
 }
 
