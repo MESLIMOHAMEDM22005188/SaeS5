@@ -6,16 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="{% static 'image/logo_bureau.png' %}">
     <title>Jeux - Niveau 2</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/levelTwo.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/level_two.css' %}">
 </head>
 <body>
     <div class="container">
         <div class="card-container">
-            <a href="{% url 'level_two_jeu1' %}" class="card red">Jeu de la Forteresse</a>
-            <a href="{% url 'level_two_course' %}" class="card blue">Course</a>
-            <a href="{% url 'level_two_jeu2' %}" class="card green">La Quête du Réseau Sécurisé</a>
-            <a href="{% url 'level_two_jeu4' %}" class="card purple">Le Mur de parefeu</a>
-            <a href="{% url 'level_two_pswd' %}" class="card brown">Combien de temps pour cracker ?</a>
+            <a href="{% url 'level_two_game_one' %}" class="card red">Jeu de la Forteresse</a>
+            <a href="{% url 'level_two_lesson' %}" class="card blue">Course</a>
+            <a href="{% url 'level_two_game_two' %}" class="card green">La Quête du Réseau Sécurisé</a>
+            <a href="{% url 'level_two_game_four' %}" class="card purple">Le Mur de parefeu</a>
+            <a href="{% url 'password_game' %}" class="card brown">Combien de temps pour cracker ?</a>
         </div>
 
         <div class="menu-container">
