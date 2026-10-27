@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     {% load static %}
     <meta charset="UTF-8">
@@ -17,62 +17,62 @@
             <span class="brand-mark" aria-hidden="true">CM</span>
             <div>
                 <p class="eyebrow">CYBERMOUSE <span>/ ACADEMY</span></p>
-                <h1>Apprendre à se défendre.</h1>
-                <p class="hero-copy">Des scénarios interactifs pour développer de vrais réflexes numériques.</p>
+                <h1>Learn to defend yourself.</h1>
+                <p class="hero-copy">Interactive scenarios to build practical cybersecurity habits.</p>
             </div>
         </div>
         <form method="post" action="{% url 'logout' %}" class="logout-form">
             {% csrf_token %}
-            <button type="submit" class="logout-button">Déconnexion <span aria-hidden="true">↗</span></button>
+            <button type="submit" class="logout-button">Log out <span aria-hidden="true">↗</span></button>
         </form>
     </header>
 
     <section class="section-heading" aria-labelledby="path-heading">
         <div>
-            <p class="eyebrow">TON PARCOURS</p>
-            <h2 id="path-heading">Choisis ton prochain défi</h2>
+            <p class="eyebrow">YOUR LEARNING PATH</p>
+            <h2 id="path-heading">Choose your next challenge</h2>
         </div>
-        <p class="section-note">3 niveaux · apprentissage progressif</p>
+        <p class="section-note">3 levels · progressive learning</p>
     </section>
 
-    <section class="level-grid" aria-label="Parcours de formation">
+    <section class="level-grid" aria-label="Learning path">
         <article class="level level--one">
             <a href="{% url 'level_one' %}" class="level-card">
                 <span class="level-number">01 <span>— STARTER</span></span>
                 <span class="level-icon" aria-hidden="true">⌁</span>
                 <h3>Les fondamentaux</h3>
-                <p>Repérer les pièges, comprendre les menaces et adopter les bons réflexes.</p>
-                <span class="level-card-footer">Explorer le niveau <span aria-hidden="true">↗</span></span>
+                <p>Spot scams, understand threats, and build safer habits.</p>
+                <span class="level-card-footer">Explore level <span aria-hidden="true">↗</span></span>
             </a>
-            <a href="{% url 'level_one_quiz' %}" class="test-card">Lancer le quiz <span aria-hidden="true">→</span></a>
+            <a href="{% url 'level_one_quiz' %}" class="test-card">Start quiz <span aria-hidden="true">→</span></a>
         </article>
 
         <article class="level level--two">
             <a href="{% url 'level_two' %}" class="level-card">
                 <span class="level-number">02 <span>— PRACTICE</span></span>
                 <span class="level-icon" aria-hidden="true">⌘</span>
-                <h3>Passer à l’action</h3>
-                <p>Expérimenter à travers des jeux autour des mots de passe, du réseau et des défenses.</p>
-                <span class="level-card-footer">Explorer le niveau <span aria-hidden="true">↗</span></span>
+                <h3>Take action</h3>
+                <p>Practice with games about passwords, networks, and defense.</p>
+                <span class="level-card-footer">Explore level <span aria-hidden="true">↗</span></span>
             </a>
-            <a href="{% url 'level_two_quiz' %}" class="test-card">Lancer le quiz <span aria-hidden="true">→</span></a>
+            <a href="{% url 'level_two_quiz' %}" class="test-card">Start quiz <span aria-hidden="true">→</span></a>
         </article>
 
         <article class="level level--three">
             <a href="{% url 'level_three' %}" class="level-card">
                 <span class="level-number">03 <span>— ADVANCED</span></span>
                 <span class="level-icon" aria-hidden="true">⌬</span>
-                <h3>Penser comme un défenseur</h3>
-                <p>Mettre en pratique l’analyse, la vigilance et la prise de décision face au risque.</p>
-                <span class="level-card-footer">Explorer le niveau <span aria-hidden="true">↗</span></span>
+                <h3>Think like a defender</h3>
+                <p>Practice analysis, awareness, and decision-making under risk.</p>
+                <span class="level-card-footer">Explore level <span aria-hidden="true">↗</span></span>
             </a>
-            <a href="{% url 'level_three_quiz' %}" class="test-card">Lancer le quiz <span aria-hidden="true">→</span></a>
+            <a href="{% url 'level_three_quiz' %}" class="test-card">Start quiz <span aria-hidden="true">→</span></a>
         </article>
     </section>
 
     <footer class="dashboard-footer">
         <span>CYBERMOUSE ACADEMY</span>
-        <span>La sécurité commence par les bons réflexes.</span>
+        <span>Security starts with good habits.</span>
     </footer>
 </main>
 </body>
