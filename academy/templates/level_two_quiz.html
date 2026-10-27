@@ -16,14 +16,14 @@
       {% csrf_token %}
       {% for question in questions %}
         <div class="question">
-          <h2>{{ question.numero }}. {{ question.texte }}</h2>
+          <h2>{{ question.number }}. {{ question.text }}</h2>
           {% if question.image %}
             <img src="{{ question.image.url }}" alt="Question illustration" style="max-width: 400px;">
           {% endif %}
-          {% for reponse in question.reponses_level_two.all %}
+          {% for reponse in question.answers %}
             <label>
               <input type="radio" name="q{{ question.id }}" value="{{ reponse.id }}">
-              {{ reponse.texte }}
+              {{ reponse.text }}
             </label>
           {% endfor %}
         </div>
