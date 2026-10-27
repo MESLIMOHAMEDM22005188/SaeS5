@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   {% load static %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz Cyber Sécu - Niveau 3</title>
+  <title>Quiz Cyber Sécu - Level 3</title>
   <link rel="stylesheet" type="text/css" href="{% static 'css/quiz_level_one.css' %}">
 </head>
 <body>
   <div class="quiz-container">
-    <h1>Quiz : Cyber Sécurité - Niveau 3</h1>
-    <p>Répondez aux questions puis cliquez sur "Valider".</p>
+    <h1>Quiz : Cyber Sécurité - Level 3</h1>
+    <p>Répondez aux questions puis cliquez sur "Submit".</p>
     <form method="post">
       {% csrf_token %}
       {% for question in questions %}
@@ -27,7 +27,7 @@
           {% endfor %}
         </div>
       {% endfor %}
-      <button type="submit">Valider</button>
+      <button type="submit">Submit</button>
     </form>
   </div>
 
