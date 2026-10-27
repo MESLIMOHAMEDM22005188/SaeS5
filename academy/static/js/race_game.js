@@ -10,23 +10,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const restartButton = document.getElementById('restart-button');
 
     let positions = { cybermouse: 0, snail: 0, turtle: 0, hare: 0, cheetah: 0 };
-    const speeds = { snail: 0.2, turtle: 0.5, hare: 0.8, cheetah: 1 }; // Vitesse en pixels par frame
-    const cybermouseSpeed = 50; // Avance pour une bonne réponse
-    const cybermousePenalty = 30; // Recul pour une mauvaise réponse
-    const trackLength = 800; // Longueur totale de la piste
+    const speeds = { snail: 0.2, turtle: 0.5, hare: 0.8, cheetah: 1 }; // Speed in pixels per frame
+    const cybermouseSpeed = 50; // Move forward for a correct answer
+    const cybermousePenalty = 30; // Move backward for an incorrect answer
+    const trackLength = 800; // Total track length
 
 
     const questions = [
     {
-        question: "Quel est le rôle d'un pare-feu dans un réseau ?",
+        question: "What is the role of a firewall in a network?",
         options: [
-            { text: "Accélérer la connexion Internet", correct: false },
-            { text: "Bloquer le trafic non autorisé", correct: true },
-            { text: "Attribuer des adresses IP", correct: false }
+            { text: "Speed up the internet connection", correct: false },
+            { text: "Block unauthorized traffic", correct: true },
+            { text: "Assign IP addresses", correct: false }
         ]
     },
     {
-        question: "Quel protocole est utilisé pour sécuriser les communications sur Internet ?",
+        question: "Which protocol secures communications over the internet?",
         options: [
             { text: "HTTP", correct: false },
             { text: "HTTPS", correct: true },
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     },
     {
-        question: "Quelle adresse IP appartient à un réseau privé ?",
+        question: "Which IP address belongs to a private network?",
         options: [
             { text: "192.168.1.1", correct: true },
             { text: "8.8.8.8", correct: false },
@@ -42,23 +42,23 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     },
     {
-        question: "Quel appareil permet de segmenter un réseau local ?",
+        question: "Which device can segment a local network?",
         options: [
-            { text: "Un commutateur (switch)", correct: true },
-            { text: "Un routeur", correct: false },
-            { text: "Un modem", correct: false }
+            { text: "A switch", correct: true },
+            { text: "A router", correct: false },
+            { text: "A modem", correct: false }
         ]
     },
     {
-        question: "Quel est le rôle d'un serveur DNS ?",
+        question: "What is the role of a DNS server?",
         options: [
-            { text: "Attribuer des adresses IP", correct: false },
-            { text: "Convertir les noms de domaine en adresses IP", correct: true },
-            { text: "Filtrer le trafic réseau", correct: false }
+            { text: "Assign IP addresses", correct: false },
+            { text: "Translate domain names into IP addresses", correct: true },
+            { text: "Filter network traffic", correct: false }
         ]
     },
     {
-        question: "Quelle commande permet de tester la connectivité entre deux appareils ?",
+        question: "Which command tests connectivity between two devices?",
         options: [
             { text: "ping", correct: true },
             { text: "tracert", correct: false },
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     },
     {
-        question: "Quel type d'attaque consiste à intercepter les communications entre deux parties ?",
+        question: "Which attack intercepts communications between two parties?",
         options: [
             { text: "Man-in-the-Middle", correct: true },
             { text: "Phishing", correct: false },
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     },
     {
-        question: "Quelle est la longueur d'une adresse IPv6 ?",
+        question: "What is the length of an IPv6 address?",
         options: [
             { text: "32 bits", correct: false },
             { text: "64 bits", correct: false },
@@ -82,15 +82,15 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     },
     {
-        question: "Quelle est la fonction principale d'un routeur ?",
+        question: "What is the main function of a router?",
         options: [
-            { text: "Relier plusieurs réseaux entre eux", correct: true },
-            { text: "Fournir du Wi-Fi", correct: false },
-            { text: "Attribuer des ports réseau", correct: false }
+            { text: "Connect multiple networks", correct: true },
+            { text: "Provide Wi-Fi", correct: false },
+            { text: "Assign network ports", correct: false }
         ]
     },
     {
-        question: "Quel protocole permet d'attribuer dynamiquement des adresses IP ?",
+        question: "Which protocol dynamically assigns IP addresses?",
         options: [
             { text: "DNS", correct: false },
             { text: "DHCP", correct: true },
@@ -98,15 +98,15 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     },
     {
-        question: "Quel est l'avantage du chiffrement des données ?",
+        question: "What is the benefit of data encryption?",
         options: [
-            { text: "Accélérer la transmission des paquets", correct: false },
-            { text: "Protéger les données contre l'interception", correct: true },
-            { text: "Augmenter la bande passante", correct: false }
+            { text: "Speed up packet transmission", correct: false },
+            { text: "Protect data from interception", correct: true },
+            { text: "Increase bandwidth", correct: false }
         ]
     },
     {
-        question: "Quel protocole est utilisé pour envoyer des emails ?",
+        question: "Which protocol is used to send email?",
         options: [
             { text: "POP3", correct: false },
             { text: "SMTP", correct: true },
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     },
     {
-        question: "Que signifie NAT en réseau ?",
+        question: "What does NAT mean in networking?",
         options: [
             { text: "Network Access Transfer", correct: false },
             { text: "Network Address Translation", correct: true },
@@ -122,23 +122,23 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     },
     {
-        question: "Quel est l'avantage d'utiliser IPv6 par rapport à IPv4 ?",
+        question: "What is the advantage of IPv6 over IPv4?",
         options: [
-            { text: "Une meilleure vitesse", correct: false },
-            { text: "Un plus grand espace d'adressage", correct: true },
-            { text: "Une compatibilité avec tous les équipements", correct: false }
+            { text: "Higher speed", correct: false },
+            { text: "A larger address space", correct: true },
+            { text: "Compatibility with all devices", correct: false }
         ]
     },
     {
-        question: "Comment un réseau Wi-Fi peut-il être sécurisé ?",
+        question: "How can a Wi-Fi network be secured?",
         options: [
-            { text: "En utilisant WPA3", correct: true },
-            { text: "En désactivant le chiffrement", correct: false },
-            { text: "En laissant un accès ouvert", correct: false }
+            { text: "By using WPA3", correct: true },
+            { text: "By disabling encryption", correct: false },
+            { text: "By leaving access open", correct: false }
         ]
     },
     {
-        question: "Quel outil permet d'analyser le trafic réseau ?",
+        question: "Which tool can analyze network traffic?",
         options: [
             { text: "Wireshark", correct: true },
             { text: "Excel", correct: false },
@@ -146,23 +146,23 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     },
     {
-        question: "Quel est l'objectif du protocole ICMP ?",
+        question: "What is the purpose of ICMP?",
         options: [
-            { text: "Envoyer des emails", correct: false },
-            { text: "Diagnostiquer et signaler des erreurs réseau", correct: true },
+            { text: "Send email", correct: false },
+            { text: "Diagnose and report network errors", correct: true },
             { text: "Assigner des adresses IP", correct: false }
         ]
     },
     {
-        question: "Pourquoi utiliser un VLAN ?",
+        question: "Why use a VLAN?",
         options: [
-            { text: "Pour réduire la congestion réseau", correct: true },
-            { text: "Pour augmenter la vitesse Internet", correct: false },
-            { text: "Pour connecter deux réseaux Wi-Fi", correct: false }
+            { text: "To reduce network congestion", correct: true },
+            { text: "To increase internet speed", correct: false },
+            { text: "To connect two Wi-Fi networks", correct: false }
         ]
     },
     {
-        question: "Quel protocole permet d'établir une connexion sécurisée à distance ?",
+        question: "Which protocol establishes a secure remote connection?",
         options: [
             { text: "FTP", correct: false },
             { text: "SSH", correct: true },
@@ -191,7 +191,7 @@ function restartGame() {
             moveAnimals();
             updatePositions();
             checkIfRaceFinished();
-        }, 50); // Mise à jour toutes les 50ms pour un mouvement fluide
+        }, 50); // Update every 50 ms for smooth movement
     }
 
     function askQuestion() {
@@ -209,9 +209,9 @@ function restartGame() {
 
     function checkAnswer(correct) {
         if (correct) {
-            positions.cybermouse += cybermouseSpeed; // Avance pour une bonne réponse
+            positions.cybermouse += cybermouseSpeed; // Move forward for a correct answer
         } else {
-            positions.cybermouse = Math.max(0, positions.cybermouse - cybermousePenalty); // Recul pour une mauvaise réponse
+            positions.cybermouse = Math.max(0, positions.cybermouse - cybermousePenalty); // Move backward for an incorrect answer
         }
         currentQuestion++;
         askQuestion();
@@ -245,14 +245,14 @@ function restartGame() {
         if (positions.cybermouse > positions.turtle) rank++;
         if (positions.cybermouse > positions.snail) rank++;
 
-        if (rank === 4) finishMessage.textContent = "Or : Vous avez dépassé tous les animaux !";
-        else if (rank >= 3) finishMessage.textContent = "Argent : Vous avez dépassé 3 animaux !";
-        else if (rank >= 2) finishMessage.textContent = "Bronze : Vous avez dépassé 2 animaux !";
-        else finishMessage.textContent = "Vous avez perdu ! Essayez encore !";
+        if (rank === 4) finishMessage.textContent = "Gold: You overtook all opponents!";
+        else if (rank >= 3) finishMessage.textContent = "Silver: You overtook 3 animals!";
+        else if (rank >= 2) finishMessage.textContent = "Bronze: You overtook 2 animals!";
+        else finishMessage.textContent = "You lost! Try again!";
 
         optionsBox.innerHTML = '';
 
-        // Afficher le bouton "Restart"
+        // Show the Restart button
         const restartButton = document.createElement('button');
         restartButton.textContent = "Restart";
         restartButton.className = "restart-button";
@@ -267,7 +267,7 @@ function restartGame() {
         askQuestion();
     }
 
-    // Initialiser la course
+    // Initialize the race
     resetPositions();
     startRace();
     askQuestion();
