@@ -55,6 +55,11 @@ def quiz_result(request):
         current_index = 0
     current_index = max(0, min(current_index, total_questions - 1))
 
+    if request.GET.get("restart") == "1":
+        request.session.pop("quiz_score", None)
+        request.session.pop("quiz_total", None)
+        request.session.pop("quiz_answers", None)
+
     answers = request.session.get("quiz_answers", {})
 
     if request.method == "POST":
@@ -104,6 +109,9 @@ def quiz_result(request):
             "current_index": current_index,
             "total_questions": total_questions,
             "selected_answer": answers.get(str(questions[current_index].id)),
+            "is_first_question": current_index == 0,
+            "is_last_question": current_index == total_questions - 1,
+            "progress_percent": round((current_index + 1) / total_questions * 100),
         },
     )
 
@@ -284,11 +292,6 @@ def level_one(request):
         messages.error(request, "Renseigne les deux champs pour lancer la simulation.")
     return render(request, 'level_one.html')
 
-
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from .models import QuestionLevelTwo, ResultatLevelTwo
 
 @login_required
 def test_level2_view(request):
