@@ -1,4 +1,3 @@
-import re
 import uuid
 from django.conf import settings
 from django.contrib import messages
@@ -7,13 +6,9 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.utils.timezone import now
-from python_http_client import Client
 from django.core.mail import send_mail
-from django_ratelimit.decorators import ratelimit
 from .forms import UserCreationFormWithPhone
 from .models import (EmailVerification, PhoneVerification, QuestionLevelOne, ResultatLevelOne, Forteresse, QuestionLevelThree, QuestionLevelTwo, ResultatLevelThree, ResultatLevelTwo, ReponseLevelThree, ReponseLevelTwo)
-
-from django.shortcuts import render
 
 @login_required
 def test_level1_view(request):
