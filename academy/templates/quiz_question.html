@@ -39,14 +39,14 @@
     <form method="post">
         {% csrf_token %}
         <section class="question" aria-labelledby="question-title">
-            <h2 id="question-title">{{ question.numero }}. {{ question.texte }}</h2>
+            <h2 id="question-title">{{ question.number }}. {{ question.text }}</h2>
             {% if question.image %}
                 <img src="{{ question.image.url }}" alt="Question illustration" style="max-width:100%;height:auto;border-radius:12px;">
             {% endif %}
-            {% for reponse in question.reponses_level_one.all %}
+            {% for reponse in question.answers %}
                 <label>
                     <input type="radio" name="answer" value="{{ reponse.id }}" {% if selected_answer == reponse.id|stringformat:"s" %}checked{% endif %}>
-                    <span>{{ reponse.texte }}</span>
+                    <span>{{ reponse.text }}</span>
                 </label>
             {% empty %}
                 <p class="quiz-intro">No answers have been added to this question yet.</p>
