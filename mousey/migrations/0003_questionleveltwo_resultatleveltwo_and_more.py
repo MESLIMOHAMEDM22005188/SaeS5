@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='reponselevelone',
             name='question',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reponses_level_one', to='mousey.questionlevelone'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reponses_level_one', to='mousey.questionleveltwo'),
         ),
         migrations.CreateModel(
             name='ReponseLevelTwo',
