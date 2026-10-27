@@ -10,7 +10,7 @@ class Forteresse(models.Model):
     porte_status = models.BooleanField(default=False)  # Door state
     tour_droite_status = models.BooleanField(default=False)  # Right tower state
     tour_gauche_status = models.BooleanField(default=False)  # Left tower state
-    created_at = models.DateTimeField(auto_now_add=True)  # Date de création
+    created_at = models.DateTimeField(auto_now_add=True)  # Creation timestamp
 
     def __str__(self):
         return f"Fortress game for {self.user.username} - {self.strength}"
@@ -30,6 +30,19 @@ class QuestionLevelOne(models.Model):
     numero = models.IntegerField()
     image = models.ImageField(upload_to='quiz_images/', blank=True, null=True)
 
+    @property
+    def text(self):
+        return self.texte
+
+    @property
+    def number(self):
+        return self.numero
+
+    @property
+    def answers(self):
+        cached_answers = getattr(self, "_english_answers", None)
+        return cached_answers if cached_answers is not None else self.reponses_level_one.all()
+
     def __str__(self):
         return f"Question {self.numero}: {self.texte}"
 
@@ -39,6 +52,19 @@ class QuestionLevelTwo(models.Model):
     numero = models.IntegerField()
     image = models.ImageField(upload_to='quiz_images/', blank=True, null=True)
 
+    @property
+    def text(self):
+        return self.texte
+
+    @property
+    def number(self):
+        return self.numero
+
+    @property
+    def answers(self):
+        cached_answers = getattr(self, "_english_answers", None)
+        return cached_answers if cached_answers is not None else self.reponses_level_two.all()
+
     def __str__(self):
         return f"Question {self.numero}: {self.texte}"
 
@@ -47,6 +73,19 @@ class QuestionLevelThree(models.Model):
     texte = models.TextField()
     numero = models.IntegerField()
     image = models.ImageField(upload_to='quiz_images/', blank=True, null=True)
+
+    @property
+    def text(self):
+        return self.texte
+
+    @property
+    def number(self):
+        return self.numero
+
+    @property
+    def answers(self):
+        cached_answers = getattr(self, "_english_answers", None)
+        return cached_answers if cached_answers is not None else self.reponses.all()
 
     def __str__(self):
         return f"Question {self.numero}: {self.texte}"
@@ -61,6 +100,14 @@ class ReponseLevelOne(models.Model):
     texte = models.CharField(max_length=200)
     est_correcte = models.BooleanField(default=False)
 
+    @property
+    def text(self):
+        return self.texte
+
+    @property
+    def is_correct(self):
+        return self.est_correcte
+
     def __str__(self):
         return f"Answer: {self.texte} (Correct: {self.est_correcte})"
 
@@ -74,6 +121,14 @@ class ReponseLevelTwo(models.Model):
     texte = models.CharField(max_length=200)
     est_correcte = models.BooleanField(default=False)
 
+    @property
+    def text(self):
+        return self.texte
+
+    @property
+    def is_correct(self):
+        return self.est_correcte
+
     def __str__(self):
         return f"Answer: {self.texte} (Correct: {self.est_correcte})"
 
@@ -86,6 +141,14 @@ class ReponseLevelThree(models.Model):
     texte = models.CharField(max_length=200)
     est_correcte = models.BooleanField(default=False)
 
+    @property
+    def text(self):
+        return self.texte
+
+    @property
+    def is_correct(self):
+        return self.est_correcte
+
     def __str__(self):
         return f"Answer: {self.texte} (Correct: {self.est_correcte})"
 
@@ -94,6 +157,10 @@ class ResultatLevelOne(models.Model):
     utilisateur = models.CharField(max_length=100)
     score = models.IntegerField()
     date = models.DateField(auto_now_add=True)
+
+    @classmethod
+    def record_score(cls, username, score):
+        return cls.objects.create(utilisateur=username, score=score)
 
     def __str__(self):
         return f"{self.utilisateur} - {self.score} points"
@@ -104,6 +171,10 @@ class ResultatLevelTwo(models.Model):
     score = models.IntegerField()
     date = models.DateField(auto_now_add=True)
 
+    @classmethod
+    def record_score(cls, username, score):
+        return cls.objects.create(utilisateur=username, score=score)
+
     def __str__(self):
         return f"{self.utilisateur} - {self.score} points"
 
@@ -112,6 +183,10 @@ class ResultatLevelThree(models.Model):
     utilisateur = models.CharField(max_length=100)
     score = models.IntegerField()
     date = models.DateField(auto_now_add=True)
+
+    @classmethod
+    def record_score(cls, username, score):
+        return cls.objects.create(utilisateur=username, score=score)
 
     def __str__(self):
         return f"{self.utilisateur} - {self.score} points"
