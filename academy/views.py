@@ -112,14 +112,7 @@ def level_one_quiz(request):
         request.session.get("quiz_total") is not None
         and request.session.get("quiz_score") is not None
     ):
-        return render(
-            request,
-            "quiz_result.html",
-            {
-                "score": request.session["quiz_score"],
-                "total_questions": request.session["quiz_total"],
-            },
-        )
+        return redirect("quiz_result")
 
     return render(
         request,
@@ -135,6 +128,19 @@ def level_one_quiz(request):
         },
     )
 
+
+
+@login_required
+def quiz_result(request):
+    score = request.session.get("quiz_score")
+    total_questions = request.session.get("quiz_total")
+    if score is None or total_questions is None:
+        return redirect("level_one_quiz")
+    return render(
+        request,
+        "quiz_result.html",
+        {"score": score, "total_questions": total_questions},
+    )
 
 def login_view(request):
     if request.method == "POST":
