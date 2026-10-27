@@ -60,7 +60,7 @@ function generateComparisons(seconds) {
     } else if (seconds < 31536000) {
         comparisons += " (One year or less to crack it).";
     } else {
-        comparisons += " (Beaucoup de temps pour le craquer, votre mot de passe est probablement sécurisé).";
+        comparisons += " (This would take a long time to crack; your password is likely strong).";
     }
 
     return comparisons;
