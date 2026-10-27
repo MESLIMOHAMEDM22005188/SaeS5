@@ -1,22 +1,22 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   {% load static %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Résultat du Quiz</title>
+  <title>Quiz Results</title>
   <link rel="stylesheet" type="text/css" href="{% static 'css/quiz_level_one.css' %}">
   <script>
     window.onload = function() {
-      alert("Votre score est : {{ score }} / {{ total_questions }}");
+      alert("Your score: {{ score }} / {{ total_questions }}");
     }
   </script>
 </head>
 <body>
   <div class="quiz-container">
-    <h1>Résultat du Quiz</h1>
-    <p>Votre score est : {{ score }} / {{ total_questions }}</p>
-    <a href="{% url 'level_one_quiz' %}">Recommencer</a>
+    <h1>Quiz Results</h1>
+    <p>Your score: {{ score }} / {{ total_questions }}</p>
+    <a href="{% url 'level_one_quiz' %}">Try again</a>
   </div>
 </body>
 </html>
