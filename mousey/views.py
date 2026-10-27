@@ -319,29 +319,20 @@ def level_two_jeu1(request):
     return render(request, 'level_twoJeu1.html')
 @login_required
 def test_level3_view(request):
+    questions = list(QuestionLevelThree.objects.prefetch_related("reponses").order_by("numero"))
     if request.method == "POST":
-        user_answers = request.POST
-        # On récupère les questions du niveau 3
-        questions = QuestionLevelThree.objects.all().order_by('numero')
         score = 0
-        total_questions = questions.count()
-
         for question in questions:
-            # On parcourt les réponses liées au niveau 3 (grâce au related_name "reponses")
-            correct_answer = question.reponses.filter(est_correcte=True).first()
-            user_answer_id = user_answers.get(f'q{question.id}')
-            if user_answer_id and correct_answer and str(correct_answer.id) == user_answer_id:
+            selected_id = (request.POST.get(f"q{question.id}") or "").strip()
+            correct = next((answer for answer in question.reponses.all() if answer.est_correcte), None)
+            if selected_id and correct and selected_id == str(correct.id):
                 score += 1
-
-        # Enregistrement du résultat dans ResultatLevelThree
         ResultatLevelThree.objects.create(utilisateur=request.user.username, score=score)
-        messages.success(request, f"Vous avez obtenu {score}/{total_questions} bonne(s) réponse(s) !")
-        return redirect('test_level3')  # Assurez-vous que l'URL 'test_level3' est bien définie
+        messages.success(request, f"Vous avez obtenu {score}/{len(questions)} bonne(s) réponse(s) !")
+        return redirect("level_three_quizz")
 
-    else:
-        questions = QuestionLevelThree.objects.all().order_by('numero')
-        return render(request, 'test_level3.html', {'questions': questions})
-@login_required
+    return render(request, "test_level3.html", {"questions": questions})
+
 def save_password(request):
     """Store game progress without persisting the user's plaintext password."""
     if request.method != "POST":
