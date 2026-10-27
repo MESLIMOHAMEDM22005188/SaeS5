@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   {% load static %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz Cyber Sécu</title>
+  <title>Cybersecurity Fundamentals Quiz</title>
   <link rel="stylesheet" type="text/css" href="{% static 'css/quiz_level_one.css' %}">
 </head>
 <body>
   <div class="quiz-container">
-    <h1>Quiz : Initiation à la Cyber Sécurité</h1>
-    <p>Répondez à chaque question, puis cliquez sur "Valider".</p>
+    <h1>Cybersecurity Fundamentals Quiz</h1>
+    <p>Answer each question, then select Submit.</p>
 
-    <form method="post">
+    <form method="post" action="{% url 'submit_level_one_quiz' %}">
       {% csrf_token %}
       {% for question in questions %}
         <div class="question">
           <h2>{{ question.numero }}. {{ question.texte }}</h2>
           {% if question.image %}
-            <img src="{{ question.image.url }}" alt="Image de la question" style="max-width: 400px;">
+            <img src="{{ question.image.url }}" alt="Question illustration" style="max-width: 400px;">
           {% endif %}
           {% for reponse in question.reponses_level_one.all %}
             <label>
@@ -28,7 +28,7 @@
           {% endfor %}
         </div>
       {% endfor %}
-      <button type="submit">Valider</button>
+      <button type="submit">Submit</button>
     </form>
   </div>
 
