@@ -5,42 +5,42 @@ const emails = [
         id: 1,
         sender: "ruuqn44Jrf@gmiel.com",
         subject: "Gagnez une tablette Apple !",
-        body: "Félicitations ! Vous avez été sélectionné parmis 100000 candidats pour gagner une tablette Apple. Cliquez ici pour retirer votre gain : <a href='http://win-free-apple-not-v1ru5.co'>http://win-free-apple-not-v1ru5.co</a>",
+        body: "Congratulations! You were selected from 100,000 entrants to win a tablet. Click here to claim your prize: <a href='http://win-free-apple-not-v1ru5.co'>http://win-free-apple-not-v1ru5.co</a>",
         isPhishing: true,
         reported: false
     },
     {
         id: 2,
         sender: "secretaire-cybermouse@gmiel.com",
-        subject: "Attention : Problème de sécurité",
-        body: "Bonjour,<br><br>De nombreux élèves ont été victimes de phishing récemment. Veuillez redoubler de vigilance et évitez au maximum les liens suspects.<br><br>Merci, la secrétaire.",
+        subject: "Warning: Security issue",
+        body: "Hello,<br><br>Several students have recently been targeted by phishing. Stay alert and avoid suspicious links.<br><br>Thank you, the school office.",
         isPhishing: false,
         reported: false
     },
     {
         id: 3,
         sender: "secretalre-cybermouse@gmiel.com",
-        subject: "Formation : Apprendre à détecter le phishing",
-        body: "Bonjour,<br><br>Voici le lien pour accéder à une formation sur le phishing : <a href='http://formation-phishing-1.com'>http://formation-phishing-1.com</a>",
+        subject: "Training: Learn to detect phishing",
+        body: "Hello,<br><br>Here is the link to phishing-awareness training: <a href='http://formation-phishing-1.com'>http://formation-phishing-1.com</a>",
         isPhishing: true,
         reported: false
     },
     {
         id: 4,
         sender: "service-technique-cybermouse@gmiel.com",
-        subject: "Maintenance réseau",
-        body: "Bonjour,<br><br>Suite  à un incident sur le réseau, seul quelques recherches sur internet pourrons aboutir.<br>Nous tentons actuellement de résoudre le probleme le plus rapidement,<br>nous vous remercions de votre compréhension<br><br>Le service technique",
+        subject: "Network maintenance",
+        body: "Hello,<br><br>Following a network incident, some internet searches may fail.<br>We are working to resolve the issue as quickly as possible.<br>Thank you for your patience.<br><br>Technical support",
         isPhishing: false,
         reported: false
     }
 ];
 
-// Pour faire réapparaître les mails et mettre à 0 les points :
+// Restore the emails and reset the score:
 // saveEmails();
 // savePoints();
 
 
-// Fonctions liées à l'affichage des emails (UI/DOM)
+// Functions for email UI and DOM rendering
 
 function openEmailWindow() {
     document.getElementById('email-window').style.display = 'block';
@@ -86,17 +86,17 @@ function displayEmailContent(emailId) {
         </div>
     `;
 
-    // Gérer les clics sur les liens suspects
+    // Handle clicks on suspicious links
     const links = emailContent.querySelectorAll('a');
     links.forEach(link => {
         link.addEventListener('click', (event) => {
             event.preventDefault();
             event.stopImmediatePropagation();
-            console.log('Lien cliqué !');
+            console.log('Link clicked!');
             if (email.isPhishing) {
                 triggerPhishingPopups(emailId);
             } else {
-                alert("Lien légitime. Aucune action nécessaire.");
+                alert("This link is legitimate. No action is required.");
             }
         });
     });
