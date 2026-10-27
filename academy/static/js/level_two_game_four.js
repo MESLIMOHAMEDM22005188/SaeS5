@@ -29,8 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
         feedbackElement.textContent = "";
         wallContainer.innerHTML = "";  // Reset the wall
         generateWall();  // Regenerate the bricks
-        document.getElementById('replay-button').style.display = "none"; // Masquer le bouton "Rejouer"
-        document.getElementById('menu-button').style.display = "none"; // Masquer le bouton "Retourner au Menu"
+        document.getElementById('replay-button').style.display = "none"; // Hide the Replay button
+        document.getElementById('menu-button').style.display = "none"; // Hide the Back to Menu button
         showNextQuestion(); // Show the first question
     };
 
@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Update the score
         scoreElement.textContent = score;
 
-        // Afficher la prochaine question
+        // Display the next question
         showNextQuestion();
 
         // Check whether all questions have been answered
@@ -80,6 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Ajouter un événement au clic sur le bouton "Rejouer"
+    // Attach a click handler to the Replay button
     replayButton.addEventListener('click', resetGame);
 });
