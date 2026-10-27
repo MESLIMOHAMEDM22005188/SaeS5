@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   {% load static %}
   <meta charset="UTF-8">
@@ -9,8 +9,8 @@
 </head>
 <body>
   <div class="quiz-container">
-    <h1>Quiz : Initiation à la Cyber Sécurité - Niveau 2</h1>
-    <p>Répondez à chaque question, puis cliquez sur "Valider".</p>
+    <h1>Cybersecurity Fundamentals Quiz - Level 2</h1>
+    <p>Répondez à chaque question, puis cliquez sur "Submit".</p>
 
     <form method="post">
       {% csrf_token %}
@@ -28,7 +28,7 @@
           {% endfor %}
         </div>
       {% endfor %}
-      <button type="submit">Valider</button>
+      <button type="submit">Submit</button>
     </form>
   </div>
 
