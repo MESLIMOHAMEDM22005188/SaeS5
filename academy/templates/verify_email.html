@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
         {% load static %}
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vérification d'email</title>
+    <title>Email verification</title>
 </head>
 <body>
     <h1>Vérifiez votre e-mail</h1>
-    <p>Veuillez entrer le code de vérification envoyé à votre adresse e-mail.</p>
+    <p>Please entrer le code de vérification envoyé à votre adresse e-mail.</p>
         <link rel="icon" type="image/png" href="{% static 'image/logo_bureau.png' %}">
 
     <form method="POST">
         {% csrf_token %}
-        <label for="code">Code de vérification :</label>
+        <label for="code">Verification code :</label>
         <input type="text" id="code" name="code" placeholder="Entrez votre code ici" required>
         <button type="submit">Vérifier</button>
     </form>
