@@ -322,7 +322,7 @@ def dashboard(request):
 
 @login_required
 def phishing_warning(request):
-    return render(request, "screen_warning.html")
+    return render(request, "phishing_warning.html")
 
 
 @login_required
@@ -339,7 +339,7 @@ def level_one_intro(request):
             return redirect("phishing_warning")
         messages.error(request, "Enter both fields to run the simulation.")
 
-    return render(request, "level_one.html")
+    return render(request, "phishing_simulation.html")
 
 
 @login_required
