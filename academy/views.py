@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, get_user_model, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
+from django.db.models import Prefetch
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
@@ -23,7 +24,7 @@ from .models import (
 
 @login_required
 def submit_level_one_quiz(request):
-    questions = LevelOneQuestion.objects.prefetch_related("reponses_level_one").order_by("numero")
+    questions = LevelOneQuestion.objects.prefetch_related(Prefetch("reponses_level_one", to_attr="_english_answers")).order_by("numero")
     if request.method != "POST":
         return render(request, "level_one_quiz.html", {"questions": questions})
     score = 0
@@ -31,14 +32,14 @@ def submit_level_one_quiz(request):
 
     for question in questions:
         correct_answer = next(
-            (answer for answer in question.reponses_level_one.all() if answer.est_correcte),
+            (answer for answer in question.answers if answer.is_correct),
             None,
         )
         selected_answer_id = (request.POST.get(f"q{question.id}") or "").strip()
         if correct_answer and selected_answer_id == str(correct_answer.id):
             score += 1
 
-    LevelOneResult.objects.create(utilisateur=request.user.username, score=score)
+    LevelOneResult.record_score(username=request.user.username, score=score)
     request.session["quiz_score"] = score
     request.session["quiz_total"] = total_questions
     messages.success(request, f"Your score: {score}/{total_questions}.")
@@ -71,7 +72,7 @@ def level_one_quiz(request):
     if request.method == "POST":
         question = questions[current_index]
         selected_answer = (request.POST.get("answer") or "").strip()
-        valid_answer_ids = {str(answer.id) for answer in question.reponses_level_one.all()}
+        valid_answer_ids = {str(answer.id) for answer in question.answers}
 
         if selected_answer in valid_answer_ids:
             answers[str(question.id)] = selected_answer
@@ -87,8 +88,8 @@ def level_one_quiz(request):
                 correct_answer = next(
                     (
                         answer
-                        for answer in quiz_question.reponses_level_one.all()
-                        if answer.est_correcte
+                        for answer in quiz_question.answers
+                        if answer.is_correct
                     ),
                     None,
                 )
@@ -345,7 +346,7 @@ def level_one_intro(request):
 @login_required
 def submit_level_two_quiz(request):
     questions = list(
-        LevelTwoQuestion.objects.prefetch_related("reponses_level_two").order_by("numero")
+        LevelTwoQuestion.objects.prefetch_related(Prefetch("reponses_level_two", to_attr="_english_answers")).order_by("numero")
     )
     if request.method == "POST":
         score = 0
@@ -354,15 +355,15 @@ def submit_level_two_quiz(request):
             correct_answer = next(
                 (
                     answer
-                    for answer in question.reponses_level_two.all()
-                    if answer.est_correcte
+                    for answer in question.answers
+                    if answer.is_correct
                 ),
                 None,
             )
             if correct_answer and selected_id == str(correct_answer.id):
                 score += 1
 
-        LevelTwoResult.objects.create(utilisateur=request.user.username, score=score)
+        LevelTwoResult.record_score(username=request.user.username, score=score)
         messages.success(request, f"Your score: {score}/{len(questions)}.")
         return redirect("level_two_quiz")
 
@@ -382,20 +383,20 @@ def level_two_game_one(request):
 @login_required
 def submit_level_three_quiz(request):
     questions = list(
-        LevelThreeQuestion.objects.prefetch_related("reponses").order_by("numero")
+        LevelThreeQuestion.objects.prefetch_related(Prefetch("reponses", to_attr="_english_answers")).order_by("numero")
     )
     if request.method == "POST":
         score = 0
         for question in questions:
             selected_id = (request.POST.get(f"q{question.id}") or "").strip()
             correct_answer = next(
-                (answer for answer in question.reponses.all() if answer.est_correcte),
+                (answer for answer in question.answers if answer.is_correct),
                 None,
             )
             if correct_answer and selected_id == str(correct_answer.id):
                 score += 1
 
-        LevelThreeResult.objects.create(utilisateur=request.user.username, score=score)
+        LevelThreeResult.record_score(username=request.user.username, score=score)
         messages.success(request, f"Your score: {score}/{len(questions)}.")
         return redirect("level_three_quiz")
 
