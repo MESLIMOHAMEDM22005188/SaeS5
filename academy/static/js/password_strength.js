@@ -19,9 +19,9 @@ function estimateComplexity(password) {
     const length = password.length;
     let charsetSize = 0;
 
-    if (/[a-z]/.test(password)) charsetSize += 26; // Lettres minuscules
-    if (/[A-Z]/.test(password)) charsetSize += 26; // Lettres majuscules
-    if (/[0-9]/.test(password)) charsetSize += 10; // Chiffres
+    if (/[a-z]/.test(password)) charsetSize += 26; // Lowercase letters
+    if (/[A-Z]/.test(password)) charsetSize += 26; // Uppercase letters
+    if (/[0-9]/.test(password)) charsetSize += 10; // Digits
     if (/[\W]/.test(password)) charsetSize += 32; // Special characters
 
     const entropy = Math.log2(Math.pow(charsetSize, length)); // Calculated entropy
@@ -51,14 +51,14 @@ function generateComparisons(seconds) {
     const currentYear = new Date().getFullYear();
     const futureYear = currentYear + Math.round(seconds / 31536000);
 
-    let comparisons = `En ce temps :
+    let comparisons = `In that time:
         - Earth would have traveled about ${distanceTraveled.toFixed(2)} million kilometers around the Sun.
         - It would now be the year ${futureYear}.`;
 
     if (seconds < 86400) {
         comparisons += " (Less than one day to crack this password).";
     } else if (seconds < 31536000) {
-        comparisons += " (Un an ou moins pour le craquer).";
+        comparisons += " (One year or less to crack it).";
     } else {
         comparisons += " (Beaucoup de temps pour le craquer, votre mot de passe est probablement sécurisé).";
     }
