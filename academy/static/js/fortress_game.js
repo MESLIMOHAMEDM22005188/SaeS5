@@ -47,13 +47,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Gestion du clic sur le bouton de soumission
+    // Handle the submit button click
     if (submitBtn && passwordInput) {
         submitBtn.addEventListener('click', () => {
             const password = passwordInput.value.trim();
 
             if (!password) {
-                feedback.textContent = 'Veuillez entrer un mot de passe.';
+                feedback.textContent = 'Please enter a password.';
                 feedback.className = 'error';
                 return;
             }
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
             feedback.textContent = `Password strength: ${strength}`;
             feedback.className = strength === 'strong' ? 'success' : 'error';
 
-            // Renforcement de la forteresse selon le mot de passe
+            // Strengthen the fortress based on password strength
             reinforceFortress(strength);
         });
     }
