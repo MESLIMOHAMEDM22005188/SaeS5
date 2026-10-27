@@ -40,7 +40,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('texte', models.CharField(max_length=200)),
                 ('est_correcte', models.BooleanField(default=False)),
-                ('question', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reponses_level_two', to='mousey.questionlevelone')),
+                ('question', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reponses_level_two', to='mousey.questionleveltwo')),
             ],
         ),
     ]
