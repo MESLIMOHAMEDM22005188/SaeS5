@@ -3,31 +3,25 @@
 <head>
     {% load static %}
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phone verification</title>
-        <link rel="icon" type="image/png" href="{% static 'image/logo_bureau.png' %}">
-
-<link rel="stylesheet" href="{% static 'css/verify.css' %}"></head>
+    <title>Phone verification | CyberMouse Academy</title>
+    <link rel="stylesheet" href="{% static 'css/verify.css' %}">
+</head>
 <body>
-
-    <form method="POST">
-        {% csrf_token %}
-        <h1>Phone verification</h1>
-        <p>Un code de vérification a été envoyé à votre numéro de téléphone. Please le saisir ci-dessous :</p>
-
-        <label for="code">Verification code :</label>
-        <input type="text" id="code" name="code" placeholder="Enter the code ici" required>
-
-        <button type="submit">Vérifier</button>
-
+    <main class="verification-card">
+        <h1>Verify your phone number</h1>
+        <p>Enter the verification code sent to your phone.</p>
+        <form method="post">
+            {% csrf_token %}
+            <label for="code">Verification code</label>
+            <input type="text" id="code" name="code" inputmode="numeric" autocomplete="one-time-code" placeholder="Enter your code" required>
+            <button type="submit">Verify phone</button>
+        </form>
         {% if messages %}
-        <ul>
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
+            <ul class="messages">
+                {% for message in messages %}<li class="{{ message.tags }}">{{ message }}</li>{% endfor %}
+            </ul>
         {% endif %}
-    </form>
+    </main>
 </body>
 </html>
