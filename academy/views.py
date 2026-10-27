@@ -10,14 +10,14 @@ from django.utils import timezone
 from .forms import RegistrationForm
 from .models import (
     EmailVerification,
-    Forteresse,
+    FortressGame,
     PhoneVerification,
-    QuestionLevelOne,
-    QuestionLevelThree,
-    QuestionLevelTwo,
-    ResultatLevelOne,
-    ResultatLevelThree,
-    ResultatLevelTwo,
+    LevelOneQuestion,
+    LevelThreeQuestion,
+    LevelTwoQuestion,
+    LevelOneResult,
+    LevelThreeResult,
+    LevelTwoResult,
 )
 
 
@@ -26,7 +26,7 @@ def submit_level_one_quiz(request):
     if request.method != "POST":
         return redirect("level_one_quiz")
 
-    questions = QuestionLevelOne.objects.prefetch_related("reponses_level_one").order_by("numero")
+    questions = LevelOneQuestion.objects.prefetch_related("reponses_level_one").order_by("numero")
     score = 0
     total_questions = questions.count()
 
@@ -39,7 +39,7 @@ def submit_level_one_quiz(request):
         if correct_answer and selected_answer_id == str(correct_answer.id):
             score += 1
 
-    ResultatLevelOne.objects.create(utilisateur=request.user.username, score=score)
+    LevelOneResult.objects.create(utilisateur=request.user.username, score=score)
     messages.success(request, f"Your score: {score}/{total_questions}.")
     return redirect("quiz_result")
 
@@ -47,7 +47,7 @@ def submit_level_one_quiz(request):
 @login_required
 def level_one_quiz(request):
     questions = list(
-        QuestionLevelOne.objects.prefetch_related("reponses_level_one").order_by("numero")
+        LevelOneQuestion.objects.prefetch_related("reponses_level_one").order_by("numero")
     )
     total_questions = len(questions)
 
@@ -97,7 +97,7 @@ def level_one_quiz(request):
                 ):
                     score += 1
 
-            ResultatLevelOne.objects.create(
+            LevelOneResult.objects.create(
                 utilisateur=request.user.username,
                 score=score,
             )
@@ -344,7 +344,7 @@ def level_one_intro(request):
 @login_required
 def submit_level_two_quiz(request):
     questions = list(
-        QuestionLevelTwo.objects.prefetch_related("reponses_level_two").order_by("numero")
+        LevelTwoQuestion.objects.prefetch_related("reponses_level_two").order_by("numero")
     )
     if request.method == "POST":
         score = 0
@@ -361,7 +361,7 @@ def submit_level_two_quiz(request):
             if correct_answer and selected_id == str(correct_answer.id):
                 score += 1
 
-        ResultatLevelTwo.objects.create(utilisateur=request.user.username, score=score)
+        LevelTwoResult.objects.create(utilisateur=request.user.username, score=score)
         messages.success(request, f"Your score: {score}/{len(questions)}.")
         return redirect("level_two_quiz")
 
@@ -381,7 +381,7 @@ def level_two_game_one(request):
 @login_required
 def submit_level_three_quiz(request):
     questions = list(
-        QuestionLevelThree.objects.prefetch_related("reponses").order_by("numero")
+        LevelThreeQuestion.objects.prefetch_related("reponses").order_by("numero")
     )
     if request.method == "POST":
         score = 0
@@ -394,7 +394,7 @@ def submit_level_three_quiz(request):
             if correct_answer and selected_id == str(correct_answer.id):
                 score += 1
 
-        ResultatLevelThree.objects.create(utilisateur=request.user.username, score=score)
+        LevelThreeResult.objects.create(utilisateur=request.user.username, score=score)
         messages.success(request, f"Your score: {score}/{len(questions)}.")
         return redirect("level_three_quiz")
 
@@ -415,7 +415,7 @@ def save_password_game_result(request):
     if strength not in {"weak", "medium", "strong"}:
         return JsonResponse({"error": "Invalid password strength."}, status=400)
 
-    Forteresse.objects.create(user=request.user, password="", strength=strength)
+    FortressGame.objects.create(user=request.user, password="", strength=strength)
     return JsonResponse({"message": "Game progress saved."}, status=201)
 
 
