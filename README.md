@@ -86,4 +86,4 @@ python manage.py test
 - Verification codes expire after ten minutes and must never be logged.
 - Keep `DEBUG=False` in production.
 - Confirm database migrations, static-file collection, email/SMS delivery, registration, and verification before deployment.
-- Asset filenames are retained in this structural pass; rename them in a dedicated change alongside all template/CSS/JavaScript references.
+- Asset filenames are retained in this structural pass; rename them incrementally alongside all template/CSS/JavaScript references.
