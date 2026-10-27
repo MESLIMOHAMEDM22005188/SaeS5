@@ -4,7 +4,6 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, get_user_model
 from django.contrib.auth.decorators import login_required
-from django.core.management import BaseCommand
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.utils.timezone import now
@@ -12,8 +11,7 @@ from python_http_client import Client
 from django.core.mail import send_mail
 from django_ratelimit.decorators import ratelimit
 from .forms import UserCreationFormWithPhone
-from .models import PhoneVerification, EmailVerification
-from .models import QuestionLevelOne, ResultatLevelOne, Forteresse, QuestionLevelThree, QuestionLevelTwo,ResultatLevelThree, ResultatLevelTwo, ReponseLevelThree, ReponseLevelTwo
+from .models import (EmailVerification, PhoneVerification, QuestionLevelOne, ResultatLevelOne, Forteresse, QuestionLevelThree, QuestionLevelTwo, ResultatLevelThree, ResultatLevelTwo, ReponseLevelThree, ReponseLevelTwo)
 
 from django.shortcuts import render
 
@@ -276,12 +274,13 @@ def screen_warning(request):
 def level_one(request):
     """Page pour le niveau 1."""
     if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        if username == "utilisateur4" and password == "01234":
-            return redirect('screen_warning')
-        else:
-            messages.error(request, "Identifiant ou mot de passe incorrect.")
+        username = (request.POST.get("username") or "").strip()
+        password = request.POST.get("password") or ""
+        # This screen is a phishing-awareness simulation, not a real login endpoint.
+        if username and password:
+            messages.info(request, "Simulation : ne saisis jamais tes identifiants sur une page non fiable.")
+            return redirect("screen_warning")
+        messages.error(request, "Renseigne les deux champs pour lancer la simulation.")
     return render(request, 'level_one.html')
 
 
@@ -300,9 +299,9 @@ def test_level2_view(request):
 
         for question in questions:
             # Ici, on parcourt les réponses du niveau 2 via le related_name 'reponses'
-            correct_answer = question.reponses.filter(est_correcte=True).first()
+            correct_answer = question.reponses_level_two.filter(est_correcte=True).first()
             user_answer_id = user_answers.get(f'q{question.id}')
-            if user_answer_id and str(correct_answer.id) == user_answer_id:
+            if user_answer_id and correct_answer and str(correct_answer.id) == user_answer_id:
                 score += 1
 
         # Sauvegarde du résultat pour le niveau 2
@@ -338,7 +337,7 @@ def test_level3_view(request):
             # On parcourt les réponses liées au niveau 3 (grâce au related_name "reponses")
             correct_answer = question.reponses.filter(est_correcte=True).first()
             user_answer_id = user_answers.get(f'q{question.id}')
-            if user_answer_id and str(correct_answer.id) == user_answer_id:
+            if user_answer_id and correct_answer and str(correct_answer.id) == user_answer_id:
                 score += 1
 
         # Enregistrement du résultat dans ResultatLevelThree
@@ -407,12 +406,3 @@ def level_three(request):
 #vue pour la page du navigateur internet du premier niveau.
 def browser_level_one(request):
     return render(request, 'test.html')
-
-
-class Command(BaseCommand):
-    help = 'Supprime les codes de vérification expirés'
-
-    def handle(self, *args, **kwargs):
-        EmailVerification.objects.filter(code_expiration__lt=now()).delete()
-        PhoneVerification.objects.filter(code_expiration__lt=now()).delete()
-        self.stdout.write("Codes expirés supprimés.")
