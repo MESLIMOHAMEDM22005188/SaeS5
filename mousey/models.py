@@ -146,9 +146,9 @@ class EmailVerification(models.Model):
     code_expiration = models.DateTimeField(null=True, blank=True)
 
     def generate_code(self):
-        import random
-        self.verification_code = str(random.randint(100000, 999999))
-        self.code_expiration = now() + timedelta(minutes=10)
+        import secrets
+        self.verification_code = str(secrets.randbelow(900000) + 100000)
+        self.code_expiration = timezone.now() + timedelta(minutes=10)
         self.save()
 
     def is_code_valid(self):
