@@ -21,20 +21,20 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // Fonction pour réinitialiser le jeu
+    // Reset the game
     const resetGame = () => {
         currentQuestionIndex = 0;
         score = 0;
         scoreElement.textContent = score;
         feedbackElement.textContent = "";
-        wallContainer.innerHTML = "";  // Réinitialiser le mur
-        generateWall();  // Régénérer les briques
+        wallContainer.innerHTML = "";  // Reset the wall
+        generateWall();  // Regenerate the bricks
         document.getElementById('replay-button').style.display = "none"; // Masquer le bouton "Rejouer"
         document.getElementById('menu-button').style.display = "none"; // Masquer le bouton "Retourner au Menu"
-        showNextQuestion(); // Afficher la première question
+        showNextQuestion(); // Show the first question
     };
 
-    // Générer les briques du mur
+    // Generate the wall bricks
     const generateWall = () => {
         for (let i = 0; i < totalQuestions; i++) {
             const brick = document.createElement('div');
@@ -45,34 +45,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
     generateWall();
 
-    // Vérifier la réponse et mettre à jour le score
+    // Check the answer and update the score
     const checkAnswer = (answer) => {
-        const correctAnswers = ["B", "B", "C", "B", "A", "A"]; // Les bonnes réponses de chaque question
+        const correctAnswers = ["B", "B", "C", "B", "A", "A"]; // Correct answers for each question
         const isCorrect = answer === correctAnswers[currentQuestionIndex];
 
         if (isCorrect) {
             score++;
-            feedbackElement.textContent = "Bonne réponse!";
+            feedbackElement.textContent = "Correct answer!";
             wallContainer.children[score - 1].classList.add('correct');
         } else {
-            feedbackElement.textContent = "Mauvaise réponse!";
+            feedbackElement.textContent = "Incorrect answer!";
             wallContainer.children[score].classList.add('incorrect');
         }
 
-        // Mise à jour du score
+        // Update the score
         scoreElement.textContent = score;
 
         // Afficher la prochaine question
         showNextQuestion();
 
-        // Si toutes les questions ont été répondues
+        // Check whether all questions have been answered
         if (currentQuestionIndex === totalQuestions) {
             document.getElementById('replay-button').style.display = "inline-block";
             document.getElementById('menu-button').style.display = "inline-block";
         }
     };
 
-    // Ajouter un événement au clic sur les boutons de réponse
+    // Add click handlers to the answer buttons
     answerButtons.forEach(button => {
         button.addEventListener('click', () => {
             const answer = button.dataset.answer;
