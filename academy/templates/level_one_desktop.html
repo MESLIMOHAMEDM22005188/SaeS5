@@ -32,17 +32,17 @@
 <!-- Taskbar -->
 <div class="bottom-bar" id="bottom">
     <div class="left-info">
-        <a href="{% url 'home' %}"><img src="{% static 'image/bouttonMA.png' %}" alt="boutton" class="bouttonMA" ></a>
+        <a href="{% url 'home' %}"><img src="{% static 'image/mail_app_button.png' %}" alt="boutton" class="bouttonMA" ></a>
     </div>
     <div class="center-app">
-        <img src="{% static 'image/window11.png' %}" alt="window" id="window">
+        <img src="{% static 'image/window_11.png' %}" alt="window" id="window">
         <img src="{% static 'image/outlook.png' %}" alt="outlook" class="outlook" onclick="openEmailWindow()">
     </div>
     <div class="right-info">
         <img src="{% static 'image/ethernet.png' %}" alt="internet" class="icon1">
-        <img src="{% static 'image/batterie.png' %}" alt="batterie" class="icon2">
+        <img src="{% static 'image/battery.png' %}" alt="batterie" class="icon2">
         <div class="volume">
-            <img src="{% static 'image/son.png' %}" onclick="toggleVolumeSlider()">
+            <img src="{% static 'image/sound.png' %}" onclick="toggleVolumeSlider()">
             <div id="volume-popup">
                 <input type="range" min="0" max="100" value="50" class="volume-range">
             <div class="icon">
@@ -86,7 +86,7 @@
             <div class="gogole-tab">
                 <img src="{% static 'image/gogole.png' %}" class="tab-gogole-ico">
                 <div class="tab-text">Nouvel onglet</div>
-                <img src="{% static 'image/croixBlanche.png' %}" class="tab-close-ico" id="close-browser-window">
+                <img src="{% static 'image/white_cross.png' %}" class="tab-close-ico" id="close-browser-window">
             </div>
             <div id="new-tab">
                 <img src="{% static 'image/plus.png' %}" id="new-tab-ico">
@@ -95,16 +95,16 @@
         </div>
         <div id="lower-header">
             <div id="refresh">
-                <img src="{% static 'image/rafraichir.png' %}" id="refresh-ico">
+                <img src="{% static 'image/refresh.png' %}" id="refresh-ico">
             </div>
             <div id="search-bar">
                 <input id="URLField" placeholder="gogole.com" onkeydown="search(this)">
             </div>
             <div id="bookmark">
-                <img src="{% static 'image/marquePage.png' %}" id="bookmark-ico">
+                <img src="{% static 'image/bookmark.png' %}" id="bookmark-ico">
             </div>
             <div id="download">
-                <img src="{% static 'image/telechargement.png' %}" id="download-ico">
+                <img src="{% static 'image/download.png' %}" id="download-ico">
             </div>
         </div>
     </header>
