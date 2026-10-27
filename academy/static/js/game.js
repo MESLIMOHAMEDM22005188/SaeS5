@@ -1,11 +1,11 @@
-// --- GESTION DE L’AFFICHAGE UNE QUESTION À LA FOIS ---
+// --- SHOW ONE QUESTION AT A TIME ---
 let currentQuestionIndex = 0;
 const questions = document.querySelectorAll(".question");
 const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
 const checkBtn = document.getElementById("checkBtn");
 
-// Fonction qui affiche la question correspondant à currentQuestionIndex
+// Display the question at currentQuestionIndex
 function showQuestion(index) {
   // Masquer toutes les questions
   questions.forEach((q) => {
@@ -15,15 +15,15 @@ function showQuestion(index) {
   // Afficher la question voulue
   questions[index].style.display = "block";
 
-  // Gérer l’affichage des boutons
-  // Si on est sur la première question, on cache "Précédent"
+  // Update button visibility
+  // Hide Previous on the first question
   if (index === 0) {
     prevBtn.style.display = "none";
   } else {
     prevBtn.style.display = "inline-block";
   }
 
-  // Si on est sur la dernière question, on cache "Suivant" et on montre "Valider"
+  // Hide Next and show Submit on the last question
   if (index === questions.length - 1) {
     nextBtn.style.display = "none";
     checkBtn.style.display = "inline-block";
@@ -41,7 +41,7 @@ function nextQuestion() {
   }
 }
 
-// Bouton « Précédent »
+// Previous button
 function prevQuestion() {
   if (currentQuestionIndex > 0) {
     currentQuestionIndex--;
@@ -49,11 +49,11 @@ function prevQuestion() {
   }
 }
 
-// Au chargement de la page, afficher la première question
+// Show the first question when the page loads
 showQuestion(currentQuestionIndex);
 
 
-// --- FONCTION QUI CORRIGE LES RÉPONSES ---
+// --- GRADE THE ANSWERS ---
 function checkAnswers() {
   const correctAnswers = {
     q1: "B",
@@ -69,7 +69,7 @@ function checkAnswers() {
   for (let question in correctAnswers) {
     const radios = document.getElementsByName(question);
 
-    // Parcours des radios pour trouver celle qui est cochée
+    // Find the selected radio button
     for (let i = 0; i < radios.length; i++) {
       if (radios[i].checked) {
         if (radios[i].value === correctAnswers[question]) {
@@ -80,7 +80,7 @@ function checkAnswers() {
     }
   }
 
-  // Affiche le résultat
+  // Display the result
   const resultDiv = document.getElementById("result");
-  resultDiv.textContent = `Vous avez ${score} bonne(s) réponse(s) sur ${totalQuestions}.`;
+  resultDiv.textContent = `You answered ${score} out of ${totalQuestions} questions correctly.`;
 }
