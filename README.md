@@ -99,8 +99,8 @@ python manage.py test
 
 ## Limites connues / prochaines étapes
 
-- Ajouter des tests automatisés sur l'inscription, les vérifications et les quiz.
+- Étendre la couverture de tests aux parcours complets des trois quiz et de l'inscription.
 - Extraire la logique métier des vues et supprimer les duplications entre niveaux.
-- Corriger et sécuriser la sauvegarde des données de mot de passe du jeu.
-- Remplacer les identifiants de démonstration codés en dur.
-- Documenter la procédure de déploiement réelle et vérifier l'hébergement actuel.
+- Finaliser le système de progression persistante et calculer les scores affichés dans le tableau de bord.
+- Tester l'ensemble des pages de jeu, notamment sur mobile.
+- Exécuter et valider le déploiement sur l'hébergeur cible.
