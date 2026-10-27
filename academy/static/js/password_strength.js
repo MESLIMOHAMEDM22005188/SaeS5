@@ -5,13 +5,13 @@ const feedback = document.getElementById('feedback');
 const crackTime = document.getElementById('crackTime');
 const complexity = document.getElementById('complexity');
 
-// Fonction pour basculer l'affichage du mot de passe
+// Toggle password visibility
 togglePassword.addEventListener('click', () => {
     const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
     passwordInput.setAttribute('type', type);
 
-    // Changer le texte du bouton
-    togglePassword.textContent = type === 'password' ? 'Afficher' : 'Masquer';
+    // Update the button label
+    togglePassword.textContent = type === 'password' ? 'Show' : 'Hide';
 });
 
 // Estimate password complexity
@@ -31,13 +31,13 @@ function estimateComplexity(password) {
 // Format a duration in years, days, hours, and more
 function formatTime(seconds) {
     if (seconds < 60) {
-        return `${Math.round(seconds)} secondes`;
+        return `${Math.round(seconds)} seconds`;
     } else if (seconds < 3600) {
         return `${Math.round(seconds / 60)} minutes`;
     } else if (seconds < 86400) {
-        return `${Math.round(seconds / 3600)} heures`;
+        return `${Math.round(seconds / 3600)} hours`;
     } else if (seconds < 31536000) {
-        return `${Math.round(seconds / 86400)} jours`;
+        return `${Math.round(seconds / 86400)} days`;
     } else {
         const years = seconds / 31536000;
         return `${Math.round(years)} years`;
@@ -45,18 +45,18 @@ function formatTime(seconds) {
 }
 
 function generateComparisons(seconds) {
-    const distancePerSecond = 30; // La Terre parcourt environ 30 km par seconde autour du Soleil
+    const distancePerSecond = 30; // Earth travels about 30 km per second around the Sun
     const distanceTraveled = (seconds * distancePerSecond) / 1e6; // Convert to millions of kilometers
 
     const currentYear = new Date().getFullYear();
     const futureYear = currentYear + Math.round(seconds / 31536000);
 
     let comparisons = `En ce temps :
-        - Earth would have traveled about ${distanceTraveled.toFixed(2)} millions de kilomètres autour du Soleil.
+        - Earth would have traveled about ${distanceTraveled.toFixed(2)} million kilometers around the Sun.
         - It would now be the year ${futureYear}.`;
 
     if (seconds < 86400) {
-        comparisons += " (Moins d'un jour pour craquer ce mot de passe).";
+        comparisons += " (Less than one day to crack this password).";
     } else if (seconds < 31536000) {
         comparisons += " (Un an ou moins pour le craquer).";
     } else {
@@ -76,7 +76,7 @@ checkBtn.addEventListener('click', () => {
     const password = passwordInput.value.trim();
 
     if (!password) {
-        feedback.textContent = 'Veuillez entrer un mot de passe.';
+        feedback.textContent = 'Please enter a password.';
         feedback.className = '';
         crackTime.textContent = '';
         complexity.textContent = '';
@@ -88,13 +88,13 @@ checkBtn.addEventListener('click', () => {
 
     // Feedback utilisateur
     if (entropy < 28) {
-        feedback.textContent = 'Mot de passe faible.';
+        feedback.textContent = 'Weak password.';
         feedback.className = 'weak';
     } else if (entropy >= 28 && entropy < 60) {
-        feedback.textContent = 'Mot de passe moyen.';
+        feedback.textContent = 'Moderate password.';
         feedback.className = 'medium';
     } else {
-        feedback.textContent = 'Mot de passe fort.';
+        feedback.textContent = 'Strong password.';
         feedback.className = 'strong';
     }
 
