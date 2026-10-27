@@ -126,16 +126,6 @@ def user_login(request):
     return render(request, 'registration/login.html')
 
 
-def envoyer_email():
-    send_mail(
-        subject="test email",
-        message="Ceci est un test envoyé via AlwaysData",
-        from_email="cybermouse@alwaysdata.net",
-        recipient_list=["pacmanthebossofhack@gmail.com"],
-        fail_silently=False,
-    )
-
-
 def send_verification_email(user):
     """Create and send an expiring verification code to the given user."""
     verification, _ = EmailVerification.objects.get_or_create(
