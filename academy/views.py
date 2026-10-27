@@ -77,7 +77,7 @@ def level_one_quiz(request):
 
         if "next" in request.POST:
             current_index = min(current_index + 1, total_questions - 1)
-        elif "previous" in request.POST:
+        elif "prev" in request.POST:
             current_index = max(current_index - 1, 0)
         elif "finish" in request.POST:
             score = 0
