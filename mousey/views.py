@@ -42,63 +42,71 @@ def test_level1_view(request):
 
 @login_required
 def quiz_result(request):
-    # Récupération de toutes les questions triées par numéro
-    questions = list(QuestionLevelOne.objects.all().order_by('numero'))
+    """Run the level-one quiz one question at a time and persist the final score."""
+    questions = list(QuestionLevelOne.objects.prefetch_related("reponses_level_one").order_by("numero"))
     total_questions = len(questions)
 
-    # Récupérer l'index courant de la question depuis la requête GET (par défaut 0)
-    try:
-        current_index = int(request.GET.get('q', 0))
-    except (ValueError, TypeError):
-        current_index = 0
+    if total_questions == 0:
+        messages.info(request, "Aucune question n'est disponible pour le moment.")
+        return redirect("home")
 
-    # Initialiser ou récupérer les réponses stockées dans la session
-    if 'quiz_answers' not in request.session:
-        request.session['quiz_answers'] = {}
-    answers = request.session['quiz_answers']
+    try:
+        current_index = int(request.GET.get("q", 0))
+    except (TypeError, ValueError):
+        current_index = 0
+    current_index = max(0, min(current_index, total_questions - 1))
+
+    answers = request.session.get("quiz_answers", {})
 
     if request.method == "POST":
-        # Enregistrer la réponse de la question actuelle
         current_question = questions[current_index]
-        selected_answer = request.POST.get('answer')
-        if selected_answer:
+        selected_answer = (request.POST.get("answer") or "").strip()
+        valid_answer_ids = {str(answer.id) for answer in current_question.reponses_level_one.all()}
+        if selected_answer and selected_answer in valid_answer_ids:
             answers[str(current_question.id)] = selected_answer
-            request.session['quiz_answers'] = answers  # Mémoriser dans la session
+            request.session["quiz_answers"] = answers
 
-        # Gestion de la navigation
-        if 'next' in request.POST:
-            if current_index < total_questions - 1:
-                current_index += 1
-        elif 'prev' in request.POST:
-            if current_index > 0:
-                current_index -= 1
-        elif 'finish' in request.POST:
-            # Calcul du score
+        if "next" in request.POST:
+            current_index = min(current_index + 1, total_questions - 1)
+        elif "prev" in request.POST:
+            current_index = max(current_index - 1, 0)
+        elif "finish" in request.POST:
             score = 0
-            for q in questions:
-                # Récupérer la bonne réponse (en supposant qu'il n'y a qu'une bonne réponse par question)
-                correct = q.reponses_level_one.filter(est_correcte=True).first()
-                # Comparer la réponse enregistrée dans la session (sous forme de chaîne) avec l'ID de la bonne réponse
-                if correct and answers.get(str(q.id)) == str(correct.id):
+            for question in questions:
+                correct = next(
+                    (answer for answer in question.reponses_level_one.all() if answer.est_correcte),
+                    None,
+                )
+                if correct and answers.get(str(question.id)) == str(correct.id):
                     score += 1
-            # Enregistrer le résultat dans la base de données
             ResultatLevelOne.objects.create(utilisateur=request.user.username, score=score)
-            # Stocker le score et le total dans la session pour affichage dans la page résultat
-            request.session['quiz_score'] = score
-            request.session['quiz_total'] = total_questions
-            return redirect('quiz_result')  # Assurez-vous que l'URL 'quiz_result' est bien définie dans urls.py
+            request.session["quiz_score"] = score
+            request.session["quiz_total"] = total_questions
+            request.session.pop("quiz_answers", None)
+            return redirect("quiz_result")
 
-        # Rediriger vers la même vue en passant le nouvel index dans l'URL
         return redirect(f"{request.path}?q={current_index}")
 
-    # Pour une requête GET, afficher la question à l'index courant
-    current_question = questions[current_index]
-    context = {
-        'question': current_question,
-        'current_index': current_index,
-        'total_questions': total_questions,
-    }
-    return render(request, 'quiz_question.html', context)
+    if request.session.get("quiz_total") is not None and request.session.get("quiz_score") is not None:
+        return render(
+            request,
+            "quiz_result.html",
+            {
+                "score": request.session["quiz_score"],
+                "total_questions": request.session["quiz_total"],
+            },
+        )
+
+    return render(
+        request,
+        "quiz_question.html",
+        {
+            "question": questions[current_index],
+            "current_index": current_index,
+            "total_questions": total_questions,
+            "selected_answer": answers.get(str(questions[current_index].id)),
+        },
+    )
 
 def user_login(request):
     """Vue pour la connexion utilisateur."""
