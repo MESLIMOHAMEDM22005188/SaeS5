@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Niveau 1</title>
+    <title>Level 1</title>
     {% load static %}
     <link rel="icon" type="image/png" href="{% static 'image/logo_bureau.png' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/level_one.css' %}">
@@ -17,21 +17,21 @@
     <div class="note">
         <label class="noteLabel">
             Simulation de sensibilisation<br />
-            Utilisez des identifiants fictifs uniquement.<br />
-            Ne saisissez jamais vos vrais mots de passe.
+            Use fictional credentials only.<br />
+            Never enter real passwords.
         </label>
     </div>
     <form method="POST">
         {% csrf_token %}
         <div class="textZone">
             <div class="MEP1">
-                <input type="text" id="username" name="username" required placeholder="Nom d'utilisateur">
+                <input type="text" id="username" name="username" required placeholder="Username">
             </div>
             <div class="MEP2">
-                <input type="password" id="password" name="password" required placeholder="Mot de passe">
+                <input type="password" id="password" name="password" required placeholder="Password">
             </div>
             <div class="MEP3">
-                <button type="submit" class="submitBtn">Se connecter</button>
+                <button type="submit" class="submitBtn">Sign in</button>
             </div>
         </div>
     </form>
