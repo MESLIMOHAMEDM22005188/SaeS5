@@ -1,33 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        {% load static %}
-
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email verification</title>
+    <title>Email verification | CyberMouse Academy</title>
+    <link rel="stylesheet" href="{% static 'css/verify.css' %}">
 </head>
 <body>
-    <h1>Verify votre e-mail</h1>
-    <p>Please entrer le code de vérification envoyé à votre adresse e-mail.</p>
-        <link rel="icon" type="image/png" href="{% static 'image/logo_bureau.png' %}">
-
-    <form method="POST">
-        {% csrf_token %}
-        <label for="code">Verification code :</label>
-        <input type="text" id="code" name="code" placeholder="Entrez votre code ici" required>
-        <button type="submit">Vérifier</button>
-    </form>
-
-    {% if messages %}
-    <ul>
-        {% for message in messages %}ve
-            <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% if messages.0.tags == "success" %}
-        <a href="{% url 'home' %}" class="btn">Suivant</a>
-    {% endif %}
-{% endif %}
+    <main class="verification-card">
+        <h1>Verify your email address</h1>
+        <p>Enter the verification code sent to your email address.</p>
+        <form method="post">
+            {% csrf_token %}
+            <label for="code">Verification code</label>
+            <input type="text" id="code" name="code" inputmode="numeric" autocomplete="one-time-code" placeholder="Enter your code" required>
+            <button type="submit">Verify email</button>
+        </form>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}<li class="{{ message.tags }}">{{ message }}</li>{% endfor %}
+            </ul>
+        {% endif %}
+        <p><a href="{% url 'login' %}">Return to sign in</a></p>
+    </main>
 </body>
 </html>
