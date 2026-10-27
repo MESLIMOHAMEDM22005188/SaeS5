@@ -137,51 +137,66 @@ def envoyer_email():
 
 
 def send_verification_email(user):
-    code = uuid.uuid4().hex[:6].upper()
-    email_verification, created = EmailVerification.objects.get_or_create(
+    """Create and send an expiring verification code to the given user."""
+    verification, _ = EmailVerification.objects.get_or_create(
         user=user,
-        defaults={
-            "email": user.email,
-            "verification_code": code,
-        }
+        defaults={"email": user.email},
     )
-    if not created:
-        email_verification.verification_code = code
-        email_verification.save()
-
+    verification.email = user.email
+    verification.generate_code()
     send_mail(
         subject="Vérification de votre adresse e-mail",
-        message=f"Votre code de vérification est : {code}",
-        from_email="cybermouse@alwaysdata.net",
+        message=f"Votre code de vérification est : {verification.verification_code}",
+        from_email=settings.DEFAULT_FROM_EMAIL,
         recipient_list=[user.email],
         fail_silently=False,
     )
 
 
 def send_verification_sms(phone_number, code):
-    """Envoi d'un SMS de vérification."""
-    client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+    """Send an SMS verification code when Twilio is configured."""
+    if not all((settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN, settings.TWILIO_PHONE_NUMBER)):
+        return False
+
     try:
+        from twilio.rest import Client as TwilioClient
+
+        client = TwilioClient(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
         client.messages.create(
-            body=f"Votre code de vérification est: {code}",
+            body=f"Votre code de vérification est : {code}",
             from_=settings.TWILIO_PHONE_NUMBER,
             to=phone_number,
         )
-    except Exception as e:
-        print(f"Erreur lors de l'envoi du SMS: {e}")
+        return True
+    except Exception:
+        # Avoid logging provider details or verification codes.
+        return False
 
 
 def verify_email(request):
-    if request.method == 'POST':
-        code = request.POST.get('code')
-        email_verification = EmailVerification.objects.filter(verification_code=code).first()
-        if email_verification:
-            email_verification.is_verified = True
-            email_verification.save()
-            return redirect('home')
-        else:
-            messages.error(request, "Code invalide.")
-    return render(request, 'verify_email.html')
+    if request.method != "POST":
+        return render(request, "verify_email.html")
+
+    code = (request.POST.get("code") or "").strip()
+    verification = EmailVerification.objects.filter(
+        verification_code=code,
+        is_verified=False,
+    ).select_related("user").first()
+
+    if not verification or not verification.is_code_valid():
+        messages.error(request, "Code invalide ou expiré.")
+        return render(request, "verify_email.html", status=400)
+
+    verification.is_verified = True
+    verification.verification_code = None
+    verification.save(update_fields=["is_verified", "verification_code", "updated_at"])
+    user = verification.user
+    if user.is_active is False:
+        user.is_active = True
+        user.save(update_fields=["is_active"])
+    messages.success(request, "Votre adresse e-mail a été vérifiée.")
+    return redirect("login")
+
 
 def register(request):
     """Vue pour enregistrer un utilisateur et ajouter un numéro de téléphone et un email."""
@@ -221,28 +236,31 @@ def register(request):
 
 
 def verify(request, identifier):
-    """Vérification du compte via un code SMS."""
+    """Verify the phone code associated with the requested account."""
     user = get_user_model().objects.filter(username=identifier).first()
     if not user:
         messages.error(request, "Utilisateur introuvable.")
-        return redirect('register')
+        return redirect("register")
 
-    if request.method == 'POST':
-        code = request.POST.get('code')
-        phone_verification = PhoneVerification.objects.filter(user=user).first()
+    if request.method == "POST":
+        code = (request.POST.get("code") or "").strip()
+        verification = PhoneVerification.objects.filter(user=user).first()
+        if (
+            verification
+            and verification.verification_code
+            and verification.verification_code == code
+            and verification.code_expiration
+            and verification.code_expiration > now()
+        ):
+            verification.is_verified = True
+            verification.verification_code = None
+            verification.save(update_fields=["is_verified", "verification_code", "updated_at"])
+            messages.success(request, "Votre numéro a été vérifié.")
+            return redirect("verify_email")
 
-        if phone_verification and phone_verification.verification_code == code:
-            if phone_verification.code_expiration > now():
-                phone_verification.is_verified = True
-                phone_verification.save()
-                messages.success(request, "Votre numéro a été vérifié avec succès.")
-                return redirect('verify_email')  # Redirige vers la vérification de l'email
-            else:
-                messages.error(request, "Le code a expiré.")
-        else:
-            messages.error(request, "Code incorrect.")
+        messages.error(request, "Code incorrect ou expiré.")
 
-    return render(request, 'verify.html', {'identifier': identifier})
+    return render(request, "verify.html", {"identifier": identifier})
 
 @login_required
 def home(request):
