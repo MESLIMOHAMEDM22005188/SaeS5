@@ -175,11 +175,17 @@ def send_verification_sms(phone_number, code):
 
 
 def verify_email(request):
+    pending_user_id = request.session.get("pending_verification_user_id")
+    if not pending_user_id:
+        messages.error(request, "Commencez par vérifier le numéro de téléphone associé à votre compte.")
+        return redirect("register")
+
     if request.method != "POST":
         return render(request, "verify_email.html")
 
     code = (request.POST.get("code") or "").strip()
     verification = EmailVerification.objects.filter(
+        user_id=pending_user_id,
         verification_code=code,
         is_verified=False,
     ).select_related("user").first()
@@ -192,48 +198,52 @@ def verify_email(request):
     verification.verification_code = None
     verification.save(update_fields=["is_verified", "verification_code", "updated_at"])
     user = verification.user
-    if user.is_active is False:
-        user.is_active = True
-        user.save(update_fields=["is_active"])
-    messages.success(request, "Votre adresse e-mail a été vérifiée.")
+    user.is_active = True
+    user.save(update_fields=["is_active"])
+    request.session.pop("pending_verification_user_id", None)
+    messages.success(request, "Votre adresse e-mail a été vérifiée. Vous pouvez vous connecter.")
     return redirect("login")
 
 
 def register(request):
-    """Vue pour enregistrer un utilisateur et ajouter un numéro de téléphone et un email."""
-    if request.method == 'POST':
+    """Create an inactive account and start the phone/e-mail verification flow."""
+    if request.method == "POST":
         form = UserCreationFormWithPhone(request.POST)
         if form.is_valid():
-            user = form.save()
-            phone_number = form.cleaned_data['phone_number']
-            email = form.cleaned_data['email']
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+            phone_number = form.cleaned_data["phone_number"]
+            email = form.cleaned_data["email"]
 
             phone_verification = PhoneVerification.objects.create(
                 user=user,
-                phone_number=phone_number
+                phone_number=phone_number,
             )
-            email_verification = EmailVerification.objects.create(
+            email_verification, _ = EmailVerification.objects.get_or_create(
                 user=user,
-                email=email
+                defaults={"email": email},
             )
             phone_verification.generate_code()
+            email_verification.email = email
             email_verification.generate_code()
+            request.session["pending_verification_user_id"] = user.pk
 
-            send_verification_sms(phone_number, phone_verification.verification_code)
+            sms_sent = send_verification_sms(phone_number, phone_verification.verification_code)
+            try:
+                send_verification_email(user)
+            except Exception:
+                messages.error(request, "L'envoi de l'e-mail a échoué. Vérifiez la configuration SMTP.")
+                return render(request, "register.html", {"form": form}, status=503)
 
-            send_verification_email(user)
-
-            messages.success(
-                request,
-                "Un code de vérification a été envoyé à votre téléphone et à votre adresse e-mail."
-            )
-            return redirect('verify', identifier=user.username)
-        else:
-            messages.error(request, "Erreur dans le formulaire. Veuillez vérifier vos informations.")
+            if not sms_sent:
+                messages.warning(request, "SMS non configuré : le compte reste désactivé jusqu'à validation du téléphone.")
+            messages.success(request, "Vérifiez votre téléphone puis votre adresse e-mail pour activer le compte.")
+            return redirect("verify", identifier=user.username)
+        messages.error(request, "Erreur dans le formulaire. Veuillez vérifier vos informations.")
     else:
         form = UserCreationFormWithPhone()
-
-    return render(request, 'register.html', {'form': form})
+    return render(request, "register.html", {"form": form})
 
 
 def verify(request, identifier):
@@ -248,6 +258,7 @@ def verify(request, identifier):
         verification = PhoneVerification.objects.filter(user=user).first()
         if (
             verification
+            and not verification.is_verified
             and verification.verification_code
             and verification.verification_code == code
             and verification.code_expiration
@@ -256,14 +267,14 @@ def verify(request, identifier):
             verification.is_verified = True
             verification.verification_code = None
             verification.save(update_fields=["is_verified", "verification_code", "updated_at"])
+            request.session["pending_verification_user_id"] = user.pk
             messages.success(request, "Votre numéro a été vérifié.")
             return redirect("verify_email")
-
         messages.error(request, "Code incorrect ou expiré.")
 
     return render(request, "verify.html", {"identifier": identifier})
 
-@login_required
+
 def home(request):
     """Page d'accueil."""
     return render(request, 'home.html')
