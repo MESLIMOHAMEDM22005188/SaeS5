@@ -33,7 +33,7 @@ function showQuestion(index) {
   }
 }
 
-// Bouton « Suivant »
+// Next button
 function nextQuestion() {
   if (currentQuestionIndex < questions.length - 1) {
     currentQuestionIndex++;
