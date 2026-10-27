@@ -4,16 +4,16 @@ from django.utils import timezone
 from datetime import timedelta
 
 class Forteresse(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Relation avec l'utilisateur
-    password = models.CharField(max_length=255)  # Mot de passe créé
-    strength = models.CharField(max_length=50)  # Force du mot de passe (faible, moyen, fort)
-    porte_status = models.BooleanField(default=False)  # État de la porte (fermée ou ouverte)
-    tour_droite_status = models.BooleanField(default=False)  # État de la tour droite
-    tour_gauche_status = models.BooleanField(default=False)  # État de la tour gauche
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Account associated with this game state
+    password = models.CharField(max_length=255)  # Legacy field; submitted passwords are never stored
+    strength = models.CharField(max_length=50)  # Password-strength category
+    porte_status = models.BooleanField(default=False)  # Door state
+    tour_droite_status = models.BooleanField(default=False)  # Right tower state
+    tour_gauche_status = models.BooleanField(default=False)  # Left tower state
     created_at = models.DateTimeField(auto_now_add=True)  # Date de création
 
     def __str__(self):
-        return f"Forteresse de {self.user.username} - {self.strength}"
+        return f"Fortress game for {self.user.username} - {self.strength}"
 
 
 class EmailGame(models.Model):
@@ -62,7 +62,7 @@ class ReponseLevelOne(models.Model):
     est_correcte = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Réponse: {self.texte} (Correcte: {self.est_correcte})"
+        return f"Answer: {self.texte} (Correct: {self.est_correcte})"
 
 
 class ReponseLevelTwo(models.Model):
@@ -75,7 +75,7 @@ class ReponseLevelTwo(models.Model):
     est_correcte = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Réponse: {self.texte} (Correcte: {self.est_correcte})"
+        return f"Answer: {self.texte} (Correct: {self.est_correcte})"
 
 class ReponseLevelThree(models.Model):
     question = models.ForeignKey(
@@ -87,7 +87,7 @@ class ReponseLevelThree(models.Model):
     est_correcte = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Réponse: {self.texte} (Correcte: {self.est_correcte})"
+        return f"Answer: {self.texte} (Correct: {self.est_correcte})"
 
 
 class ResultatLevelOne(models.Model):
@@ -156,3 +156,16 @@ class EmailVerification(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.email} - Verified: {self.is_verified}"
+
+
+# English aliases keep application code readable without changing legacy database models.
+FortressGame = Forteresse
+LevelOneQuestion = QuestionLevelOne
+LevelTwoQuestion = QuestionLevelTwo
+LevelThreeQuestion = QuestionLevelThree
+LevelOneAnswer = ReponseLevelOne
+LevelTwoAnswer = ReponseLevelTwo
+LevelThreeAnswer = ReponseLevelThree
+LevelOneResult = ResultatLevelOne
+LevelTwoResult = ResultatLevelTwo
+LevelThreeResult = ResultatLevelThree
