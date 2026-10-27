@@ -23,10 +23,9 @@ from .models import (
 
 @login_required
 def submit_level_one_quiz(request):
-    if request.method != "POST":
-        return redirect("level_one_quiz")
-
     questions = LevelOneQuestion.objects.prefetch_related("reponses_level_one").order_by("numero")
+    if request.method != "POST":
+        return render(request, "level_one_quiz.html", {"questions": questions})
     score = 0
     total_questions = questions.count()
 
