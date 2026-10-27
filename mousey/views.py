@@ -374,8 +374,7 @@ def level_two_course(request):
 
 @login_required
 def level_two_jeu3(request):
-    return render(request, ''
-                           'level_twoJeu3.html')
+    return render(request, "level_twoJeu3.html")
 @login_required
 def level_two_jeu4(request):
     return render(request, 'level_twoJeu4.html')
