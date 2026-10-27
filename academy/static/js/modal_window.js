@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         {
             title: "Step 2: Public Wi-Fi",
-            question: "Quel est le principal risque d'utiliser une connexion Wi-Fi publique ?",
+            question: "What is the main risk of using public Wi-Fi?",
             options: [
                 { text: "Accès limité à Internet", correct: false, explanation: "The main risk is security, not limited access." },
                 { text: "Attaques de type 'man-in-the-middle'", correct: true, explanation: "Public Wi-Fi traffic can be intercepted by attackers." },
@@ -32,22 +32,22 @@ document.addEventListener('DOMContentLoaded', () => {
             title: "Step 3: Home network",
             question: "Which configuration makes a home network safer?",
             options: [
-                { text: "Désactiver le mot de passe Wi-Fi", correct: false, explanation: "Cela rendrait votre réseau vulnérable aux intrusions." },
+                { text: "Disable the Wi-Fi password", correct: false, explanation: "This would make your network vulnerable to intrusion." },
                 { text: "Activer le filtrage d'adresses MAC", correct: false, explanation: "Le filtrage MAC n'est pas suffisant pour protéger un réseau." },
-                { text: "Changer le mot de passe par défaut du routeur", correct: true, explanation: "Changer les mots de passe par défaut réduit les risques d'accès non autorisé." }
+                { text: "Change the router's default password", correct: true, explanation: "Changing default passwords reduces the risk of unauthorized access." }
             ]
         },
         {
-            title: "Étape 4 : Authentification",
-            question: "Quel type d'authentification est recommandé pour une connexion Wi-Fi ?",
+            title: "Step 4: Authentication",
+            question: "Which authentication method is recommended for Wi-Fi?",
             options: [
-                { text: "Mot de passe simple", correct: false, explanation: "Les mots de passe simples sont faciles à deviner." },
-                { text: "Mot de passe complexe combiné à WPA3", correct: true, explanation: "Un mot de passe complexe et WPA3 renforcent la sécurité." },
+                { text: "Simple password", correct: false, explanation: "Simple passwords are easy to guess." },
+                { text: "Strong password combined with WPA3", correct: true, explanation: "A strong password and WPA3 improve security." },
                 { text: "Aucune authentification", correct: false, explanation: "Une connexion sans authentification expose le réseau à des intrusions." }
             ]
         },
         {
-            title: "Étape 5 : Réseaux invités",
+            title: "Step 5: Guest networks",
             question: "Pourquoi configurer un réseau invité sur un routeur domestique ?",
             options: [
                 { text: "Pour augmenter la vitesse de la connexion", correct: false, explanation: "Cela n'améliore pas la vitesse, mais la sécurité." },
