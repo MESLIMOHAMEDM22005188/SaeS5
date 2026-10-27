@@ -23,9 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
             title: "Step 2: Public Wi-Fi",
             question: "What is the main risk of using public Wi-Fi?",
             options: [
-                { text: "Accès limité à Internet", correct: false, explanation: "The main risk is security, not limited access." },
+                { text: "Limited internet access", correct: false, explanation: "The main risk is security, not limited access." },
                 { text: "Attaques de type 'man-in-the-middle'", correct: true, explanation: "Public Wi-Fi traffic can be intercepted by attackers." },
-                { text: "Temps de latence élevé", correct: false, explanation: "High latency is not a security issue." }
+                { text: "High latency", correct: false, explanation: "High latency is not a security issue." }
             ]
         },
         {
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
             question: "Which configuration makes a home network safer?",
             options: [
                 { text: "Disable the Wi-Fi password", correct: false, explanation: "This would make your network vulnerable to intrusion." },
-                { text: "Activer le filtrage d'adresses MAC", correct: false, explanation: "Le filtrage MAC n'est pas suffisant pour protéger un réseau." },
+                { text: "Enable MAC address filtering", correct: false, explanation: "MAC filtering alone is not enough to secure a network." },
                 { text: "Change the router's default password", correct: true, explanation: "Changing default passwords reduces the risk of unauthorized access." }
             ]
         },
@@ -43,16 +43,16 @@ document.addEventListener('DOMContentLoaded', () => {
             options: [
                 { text: "Simple password", correct: false, explanation: "Simple passwords are easy to guess." },
                 { text: "Strong password combined with WPA3", correct: true, explanation: "A strong password and WPA3 improve security." },
-                { text: "Aucune authentification", correct: false, explanation: "Une connexion sans authentification expose le réseau à des intrusions." }
+                { text: "No authentication", correct: false, explanation: "A connection without authentication exposes the network to intrusion." }
             ]
         },
         {
             title: "Step 5: Guest networks",
-            question: "Pourquoi configurer un réseau invité sur un routeur domestique ?",
+            question: "Why configure a guest network on a home router?",
             options: [
-                { text: "Pour augmenter la vitesse de la connexion", correct: false, explanation: "Cela n'améliore pas la vitesse, mais la sécurité." },
-                { text: "Pour isoler les appareils des invités du réseau principal", correct: true, explanation: "Un réseau invité empêche les invités d'accéder aux appareils sur le réseau principal." },
-                { text: "Pour éviter de changer le mot de passe principal", correct: false, explanation: "Ce n'est pas une raison valable pour configurer un réseau invité." }
+                { text: "To increase connection speed", correct: false, explanation: "This does not improve speed, but it does improve security." },
+                { text: "To isolate guest devices from the main network", correct: true, explanation: "A guest network prevents guests from accessing devices on the main network." },
+                { text: "To avoid changing the main password", correct: false, explanation: "This is not a valid reason to configure a guest network." }
             ]
         }
     ];
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (isCorrect) {
             button.classList.add('correct');
-            feedback.innerHTML = `<p style="color: green;">Bonne réponse ! ${explanation}</p>`;
+            feedback.innerHTML = `<p style="color: green;">Correct answer! ${explanation}</p>`;
             currentStage++;
             setTimeout(() => {
                 hideModal();
@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 2000);
         } else {
             button.classList.add('incorrect');
-            feedback.innerHTML = `<p style="color: red;">Mauvaise réponse. ${explanation}</p>`;
+            feedback.innerHTML = `<p style="color: red;">Incorrect answer. ${explanation}</p>`;
         }
     }
 
@@ -126,9 +126,9 @@ document.addEventListener('DOMContentLoaded', () => {
         modalContent.className = 'modal-content';
         modalContent.innerHTML = `
             <header>
-                <span>Félicitations !</span>
+                <span>Congratulations!</span>
             </header>
-            <p>Vous avez complété le défi des connexions Internet !</p>
+            <p>You completed the internet connection challenge!</p>
             <p>Redirection en cours...</p>
         `;
         modalWindow.innerHTML = '';
