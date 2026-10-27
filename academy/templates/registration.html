@@ -4,39 +4,25 @@
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration</title>
-        <link rel="icon" type="image/png" href="{% static 'image/logo_bureau.png' %}">
-
+    <title>Create an account | CyberMouse Academy</title>
     <link rel="stylesheet" href="{% static 'css/registration.css' %}">
 </head>
 <body>
-    <div class="rectangle">
-        <header>
-            <h2 class="titre">Create an account</h2>
-        </header>
-
+    <main class="rectangle">
+        <header><h1 class="titre">Create an account</h1></header>
         {% if messages %}
             <div class="messages">
-                {% for message in messages %}
-                    <p class="message {{ message.tags }}">{{ message }}</p>
-                {% endfor %}
+                {% for message in messages %}<p class="message {{ message.tags }}">{{ message }}</p>{% endfor %}
             </div>
         {% endif %}
-
-        <main>
-            <form method="POST">
+        <section>
+            <form method="post" action="{% url 'register' %}">
                 {% csrf_token %}
-                <fieldset>
-                    {{ form.as_p }}
-                </fieldset>
-                <button type="submit" class="btn-submit">S'inscrire</button>
+                {{ form.as_p }}
+                <button type="submit" class="btn-submit">Create account</button>
             </form>
-
-            <p class="texte-acceuil">
-                Vous avez déjà un compte ?
-                <a href="{% url 'login' %}">Sign in</a>
-            </p>
-        </main>
-    </div>
+            <p class="texte-acceuil">Already have an account? <a href="{% url 'login' %}">Sign in</a>.</p>
+        </section>
+    </main>
 </body>
 </html>
