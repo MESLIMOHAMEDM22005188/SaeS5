@@ -1,28 +1,33 @@
-# CyberMouse — plateforme pédagogique de cybersécurité
+# CyberMouse Academy
 
-CyberMouse est une application web Django conçue comme une expérience d'apprentissage ludique autour des réflexes de cybersécurité. Elle propose des niveaux et des exercices, des quiz et des mécanismes de compte utilisateur.
+CyberMouse Academy is a Django web application for learning practical cybersecurity habits through guided levels, quizzes, and interactive simulations.
 
-> Projet universitaire (SAE S5). Le dépôt est en cours de modernisation : certaines fonctions historiques peuvent nécessiter une configuration locale avant d'être pleinement exécutables.
+## Technology stack
 
-## Stack
+- Python and Django
+- Django templates, CSS, and JavaScript
+- Django authentication and session management
+- SQLite for local development; configurable external databases for deployment
+- Gunicorn and WhiteNoise for production serving
+- Optional Twilio integration for SMS verification
 
-- Python et Django
-- Templates HTML, CSS et JavaScript
-- Authentification Django
-- Base de données configurable par variables d'environnement
-- Gunicorn pour l'exécution WSGI en production
+## Project structure
 
-## Fonctionnalités présentes dans le code
+```text
+config/                 Django project configuration (settings, URLs, ASGI, WSGI)
+academy/                Application views, forms, models, tests, templates, and static assets
+academy/migrations/     Historical database migrations
+manage.py               Django management entry point
+Procfile                Production web process
+requirements.txt         Python dependencies
+.env.example            Environment-variable template
+```
 
-- Création de compte et connexion
-- Vérification de compte par e-mail et SMS (intégrations externes à configurer)
-- Parcours pédagogique découpé en niveaux
-- Quiz et enregistrement des scores
-- Interface d'administration Django
+The application keeps the historical Django app label `mousey` to preserve existing database table names and migration history. The Python package itself is now named `academy`.
 
-## Installation locale
+## Local setup
 
-Python 3.11 ou plus récent est recommandé. Les versions exactes compatibles devront être validées dans l'environnement du projet.
+Python 3.12 is recommended.
 
 ```bash
 git clone https://github.com/MESLIMOHAMEDM22005188/SaeS5.git
@@ -30,21 +35,28 @@ cd SaeS5
 python -m venv .venv
 ```
 
-Active l'environnement :
+Activate the environment:
 
-- Windows PowerShell : `.venv\\Scripts\\Activate.ps1`
-- macOS / Linux : `source .venv/bin/activate`
+- Windows PowerShell: `.venv\\Scripts\\Activate.ps1`
+- macOS/Linux: `source .venv/bin/activate`
 
-Puis installe les dépendances :
+Install dependencies:
 
 ```bash
+python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
-Crée un fichier `.env` à la racine à partir de cet exemple minimal :
+Create a local `.env` file based on `.env.example`. Generate a unique secret key:
+
+```bash
+python -c "import secrets; print(secrets.token_urlsafe(50))"
+```
+
+Minimum local configuration:
 
 ```dotenv
-SECRET_KEY=replace-with-a-long-random-secret
+SECRET_KEY=replace-with-a-generated-secret
 DEBUG=True
 ALLOWED_HOSTS=localhost,127.0.0.1
 DB_ENGINE=django.db.backends.sqlite3
@@ -52,13 +64,7 @@ DB_NAME=db.sqlite3
 EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
 ```
 
-Ne publie jamais le fichier `.env`. Génère une vraie clé secrète avec :
-
-```bash
-python -c "import secrets; print(secrets.token_urlsafe(50))"
-```
-
-Lance ensuite les vérifications et migrations :
+Run checks, apply migrations, and start the development server:
 
 ```bash
 python manage.py check
@@ -66,41 +72,40 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-Le serveur local est disponible sur http://127.0.0.1:8000/.
+Open http://127.0.0.1:8000/.
 
-## Configuration de production
+## Production configuration
 
-Définis les variables d'environnement dans le tableau de bord de ton hébergeur, jamais dans Git :
+Set environment variables in the hosting provider dashboard. Do not commit `.env` or production credentials.
 
-- `SECRET_KEY` : clé secrète aléatoire
+Required settings:
+
+- `SECRET_KEY`: unique, randomly generated secret
 - `DEBUG=False`
-- `ALLOWED_HOSTS` : domaines sans protocole, séparés par des virgules
-- `DB_ENGINE`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_HOST`, `DB_PORT` : paramètres de base de données
-- `EMAIL_HOST`, `EMAIL_PORT`, `EMAIL_USE_TLS`, `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD`, `DEFAULT_FROM_EMAIL`
-- `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_PHONE_NUMBER` pour le SMS
+- `ALLOWED_HOSTS`: comma-separated hostnames
+- `DB_ENGINE`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_HOST`, and `DB_PORT` for an external database
+- `EMAIL_HOST`, `EMAIL_PORT`, `EMAIL_USE_TLS`, `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD`, and `DEFAULT_FROM_EMAIL` for SMTP
+- `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, and `TWILIO_PHONE_NUMBER` for SMS delivery
 
-Avant de déployer, vérifie les migrations, les fichiers statiques, l'envoi d'e-mail, les flux d'inscription et de vérification et les paramètres de sécurité Django. L'application utilise des données persistantes : configure une base distante pour la production plutôt qu'un fichier SQLite éphémère.
+A persistent external database is recommended for production. Confirm that migrations, static-file collection, email delivery, SMS delivery, registration, and verification work in the target hosting environment before launch.
 
-## Contrôles qualité
+## Quality checks
 
 ```bash
+python -m compileall -q config academy
 python manage.py check
 python manage.py makemigrations --check --dry-run
+python manage.py collectstatic --noinput
 python manage.py test
 ```
 
-## Sécurité
+GitHub Actions runs these checks on pushes and pull requests.
 
-- Aucun secret ne doit être stocké dans les fichiers suivis par Git.
-- N'enregistre jamais des mots de passe utilisateurs en clair.
-- Les codes de vérification doivent expirer, être limités en tentatives et ne pouvoir valider que le compte associé.
-- Ne déploie pas avec `DEBUG=True`.
-- La base SQLite locale n'est pas un environnement de données de production.
+## Security notes
 
-## Limites connues / prochaines étapes
-
-- Étendre la couverture de tests aux parcours complets des trois quiz et de l'inscription.
-- Extraire la logique métier des vues et supprimer les duplications entre niveaux.
-- Finaliser le système de progression persistante et calculer les scores affichés dans le tableau de bord.
-- Tester l'ensemble des pages de jeu, notamment sur mobile.
-- Exécuter et valider le déploiement sur l'hébergeur cible.
+- Never commit secrets or real user credentials.
+- The password-strength game stores only a non-sensitive game state, not the submitted password.
+- Verification codes expire and should never be logged.
+- Keep `DEBUG=False` in production.
+- Historical migration filenames retain their original names to avoid breaking existing migration records.
+- Some legacy game pages and database fields still need a dedicated follow-up refactor; validate the complete application before deploying.
