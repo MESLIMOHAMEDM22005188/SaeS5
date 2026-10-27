@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080d18">
+    <title>Quiz cybersécurité — Niveau 1</title>
+    <link rel="stylesheet" href="{% static 'css/quizz_1.css' %}">
+    <style>
+        .quiz-top { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:24px; color:#9eabc0; font-size:.9rem; }
+        .progress-track { width:100%; height:7px; margin:0 0 30px; overflow:hidden; border-radius:99px; background:#303447; }
+        .progress-value { height:100%; border-radius:inherit; background:linear-gradient(90deg,#c6f36b,#6ee7f9); transition:width .2s ease; }
+        .question label { display:flex; align-items:flex-start; gap:12px; padding:14px 16px; margin:10px 0; background:#171c2a; border:1px solid #343b4e; border-radius:12px; line-height:1.5; }
+        .question label:has(input:checked) { border-color:#c6f36b; background:#202a29; }
+        .question input[type="radio"] { margin-top:4px; accent-color:#c6f36b; flex:0 0 auto; }
+        .question h2 { font-size:clamp(1.15rem,2.4vw,1.55rem); line-height:1.4; }
+        .quiz-actions { display:flex; justify-content:space-between; gap:12px; margin-top:28px; }
+        .quiz-actions button, .text-link { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:12px 17px; border:1px solid #3b455a; border-radius:12px; color:#f3f7ff; background:#202a3d; font-weight:750; cursor:pointer; text-decoration:none; }
+        .quiz-actions button.primary { color:#08120d; border-color:#c6f36b; background:#c6f36b; }
+        .quiz-actions button:focus-visible, .text-link:focus-visible { outline:3px solid #6ee7f9; outline-offset:3px; }
+        .quiz-intro { color:#9eabc0; }
+        @media (max-width:560px) { .quiz-container { width:calc(100% - 24px); margin:24px auto; padding:20px; } .quiz-actions { flex-direction:column-reverse; } .quiz-actions button { width:100%; } .quiz-top { align-items:flex-start; flex-direction:column; } }
+    </style>
+</head>
+<body>
+<main class="quiz-container">
+    <div class="quiz-top">
+        <a class="text-link" href="{% url 'home' %}">← Tableau de bord</a>
+        <span>QUESTION {{ current_index|add:"1" }} / {{ total_questions }}</span>
+    </div>
+    <div class="progress-track" role="progressbar" aria-label="Progression du quiz" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ progress_percent }}">
+        <div class="progress-value" style="width: {{ progress_percent }}%"></div>
+    </div>
+    <p style="color:#c6f36b;font-size:.75rem;letter-spacing:.16em;font-weight:800;">CYBERMOUSE / NIVEAU 01</p>
+    <h1>Les fondamentaux</h1>
+    <p class="quiz-intro">Choisis la réponse la plus adaptée. Tu peux revenir sur les questions précédentes avant de terminer.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <section class="question" aria-labelledby="question-title">
+            <h2 id="question-title">{{ question.numero }}. {{ question.texte }}</h2>
+            {% if question.image %}
+                <img src="{{ question.image.url }}" alt="Illustration de la question" style="max-width:100%;height:auto;border-radius:12px;">
+            {% endif %}
+            {% for reponse in question.reponses_level_one.all %}
+                <label>
+                    <input type="radio" name="answer" value="{{ reponse.id }}" {% if selected_answer == reponse.id|stringformat:"s" %}checked{% endif %}>
+                    <span>{{ reponse.texte }}</span>
+                </label>
+            {% empty %}
+                <p class="quiz-intro">Aucune réponse n'a encore été ajoutée à cette question.</p>
+            {% endfor %}
+        </section>
+
+        <div class="quiz-actions">
+            {% if not is_first_question %}
+                <button type="submit" name="prev" value="1">← Précédent</button>
+            {% else %}
+                <span></span>
+            {% endif %}
+
+            {% if is_last_question %}
+                <button class="primary" type="submit" name="finish" value="1">Terminer le quiz ✓</button>
+            {% else %}
+                <button class="primary" type="submit" name="next" value="1">Question suivante →</button>
+            {% endif %}
+        </div>
+    </form>
+</main>
+</body>
+</html>
