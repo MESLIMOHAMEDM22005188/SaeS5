@@ -5,10 +5,10 @@ function openGameWindow() {
     const gameTexts = [
         "Bienvenue dans le jeu !",
         "Cliquez sur les objets pour interagir.",
-        "Votre objectif : découvrir l'indice caché."
+        "Your objective: find the hidden clue."
     ];
 
-    gameContent.innerHTML = ""; // Réinitialise le contenu
+    gameContent.innerHTML = ""; // Reset the content
     gameTexts.forEach((text) => {
         const paragraph = document.createElement("p");
         paragraph.textContent = text;
