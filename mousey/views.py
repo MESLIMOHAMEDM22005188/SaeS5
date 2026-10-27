@@ -294,29 +294,19 @@ from .models import QuestionLevelTwo, ResultatLevelTwo
 
 @login_required
 def test_level2_view(request):
+    questions = list(QuestionLevelTwo.objects.prefetch_related("reponses_level_two").order_by("numero"))
     if request.method == "POST":
-        user_answers = request.POST
-        questions = QuestionLevelTwo.objects.all().order_by('numero')
         score = 0
-        total_questions = questions.count()
-
         for question in questions:
-            # Ici, on parcourt les réponses du niveau 2 via le related_name 'reponses'
-            correct_answer = question.reponses_level_two.filter(est_correcte=True).first()
-            user_answer_id = user_answers.get(f'q{question.id}')
-            if user_answer_id and correct_answer and str(correct_answer.id) == user_answer_id:
+            selected_id = (request.POST.get(f"q{question.id}") or "").strip()
+            correct = next((answer for answer in question.reponses_level_two.all() if answer.est_correcte), None)
+            if selected_id and correct and selected_id == str(correct.id):
                 score += 1
-
-        # Sauvegarde du résultat pour le niveau 2
         ResultatLevelTwo.objects.create(utilisateur=request.user.username, score=score)
-        messages.success(request, f"Vous avez obtenu {score}/{total_questions} bonne(s) réponse(s) !")
-        return redirect('test_level2')  # Assurez-vous que l'URL 'test_level2' est bien définie
+        messages.success(request, f"Vous avez obtenu {score}/{len(questions)} bonne(s) réponse(s) !")
+        return redirect("level_two_quizz")
 
-    else:
-        questions = QuestionLevelTwo.objects.all().order_by('numero')
-        return render(request, 'test_level2.html', {'questions': questions})
-
-
+    return render(request, "test_level2.html", {"questions": questions})
 
 @login_required
 def level_one_bureau(request):
