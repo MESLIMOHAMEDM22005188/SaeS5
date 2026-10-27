@@ -133,7 +133,7 @@ function triggerPhishingPopups(emailId) {
         popup.style.left = left;
         popup.innerHTML = `
             <h1>Piratage en cours...</h1>
-            <p>Veuillez ne pas éteindre votre ordinateur.</p>
+            <p>Please do not turn off your computer.</p>
         `;
         popupContainer.appendChild(popup);
 
@@ -165,10 +165,10 @@ function triggerPhishingPopups(emailId) {
             popupContainer.remove();
             document.body.innerHTML = `
                 <div class="hacked-message" style="text-align: center; padding: 50px;">
-                    <h1>Session Rebootée</h1>
-                    <p>Vous vous êtes fait hacker ! Ne cliquez pas sur des liens suspects.</p>
-                    <p><strong>Indice :</strong> Vérifiez l'adresse email de l'expéditeur et l'URL.</p>
-                    <button onclick="reloadSession()" style="padding: 10px 20px; font-size: 16px;">Réessayer</button>
+                    <h1>Session restarted</h1>
+                    <p>You were hacked! Do not click suspicious links.</p>
+                    <p><strong>Hint:</strong> Check the sender's email address and the URL.</p>
+                    <button onclick="reloadSession()" style="padding: 10px 20px; font-size: 16px;">Try again</button>
                 </div>
             `;
             document.body.style.pointerEvents = 'auto';
@@ -182,14 +182,14 @@ function reloadSession() {
 }
 
 
-// Fonctions liées à la gestion des emails
+// Email management functions
 
 function reportEmail(emailId) {
     const email = emails.find(e => e.id === emailId);
     const emailElement = document.querySelector(`[data-id="${emailId}"]`);
 
     if (email.reported) {
-        alert("Cet email a déjà été signalé.");
+        alert("This email has already been reported.");
         return;
     }
 
@@ -197,11 +197,11 @@ function reportEmail(emailId) {
 
     if (email.isPhishing) {
         emailElement.style.backgroundColor = 'green';
-        alert("Bravo ! Vous avez signalé un email de phishing. Vous pouvez maintenant le supprimer.");
+        alert("Correct! You reported a phishing email. You can now delete it.");
         points += 100;
     } else {
         emailElement.style.backgroundColor = 'red';
-        alert("Vous avez signalé un vrai email. Votre crédibilité diminue.");
+        alert("You reported a legitimate email. Your credibility has decreased.");
         points -= 100;
     }
 
@@ -219,17 +219,17 @@ function deleteEmail(emailId) {
         const emailElement = document.querySelector(`[data-id="${emailId}"]`);
         emailElement.remove();
         document.getElementById('email-content').innerHTML = '';
-        alert("L'email a été supprimé avec succès.");
+        alert("The email was deleted successfully.");
         saveEmails();
     } else if (emails[emailIndex].reported && !emails[emailIndex].isPhishing) {
-        alert("Cet email est légitime. Vous ne pouvez pas le supprimer.");
+        alert("This email is legitimate and cannot be deleted.");
     } else {
-        alert("Vous devez d'abord signaler correctement cet email avant de pouvoir le supprimer.");
+        alert("You must correctly report this email before deleting it.");
     }
 }
 
 
-// Fonctions liées aux points
+// Score functions
 
 function savePoints() {
     sessionStorage.setItem('points', points);
@@ -246,7 +246,7 @@ function updatePointsDisplay() {
 }
 
 
-// Fonctions liées à la gestion des données
+// Data management functions
 
 function loadEmails() {
     const savedEmails = JSON.parse(sessionStorage.getItem('emails'));
@@ -261,7 +261,7 @@ function saveEmails() {
 }
 
 
-// Gestion des options supplémentaires
+// Additional options
 
 function openMoreOption(event, emailId) {
     event.stopPropagation();
@@ -283,7 +283,7 @@ function openMoreOption(event, emailId) {
 }
 
 
-// Gestion reussite à signaler les mails de phishing
+// Track successful phishing reports
 
 function checkAllPhishingReported() {
     const allReported = emails.every(email => !email.isPhishing || email.reported);
@@ -297,10 +297,10 @@ function sendCongratulationsMail() {
     const congratulationsEmail = {
         id: 5,
         sender: "admin@cybersecure.com",
-        subject: "Félicitations pour votre vigilance !",
+        subject: "Congratulations on staying alert!",
         body: `
-            Bravo, vous avez signalé tous les emails de phishing avec succès !<br>
-            Vous avez complété le 1er défi de ce niveau.
+            Great job! You successfully reported all phishing emails!<br>
+            You completed the first challenge in this level.
         `,
         read: false,
         isPhishing: false,
@@ -316,10 +316,10 @@ function sendChallenge2Mail() {
     const challenge2Email = {
         id: 6,
         sender: "collegue@cybersecure.com",
-        subject: "Mise à jour du projet",
+        subject: "Project update",
         body: `
-            Le projet à eu une mise à jour et nécéssite maintenant la version de \'Flowtouch\' 3.21.6 <br>
-            Veuillez installer la mise à jour avant de reprendre le projet.
+            The project has been updated and now requires Flowtouch version 3.21.6 <br>
+            Install the update before resuming the project.
         `,
         read: false,
         isPhishing: false,
@@ -331,7 +331,7 @@ function sendChallenge2Mail() {
     loadEmailTitles();
 }
 
-// Initialisation et gestion des événements
+// Initialize and manage events
 
 document.getElementById('close-email-window').addEventListener('click', closeEmailWindow);
 
@@ -356,7 +356,7 @@ document.addEventListener('click', () => {
     });
 });
 
-// Fonction pour mettre la fenêtre des emails au premier plan
+// Bring the email window to the foreground
 function putEmailInFront() {
     const emailWindow = document.getElementById('email-window');
     const browserWindow = document.getElementById('browser-window');
@@ -376,11 +376,11 @@ function putEmailInFront() {
     putBrowserInBack()
 }
 
-// Fonction pour mettre la fenêtre des emails à l'arrière-plan
+// Send the email window to the background
 function putEmailInBack() {
     const emailWindow = document.getElementById('email-window');
     if (emailWindow) {
-        emailWindow.style.zIndex = '1'; // Met l'email à l'arrière-plan
+        emailWindow.style.zIndex = '1'; // Send the email to the background
     }
 }
 
@@ -418,7 +418,7 @@ document.addEventListener('mousemove', function (event) {
     }
 }, true);
 
-// Ajout des écouteurs d'événements pour l'ouverture et la gestion de l'email
+// Add event listeners for opening and managing emails
 document.getElementById('email-open').addEventListener('click', openEmailWindow);
 document.getElementById('email-open').addEventListener('click', putEmailInFront);
 document.getElementById('email-window').addEventListener("click", putEmailInFront);
