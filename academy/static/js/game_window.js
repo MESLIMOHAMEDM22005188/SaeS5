@@ -24,5 +24,5 @@ document.getElementById("close-game-window").addEventListener("click", function 
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("La gestion de la fenêtre de jeu est prête.");
+    console.log("Game window initialized.");
 });
